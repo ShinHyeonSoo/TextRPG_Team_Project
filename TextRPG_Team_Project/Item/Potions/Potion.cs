@@ -12,7 +12,7 @@
         {
             if (itemCount > 0)
             {
-                Console.WriteLine($"{{player.Name}}가 {this.Name}를 사용합니다.");
+                Console.WriteLine($"{{player.Name}}이(가) {this.Name}를 사용합니다.");
                 itemCount--;
             }
             else
@@ -35,11 +35,11 @@
             }
         }
 
-        public string Name { get { return name; } }
-        public int ItemPrice { get { return itemPrice; } }
+        public string Name { get { return name; } private set { name = value; } }
+        public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
-        public int ItemCountMax { get { return itemCountMax; } }
-        public int PotionEffect {  get { return potionEffect; } }
+        public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
+        public int PotionEffect {  get { return potionEffect; } private set { potionEffect = value; } }
     }
 
     class HealthPotion : Potion

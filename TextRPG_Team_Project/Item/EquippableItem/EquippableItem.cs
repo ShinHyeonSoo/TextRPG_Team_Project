@@ -8,10 +8,10 @@
         int itemCountMax = 1;
         bool isEquipped = false;
 
-        public string Name { get { return name; } }
-        public int ItemPrice { get { return itemPrice; } }
+        public string Name { get { return name; } private set { name = value; } }
+        public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
-        public int ItemCountMax { get { return itemCountMax; } }
+        public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
         public bool IsEquipped { get { return isEquipped; } private set { isEquipped = value; } }
 
         public void GetItem(int addItemCount)
@@ -63,6 +63,13 @@
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
+        }
+
+        int SetPrice()
+        {
+            int price = 0;
+
+            return price;
         }
     }
 }
