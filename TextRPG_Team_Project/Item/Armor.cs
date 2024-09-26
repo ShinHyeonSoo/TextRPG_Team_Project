@@ -20,7 +20,7 @@
         string name = "Test Armor";
         int itemPrice = 0;
         bool isHave = false;
-        bool isEquipped = true;
+        bool isEquipped = false;
         int armorDefence = 5;
     }
 }
