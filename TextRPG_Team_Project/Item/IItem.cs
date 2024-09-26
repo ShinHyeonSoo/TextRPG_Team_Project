@@ -13,6 +13,8 @@
         bool IsEquipped { get; }
 
         void EquipThis();
+
+        void UnEquipThis();
     }
 
     interface IConsumable

@@ -37,6 +37,21 @@
                 Console.WriteLine("This is already equipped.");
             }
         }
+
+        public void UnEquipThis()
+        {
+            // 장비되어 있을 때
+            if (isEquipped)
+            {
+                Console.WriteLine($"Unequip {this.Name}");
+                isEquipped = false;
+            }
+            // 아닐 때
+            else
+            {
+                Console.WriteLine("This is already unequipped.");
+            }
+        }
     }
 
     class TestWeapon : Weapon
