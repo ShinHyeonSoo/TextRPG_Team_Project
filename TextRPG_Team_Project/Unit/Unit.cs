@@ -5,6 +5,7 @@
         string Name { get; }
         int Level { get; }
         int Health { get; }
+        int MaxHealth { get; }
         int Attack { get; }
         int Defense { get; }
         bool IsDead { get; }
