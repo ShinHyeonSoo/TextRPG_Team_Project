@@ -15,6 +15,18 @@
         public int ItemCountMax { get { return itemCountMax; } }
         public bool IsEquipped { get { return isEquipped; } }
         public int ArmorDefence { get { return armorDefence; } }
+
+        public void EquipThis()
+        {
+            if (itemCount > 0)
+            {
+                Console.WriteLine($"Equip {this.Name}");
+            }
+            else
+            {
+                Console.WriteLine($"There is no {this.Name}.");
+            }
+        }
     }
 
     class TestArmor : Armor

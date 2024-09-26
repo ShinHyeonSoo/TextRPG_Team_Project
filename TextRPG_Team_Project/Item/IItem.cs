@@ -11,6 +11,11 @@
     interface IEquipable
     {
         bool IsEquipped { get; }
+
+        void EquipThis()
+        {
+
+        }
     }
 
     interface IConsumable
