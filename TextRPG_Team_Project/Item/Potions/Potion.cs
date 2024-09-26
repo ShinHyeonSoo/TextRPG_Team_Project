@@ -12,19 +12,20 @@
         {
             if (itemCount > 0)
             {
-                Console.WriteLine($"Use {Name}");
+                Console.WriteLine($"{{player.Name}} use {this.Name}.");
                 itemCount--;
             }
             else
             {
-                Console.WriteLine($"Need More {Name}");
+                Console.WriteLine($"Need More {this.Name}");
             }
         }
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
-        public int ItemCount { get { return itemCount; } }
+        public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } }
+        public int PotionEffect {  get { return potionEffect; } }
     }
 
     class HealthPotion : Potion
@@ -37,20 +38,29 @@
 
         public override void ConsumeThis()
         {
+            // 매개변수로 플레이어 받을 예정.
+            // 던전 입장 전 포션 사용
+
+            // 보유량 충분하면 회복 완료 메세지
             if (itemCount > 0)
             {
-                Console.WriteLine($"Health is restored by {potionEffect}.");
+                // 포션의 회복량은 30(potionEffect)
+                // player.Health += potionEffect;           
+                Console.WriteLine($"Health is restored by {this.potionEffect}.");
+                // 최대체력보다 높게 회복되지는 않음
+                /*
+                if(player.Health > player.HealthMax)
+                {
+                    player.Health = player.HealthMax;
+                }
+                */
                 itemCount--;
             }
+            // 보유량 부족하면 포션 부족 메세지
             else
             {
-                Console.WriteLine($"Need More {Name}");
+                Console.WriteLine($"Need More {this.Name}");
             }
-            // 던전 입장 전 포션 사용
-            // 보유량 충분하면 회복 완료 메세지
-            // 보유량 부족하면 포션 부족 메세지
-            // 포션의 회복량은 30
-            // 최대체력보다 높게 회복되지는 않음
         }
     }
 }

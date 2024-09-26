@@ -11,7 +11,7 @@
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
-        public int ItemCount { get { return itemCount; } }
+        public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } }
         public bool IsEquipped { get { return isEquipped; } }
         public int ArmorDefence { get { return armorDefence; } }
