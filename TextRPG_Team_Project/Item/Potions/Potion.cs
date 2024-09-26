@@ -17,7 +17,7 @@
             }
             else
             {
-                Console.WriteLine($"{this.Name}가 없습니다.");
+                Console.WriteLine($"{this.Name}이(가) 없습니다.");
             }
         }
 
