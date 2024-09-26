@@ -8,7 +8,7 @@ namespace TextRPG_Team_Project
     public class Character : IUnit
     {
 
-<<<<<<< Updated upstream
+
         public string Name { get; private set; }
         public int Gold { get; }
         public int Level { get; private set; }
@@ -16,21 +16,6 @@ namespace TextRPG_Team_Project
         public int Health { get; private set; }      
         public float Attack { get; private set; }
         public int Defense { get; }     
-=======
-        public string Name { get; }
-
-        public int MaxHealth { get; private set; }
-        public int Level { get; private set; }
-
-       
-        public int Health { get; private set; }
-
-       
-        public float Attack { get; private set; }
-        public int Defense { get; }
-
-        public int Gold { get; private set; }
->>>>>>> Stashed changes
         public bool IsDead { get; private set; }
 
         private int exp = 0;      
@@ -51,7 +36,7 @@ namespace TextRPG_Team_Project
 
 
         }
-<<<<<<< Updated upstream
+
         public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음 , 정수면 그대로계산 , 소수면 올림후 계산
         {
             Random random = new Random();
@@ -73,11 +58,6 @@ namespace TextRPG_Team_Project
 
             if (reducedDamage < 0) reducedDamage = 0;
 
-=======
-        public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음
-        {
-            float reducedDamage = damage - Defense;
->>>>>>> Stashed changes
             Health -= reducedDamage;
 
             if (Health <= 0) // 사망판정
