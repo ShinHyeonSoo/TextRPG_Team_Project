@@ -18,13 +18,23 @@
 
         public void EquipThis()
         {
-            if(itemCount>0)
+            // 장비하지 않았을 때.
+            if (!isEquipped)
             {
-                Console.WriteLine($"Equip {this.Name}");
+                if (itemCount > 0)
+                {
+                    Console.WriteLine($"Equip {this.Name}");
+                    isEquipped = true;
+                }
+                else
+                {
+                    Console.WriteLine($"There is no {this.Name}.");
+                }
             }
+            // 이미 장비되었을 때.
             else
             {
-                Console.WriteLine($"There is no {this.Name}.");
+                Console.WriteLine("This is already equipped.");
             }
         }
     }

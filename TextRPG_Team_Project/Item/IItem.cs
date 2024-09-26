@@ -12,17 +12,11 @@
     {
         bool IsEquipped { get; }
 
-        void EquipThis()
-        {
-
-        }
+        void EquipThis();
     }
 
     interface IConsumable
     {
-        void ConsumeThis()
-        {
-
-        }
+        void ConsumeThis();
     }
 }
