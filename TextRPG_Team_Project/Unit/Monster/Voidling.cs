@@ -10,7 +10,14 @@
 
         public override string MonsterInfo()
         {
-            string info = $"Lv.{Level} {Name}       HP {Health}\n";
+            string info = $"Lv.{Level} {Name}       HP {Health}";
+
+            return info;
+        }
+
+        public override string DeadInfo()
+        {
+            string info = $"Lv.{Level} {Name}       Dead";
 
             return info;
         }

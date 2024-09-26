@@ -18,10 +18,22 @@
 
         public void MonsterInfo(Func<string> callback)
         {
+            int count = 0;
             foreach (var monster in _monsters)
             {
-                callback = monster.MonsterInfo;
-                Console.WriteLine(callback());
+                ++count;
+
+                if (!monster.IsDead)
+                {
+                    callback = monster.MonsterInfo;
+                }
+                else
+                {
+                    callback = monster.DeadInfo;
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+                Console.WriteLine("{0}  " + callback(), count);
+                Console.ResetColor();
             }
         }
     }

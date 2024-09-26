@@ -41,6 +41,11 @@
             return "Unknown";
         }
 
+        public virtual string DeadInfo()
+        {
+            return "Unknown Dead";
+        }
+
         public void TakeDamage(float damage)
         {
             int error = (int)Math.Ceiling(damage * 0.1f); // 소수 첫번째 자리 올림
