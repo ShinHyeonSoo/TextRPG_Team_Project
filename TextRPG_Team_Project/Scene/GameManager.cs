@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using TextRPG_Team_Project.Quest;
 
 namespace TextRPG_Team_Project.Scene
 {
@@ -22,6 +23,8 @@ namespace TextRPG_Team_Project.Scene
 		}
 		private GameStatus _status = GameStatus.Start;
 
+		private QuestManger _questManager;
+
 		private StartScene _startScene;
 		private HomeScene _homeScene;
 		private StatusScene _statusScene;
@@ -31,12 +34,14 @@ namespace TextRPG_Team_Project.Scene
 
 		public GameManager()
 		{
+			_questManager = new QuestManger();
+
 			_startScene = new StartScene();
 			_homeScene = new HomeScene();
 			_statusScene = new StatusScene();
 			_battleScene = new BattleScene();
 			_inventoryScene = new InventoryScene();
-			_questScene = new QuestScene();
+			_questScene = new QuestScene(_questManager);
 		}
 
 		public void GameMain()
