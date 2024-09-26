@@ -4,12 +4,12 @@
     {
         int armorDefence;
 
-        public int ArmorDefence { get { return armorDefence; } }
+        public int ArmorDefence { get { return armorDefence; } private set { armorDefence = value; } }
     }
 
     class TestArmor : Armor
     {
-        string name = "Test Armor";
+        string name = "테스트 방어구";
         int itemPrice = 0;
         int itemCount = 1;
         int itemCountMax = 5;

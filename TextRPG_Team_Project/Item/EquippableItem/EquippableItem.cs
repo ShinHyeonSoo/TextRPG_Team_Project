@@ -12,7 +12,7 @@
         public int ItemPrice { get { return itemPrice; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } }
-        public bool IsEquipped { get { return isEquipped; } }
+        public bool IsEquipped { get { return isEquipped; } private set { isEquipped = value; } }
 
         public void EquipThis()
         {
@@ -21,18 +21,18 @@
             {
                 if (itemCount > 0)
                 {
-                    Console.WriteLine($"Equip {Name}");
+                    Console.WriteLine($"{Name} 장착.");
                     isEquipped = true;
                 }
                 else
                 {
-                    Console.WriteLine($"There is no {Name}.");
+                    Console.WriteLine($"{Name}가 없습니다.");
                 }
             }
             // 이미 장비되었을 때.
             else
             {
-                Console.WriteLine("This is already equipped.");
+                Console.WriteLine($"{Name}은 이미 장착 중입니다.");
             }
         }
 
@@ -41,13 +41,13 @@
             // 장비되어 있을 때
             if (isEquipped)
             {
-                Console.WriteLine($"Unequip {Name}");
+                Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
             }
             // 아닐 때
             else
             {
-                Console.WriteLine("This is already unequipped.");
+                Console.WriteLine($"{Name}은 이미 장착해제 중입니다.");
             }
         }
     }

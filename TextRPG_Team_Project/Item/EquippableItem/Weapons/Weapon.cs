@@ -4,12 +4,12 @@
     {
         int weaponAttack;
 
-        public int WeaponAttack { get { return weaponAttack; } }
+        public int WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
     }
 
     class TestWeapon : Weapon
     {
-        string name = "Test Weapon";
+        string name = "테스트 무기";
         int itemPrice = 0;
         int itemCount = 1;
         int itemCountMax = 5;
