@@ -1,4 +1,4 @@
-﻿namespace TextRPG_Team_Project.Item.EquipableItem.Weapons
+﻿namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 {
     class Weapon : EquippableItem
     {
