@@ -2,11 +2,11 @@
 {
     class EquippableItem : IItem, IEquippable
     {
-        string name;
-        int itemPrice;
-        int itemCount;
+        string name = "보이면 안되는 장비이름";
+        int itemPrice = 0;
+        int itemCount = 0;
         int itemCountMax = 1;
-        bool isEquipped;
+        bool isEquipped = false;
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
@@ -61,7 +61,7 @@
             // 아닐 때
             else
             {
-                Console.WriteLine($"{Name}은(는) 이미 장착해제 중입니다.");
+                Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
         }
     }

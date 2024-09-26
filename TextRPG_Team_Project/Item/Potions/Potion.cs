@@ -2,11 +2,11 @@
 {
     class Potion : IItem, IConsumable
     {
-        string name;
-        int itemPrice;
-        int itemCount;
-        int itemCountMax;
-        int potionEffect;
+        string name = "보이면 안되는 물약이름";
+        int itemPrice = 0;
+        int itemCount = 0;
+        int itemCountMax = 30;
+        int potionEffect = 0;
 
         public virtual void ConsumeThis()       // 후에 적절한 매개변수 넣을 예정(ex. 플레이어)
         {
