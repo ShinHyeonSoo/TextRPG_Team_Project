@@ -24,6 +24,28 @@
         public int Gold { get => _gold; private set => _gold = value; }
         public bool IsDead { get => _isDead; private set => _isDead = value; }
 
+        public Monster(string name, int level, int maxHealth, float attack, int defense, int gold)
+        {
+            Name = name;
+            Level = level;
+            Health = maxHealth;
+            _maxHealth = maxHealth;
+            Attack = attack;
+            Defense = defense;
+            Gold = gold;
+            _isDead = false;
+        }
+
+        public virtual string MonsterInfo()
+        {
+            return "Unknown";
+        }
+
+        public virtual string DeadInfo()
+        {
+            return "Unknown Dead";
+        }
+
         public void TakeDamage(float damage)
         {
             int error = (int)Math.Ceiling(damage * 0.1f); // 소수 첫번째 자리 올림
