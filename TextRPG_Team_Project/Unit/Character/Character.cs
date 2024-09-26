@@ -7,19 +7,13 @@ namespace TextRPG_Team_Project
     public class Character : IUnit
     {
 
-        public string Name { get; }
-
-       
+        public string Name { get; private set; }
+        public int Gold { get; }
         public int Level { get; private set; }
-
-       
-        public int Health { get; private set; }
-
-       
-        public int Attack { get; private set; }
-        public int Defense { get; }
-
-       
+        public int MaxHealth { get; }
+        public int Health { get; private set; }      
+        public float Attack { get; private set; }
+        public int Defense { get; }     
         public bool IsDead { get; private set; }
 
         private int exp = 0;      
@@ -40,14 +34,34 @@ namespace TextRPG_Team_Project
 
 
         }
-        public void TakeDamage(int damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음
+        public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음 , 정수면 그대로계산 , 소수면 올림후 계산
         {
-            int reducedDamage = damage - Defense;
+            Random random = new Random();
+            int intDamage;
+
+            if(damage % 1 == 0)
+            {
+                intDamage = (int)damage;
+            }
+
+            else
+            {
+                intDamage = (int)damage + 1;
+            }
+
+            intDamage = random.Next((int)(intDamage * 0.9), intDamage + 1);
+
+            int reducedDamage = intDamage - Defense;
+
+            if (reducedDamage < 0) reducedDamage = 0;
+
             Health -= reducedDamage;
-            if ( Health <= 0)
+
+            if (Health <= 0) // 사망판정
             {
                 IsDead = true;
 
+                Console.WriteLine($"{Name} 이(가) 사망하였습니다.");
             }
         }
 
@@ -74,6 +88,13 @@ namespace TextRPG_Team_Project
             Level += 1;
 
             
+        }
+
+        public string GetStatus()
+        {
+
+            return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}";
+
         }
 
         
