@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextRPG_Team_Project.Unit.Character
+namespace TextRPG_Team_Project
 {
     public class Warrior : Character // 워리어 클래스
     {
@@ -14,7 +14,12 @@ namespace TextRPG_Team_Project.Unit.Character
 
         }
 
+        public void Skill()
+        {
 
+
+        }
+        
 
     }
 }
