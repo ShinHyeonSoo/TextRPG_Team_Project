@@ -21,6 +21,20 @@
             }
         }
 
+        public void GetItem(int addItemCount)
+        {
+            Console.WriteLine($"{name}을(를) {addItemCount}개 얻었다.");
+            itemCount += addItemCount;
+
+            int overItemCount = itemCount - itemCountMax;
+
+            if (overItemCount > 0)
+            {
+                Console.WriteLine($"{name}을(를) 더 많이 들 수 없어 {overItemCount}개 버렸다.");
+                itemCount = itemCountMax;
+            }
+        }
+
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
@@ -61,7 +75,7 @@
             // 보유량 부족하면 포션 부족 메세지
             else
             {
-                Console.WriteLine($"{this.Name}가 없습니다.");
+                Console.WriteLine($"{this.Name}이(가) 없습니다.");
             }
         }
     }

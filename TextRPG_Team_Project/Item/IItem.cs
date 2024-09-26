@@ -6,9 +6,11 @@
         int ItemPrice { get; }
         int ItemCount { get; }
         int ItemCountMax { get; }
+
+        void GetItem(int addItemCount);
     }
 
-    interface IEquipable
+    interface IEquippable
     {
         bool IsEquipped { get; }
 

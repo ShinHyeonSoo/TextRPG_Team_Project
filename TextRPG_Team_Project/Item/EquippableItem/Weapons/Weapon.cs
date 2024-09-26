@@ -2,9 +2,9 @@
 {
     class Weapon : EquippableItem
     {
-        int weaponAttack;
+        float weaponAttack;
 
-        public int WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
+        public float WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
     }
 
     class TestWeapon : Weapon
@@ -14,6 +14,6 @@
         int itemCount = 1;
         int itemCountMax = 5;
         bool isEquipped = false;
-        int weaponAttack = 5;
+        float weaponAttack = 5;
     }
 }

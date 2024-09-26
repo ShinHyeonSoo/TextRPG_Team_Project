@@ -1,11 +1,11 @@
 ﻿namespace TextRPG_Team_Project.Item.EquippableItem
 {
-    class EquippableItem : IItem, IEquipable
+    class EquippableItem : IItem, IEquippable
     {
         string name;
         int itemPrice;
         int itemCount;
-        int itemCountMax = 5;
+        int itemCountMax = 1;
         bool isEquipped;
 
         public string Name { get { return name; } }
@@ -13,6 +13,20 @@
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } }
         public bool IsEquipped { get { return isEquipped; } private set { isEquipped = value; } }
+
+        public void GetItem(int addItemCount)
+        {
+            Console.WriteLine($"{name}을(를) 얻었다.");
+            itemCount += addItemCount;
+
+            int overItemCount = itemCount - itemCountMax;
+
+            if (overItemCount > 0)
+            {
+                Console.WriteLine($"{name}은(는) 이미 가지고 있다.");
+                itemCount = itemCountMax;
+            }
+        }
 
         public void EquipThis()
         {
@@ -26,13 +40,13 @@
                 }
                 else
                 {
-                    Console.WriteLine($"{Name}가 없습니다.");
+                    Console.WriteLine($"{Name}이(가) 없습니다.");
                 }
             }
             // 이미 장비되었을 때.
             else
             {
-                Console.WriteLine($"{Name}은 이미 장착 중입니다.");
+                Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
             }
         }
 
@@ -47,7 +61,7 @@
             // 아닐 때
             else
             {
-                Console.WriteLine($"{Name}은 이미 장착해제 중입니다.");
+                Console.WriteLine($"{Name}은(는) 이미 장착해제 중입니다.");
             }
         }
     }
