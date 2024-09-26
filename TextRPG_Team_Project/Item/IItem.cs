@@ -4,7 +4,8 @@
     {
         string Name { get; }
         int ItemPrice { get; }
-        bool IsHave { get; }
+        int ItemCount { get; }
+        int ItemCountMax { get; }
     }
 
     interface IEquipable
@@ -14,9 +15,6 @@
 
     interface IConsumable
     {
-        int ItemCount { get; }
-        int ItemCountMax { get; }
-
         void ConsumeThis()
         {
 

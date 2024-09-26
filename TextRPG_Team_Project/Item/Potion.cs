@@ -4,18 +4,25 @@
     {
         string name;
         int itemPrice;
-        bool isHave;
         int itemCount;
         int itemCountMax;
+        int potionEffect;
 
-        public virtual void ConsumeThis()
+        public virtual void ConsumeThis()       // 후에 적절한 매개변수 넣을 예정(ex. 플레이어)
         {
-
+            if (itemCount > 0)
+            {
+                Console.WriteLine($"Use {this.Name}");
+                itemCount--;
+            }
+            else
+            {
+                Console.WriteLine($"Need More {this.Name}");
+            }
         }
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
-        public bool IsHave { get { return isHave; } }
         public int ItemCount { get { return itemCount; } }
         public int ItemCountMax { get { return itemCountMax; } }
     }
@@ -24,12 +31,21 @@
     {
         string name = "Health Potion";
         int itemPrice = 0;
-        bool isHave = true;
         int itemCount = 3;
         int itemCountMax = 30;
+        int potionEffect = 30;
 
         public override void ConsumeThis()
         {
+            if (itemCount > 0)
+            {
+                Console.WriteLine($"Health is restored by {potionEffect}.");
+                itemCount--;
+            }
+            else
+            {
+                Console.WriteLine($"Need More {this.Name}");
+            }
             // 던전 입장 전 포션 사용
             // 보유량 충분하면 회복 완료 메세지
             // 보유량 부족하면 포션 부족 메세지

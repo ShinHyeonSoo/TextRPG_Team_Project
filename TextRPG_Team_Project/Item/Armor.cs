@@ -4,13 +4,15 @@
     {
         string name;
         int itemPrice;
-        bool isHave;
+        int itemCount;
+        int itemCountMax = 5;
         bool isEquipped;
         int armorDefence;
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
-        public bool IsHave { get { return isHave; } }
+        public int ItemCount { get { return itemCount; } }
+        public int ItemCountMax { get { return itemCountMax; } }
         public bool IsEquipped { get { return isEquipped; } }
         public int ArmorDefence { get { return armorDefence; } }
     }
@@ -19,7 +21,8 @@
     {
         string name = "Test Armor";
         int itemPrice = 0;
-        bool isHave = false;
+        int itemCount = 1;
+        int itemCountMax = 5;
         bool isEquipped = false;
         int armorDefence = 5;
     }
