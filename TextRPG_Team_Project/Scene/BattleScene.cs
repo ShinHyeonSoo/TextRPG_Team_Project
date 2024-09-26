@@ -40,9 +40,10 @@ namespace TextRPG_Team_Project.Scene
 		{
 			DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("적들의 정보 출력");
+			Console.WriteLine("적들의 정보 출력\n");
+            _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-			Console.WriteLine("캐릭터의 간단한 정보 출력");
+            Console.WriteLine("캐릭터의 간단한 정보 출력");
 
 			DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
 			DisplayGetInputNumber();
