@@ -6,10 +6,11 @@
         int Level { get; }
         int Health { get; }
         int MaxHealth { get; }
-        int Attack { get; }
+        float Attack { get; }
         int Defense { get; }
+        int Gold { get; }
         bool IsDead { get; }
 
-        void TakeDamage(int damage);
+        void TakeDamage(float damage);
     }
 }

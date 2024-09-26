@@ -1,6 +1,6 @@
 ﻿namespace TextRPG_Team_Project
 {
-    public delegate void MonsterAttackHandler(int damage);
+    public delegate void MonsterAttackHandler(float damage);
 
     public class Monster : IUnit
     {
@@ -10,24 +10,28 @@
         private int _level;
         private int _health;
         private int _maxHealth;
-        private int _attack;
+        private float _attack;
         private int _defense;
+        private int _gold;
         private bool _isDead;
 
         public string Name { get { return _name ?? "Unknown"; } private set { _name = value; } }
         public int Level { get => _level; private set => _level = value; }
         public int Health { get => _health; private set => _health = value; }
         public int MaxHealth { get => _maxHealth; }
-        public int Attack { get => _attack; private set => _attack = value; }
+        public float Attack { get => _attack; private set => _attack = value; }
         public int Defense { get => _defense; private set => _defense = value; }
+        public int Gold { get => _gold; private set => _gold = value; }
         public bool IsDead { get => _isDead; private set => _isDead = value; }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             int error = (int)Math.Ceiling(damage * 0.1f); // 소수 첫번째 자리 올림
 
             Random random = new Random();
-            int totalDamage = random.Next(damage - error, damage + error + 1);
+            int minRange = (int)damage - error;
+            int maxRange = (int)damage + error + 1;
+            int totalDamage = random.Next(minRange, maxRange);
 
             _health -= totalDamage;
 
@@ -38,7 +42,7 @@
             }
         }
 
-        public void MonsterAttack(int damage)
+        public void MonsterAttack(float damage)
         {
             OnAttack?.Invoke(damage);
         }
