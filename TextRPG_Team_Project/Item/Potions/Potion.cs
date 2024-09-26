@@ -1,4 +1,4 @@
-﻿namespace TextRPG_Team_Project.Item
+﻿namespace TextRPG_Team_Project.Item.Potions
 {
     class Potion : IItem, IConsumable
     {
@@ -12,12 +12,12 @@
         {
             if (itemCount > 0)
             {
-                Console.WriteLine($"Use {this.Name}");
+                Console.WriteLine($"Use {Name}");
                 itemCount--;
             }
             else
             {
-                Console.WriteLine($"Need More {this.Name}");
+                Console.WriteLine($"Need More {Name}");
             }
         }
 
@@ -44,7 +44,7 @@
             }
             else
             {
-                Console.WriteLine($"Need More {this.Name}");
+                Console.WriteLine($"Need More {Name}");
             }
             // 던전 입장 전 포션 사용
             // 보유량 충분하면 회복 완료 메세지

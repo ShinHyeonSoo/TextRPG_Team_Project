@@ -1,29 +1,29 @@
-﻿namespace TextRPG_Team_Project.Item
+﻿namespace TextRPG_Team_Project.Item.Armors
 {
-    class Weapon : IItem, IEquipable
+    class Armor : IItem, IEquipable
     {
         string name;
         int itemPrice;
         int itemCount;
         int itemCountMax = 5;
         bool isEquipped;
-        int weaponAttack;
+        int armorDefence;
 
         public string Name { get { return name; } }
         public int ItemPrice { get { return itemPrice; } }
         public int ItemCount { get { return itemCount; } }
         public int ItemCountMax { get { return itemCountMax; } }
         public bool IsEquipped { get { return isEquipped; } }
-        public int WeaponAttack { get { return weaponAttack; } }
+        public int ArmorDefence { get { return armorDefence; } }
     }
 
-    class TestWeapon : Weapon
+    class TestArmor : Armor
     {
-        string name = "Test Weapon";
+        string name = "Test Armor";
         int itemPrice = 0;
-        int itemCount = 0;
+        int itemCount = 1;
         int itemCountMax = 5;
         bool isEquipped = false;
-        int weaponAttack = 5;
+        int armorDefence = 5;
     }
 }
