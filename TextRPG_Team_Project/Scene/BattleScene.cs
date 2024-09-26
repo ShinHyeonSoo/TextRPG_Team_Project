@@ -11,7 +11,7 @@ namespace TextRPG_Team_Project.Scene
 	public class BattleScene : Scene
 	{
 		// 논의 필요 
-
+		private BattleManager _battleManager;
 
 		enum BattleStatus
 		{
@@ -27,11 +27,13 @@ namespace TextRPG_Team_Project.Scene
 		// 플레이어 할당받을 변수 필요
 		// 던전등 배틀을 관리하는 매니저 필요
 
-		event Func<string> StageEnermyInfo; // 해당 전투의 적들의 정보를 보여주는 함수를 할당해주세요 (매개변수 없음, 반환형 string)
+		event Func<string> StageEnemyInfo; // 해당 전투의 적들의 정보를 보여주는 함수를 할당해주세요 (매개변수 없음, 반환형 string)
 		event Func<string> UserInfo;  // 유저의 정보를 간략하게 보여주는 함수를 할당해주세요 (매개변수 없음, 반환형 string)
 		public BattleScene()
 		{
-			_status = BattleStatus.Start;
+            _battleManager = new();
+
+            _status = BattleStatus.Start;
 		}
 
 		public override void DisplayInitScene()
@@ -39,7 +41,7 @@ namespace TextRPG_Team_Project.Scene
 			DisplayIntro("Battle");
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
-			Console.WriteLine();
+            Console.WriteLine();
 			Console.WriteLine("캐릭터의 간단한 정보 출력");
 
 			DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
