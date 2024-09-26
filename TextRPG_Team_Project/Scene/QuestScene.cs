@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Quest;
 
 namespace TextRPG_Team_Project.Scene
 {
 	public class QuestScene : Scene
 	{
-		enum QuestState
+		private QuestManger _questManager;
+		enum QuestSceneState
 		{
 			QuestList = 0,
 			Quest = 1,
 			QuestComplete = 2,
 		}
-		private QuestState _state;
+		private QuestSceneState _state;
+
+		public QuestScene(QuestManger questManager)
+		{
+			_questManager = questManager;
+		}
+
 		public override void DisplayInitScene()
 		{
 			DisplayIntro("Quest");
 			Console.WriteLine();
-			Console.WriteLine("퀘스트 목록 ");
+			for (int i = 0; i < _questManager.Quests.Count; i++) 
+			{
+				Console.WriteLine(_questManager.Quests[i].Tostring());
+			}
 			Console.WriteLine();
 			Console.WriteLine("0. 나가기");
 		}
@@ -45,15 +56,15 @@ namespace TextRPG_Team_Project.Scene
 			int userInput = 0;
 			switch (_state)
 			{
-				case QuestState.QuestList:
+				case QuestSceneState.QuestList:
 					DisplayInitScene();
 					userInput = GameManager.GetNumberInput(0, 1);
 					if(userInput == 0) { return  0; }
 					break;
-				case QuestState.Quest:
+				case QuestSceneState.Quest:
 					DisplayQuest();
 					return 0;
-				case QuestState.QuestComplete:
+				case QuestSceneState.QuestComplete:
 					DisplayQuestCompletion();
 					return 0;
 			}
