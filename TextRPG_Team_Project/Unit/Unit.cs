@@ -5,10 +5,12 @@
         string Name { get; }
         int Level { get; }
         int Health { get; }
-        int Attack { get; }
+        int MaxHealth { get; }
+        float Attack { get; }
         int Defense { get; }
+        int Gold { get; }
         bool IsDead { get; }
 
-        void TakeDamage(int damage);
+        void TakeDamage(float damage);
     }
 }
