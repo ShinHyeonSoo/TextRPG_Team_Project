@@ -34,7 +34,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("");
 			DisplayOption(new List<string>() { "1. 직업1", "2. 직업2", "3. 직업3" });
 		}
-		public override int PlayScene()
+		public override void PlayScene()
 		{
 			DisplayInitScene();
 			Utils.GetNumberInput(1, 2);
@@ -47,7 +47,7 @@ namespace TextRPG_Team_Project.Scene
 			Utils.GetNumberInput(1, 4);
 			// 케릭터의 직업을 정하는 부분 추가 필요
 
-			return 0;
+			GameManager.Instance.GoHomeScene();
 		}
 	}
 }
