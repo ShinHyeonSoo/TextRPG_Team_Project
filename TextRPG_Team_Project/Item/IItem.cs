@@ -21,6 +21,6 @@
 
     interface IConsumable
     {
-        void ConsumeThis();
+        void ConsumeThis(Character character);
     }
 }
