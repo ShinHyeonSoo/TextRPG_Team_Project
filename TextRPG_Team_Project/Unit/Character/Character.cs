@@ -16,7 +16,7 @@ namespace TextRPG_Team_Project
         public string Name { get; private set; }
         public int Gold { get; }
         public int Level { get; private set; }
-        public int MaxHealth { get; }
+        public int MaxHealth { get; private set; }
         public int Health { get; private set; }      
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
@@ -31,15 +31,20 @@ namespace TextRPG_Team_Project
         public Weapon currentWeapon;
         public Armor currentArmor;
 
-        public Character(String _name , int _level, int _health , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
+        public Character(String _name , int _level, int _maxHealth , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
         {
 
             Name = _name;
             Level = _level;
-            Health = _health;
+            MaxHealth = _maxHealth;
+            Health = MaxHealth;
             Attack = _attack;
             Defense = _defense;
             IsDead = false;
+
+            Weapon = new List<Weapon>();
+            armor = new List<Armor>();  
+            potion = new List<Potion>();    
             
             
         }
@@ -100,10 +105,11 @@ namespace TextRPG_Team_Project
 
         public void LevelUp() // 경험치 100초과시 레벨업 
         {
-            Health += 10;
+            MaxHealth += 10;
             Attack += 10;
             Level += 1;
 
+            Console.WriteLine($"Level Up !! / 최대 체력 : +10 증가하여 {MaxHealth} , 공격력 : + 10 증가하여 {Attack} , 레벨 : +1 증가하여 {Level}");
             
         }
 
@@ -137,6 +143,13 @@ namespace TextRPG_Team_Project
 
             _target.TakeDamage(damage);
 
+        }
+
+        public void UsePotion(Potion _potion)
+        {
+            Health += _potion.PotionEffect;
+            if(Health > MaxHealth) { Health = MaxHealth; }
+            
         }
 
    
