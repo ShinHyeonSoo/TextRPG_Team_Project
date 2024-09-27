@@ -1,6 +1,6 @@
 ﻿namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 {
-    class Weapon : EquippableItem
+    public class Weapon : EquippableItem
     {
         float weaponAttack;
         // 치명타가 추가될 수도 있음

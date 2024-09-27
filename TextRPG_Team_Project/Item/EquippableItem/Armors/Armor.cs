@@ -1,6 +1,6 @@
 ﻿namespace TextRPG_Team_Project.Item.EquippableItem.Armors
 {
-    class Armor : EquippableItem
+    public class Armor : EquippableItem
     {
         int armorDefence;
         // 회피율이 추가될 수도 있음

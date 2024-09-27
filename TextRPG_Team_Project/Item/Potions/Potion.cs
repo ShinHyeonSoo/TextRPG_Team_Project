@@ -1,6 +1,6 @@
 ﻿namespace TextRPG_Team_Project.Item.Potions
 {
-    class Potion : IItem, IConsumable
+    public class Potion : IItem, IConsumable
     {
         protected string name = "보이면 안되는 물약이름";
         protected int itemPrice = 0;
@@ -42,8 +42,36 @@
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
         public int PotionEffect {  get { return potionEffect; } private set { potionEffect = value; } }
-    }
 
+        public void SellThis(Character character)
+        {
+            // 있을 때
+            if (itemCount > 0)
+            {
+                Console.WriteLine("판매완료");
+
+            }
+            // 없을 때
+            else
+            {
+                Console.WriteLine("판매할 수 없습니다.");
+            }
+        }
+
+        public void BuyThis(Character character)
+        {
+            // 최대치보다 적을 때
+            if (itemCount < itemCountMax)
+            {
+                Console.WriteLine("구입완료");
+            }
+            else
+            {
+                Console.WriteLine("구입할 수 없습니다.");
+            }
+        }
+    }
+    /*
     class HealthPotion : Potion
     {
         string name = "체력 물약";
@@ -80,4 +108,5 @@
             }
         }
     }
+    */
 }
