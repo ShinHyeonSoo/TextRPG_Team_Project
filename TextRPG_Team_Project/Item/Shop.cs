@@ -228,6 +228,67 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
         }
 
+        void CharacterInventoryReset()
+        {
+            character.Weapon.Clear();
+            character.armor.Clear();
+            character.potion.Clear();
+
+            // weapon check
+            for (int i = 0; i < weaponArr.Length; i++)
+            {
+                if (weaponArr[i].ItemCount > 0)
+                {
+                    character.Weapon.Add(weaponArr[i]);
+                }
+                else
+                {
+                    character.Weapon.Remove(weaponArr[i]);
+                }
+            }
+            // armor check
+            for (int i = 0; i < armorArr.Length; i++)
+            {
+                if (armorArr[i].ItemCount > 0)
+                {
+                    character.armor.Add(armorArr[i]);
+                }
+                else
+                {
+                    character.armor.Remove(armorArr[i]);
+                }
+            }
+            // potion check
+            for (int i = 1; i < potionArr.Length; i++)
+            {
+                if (potionArr[i].ItemCount > 0)
+                {
+                    character.potion.Add(potionArr[i]);
+                }
+                else
+                {
+                    character.potion.Remove(potionArr[i]);
+                }
+            }
+        }
+
+        public void DebugInventory()
+        {
+            CharacterInventoryReset();
+
+            DisplayCharacterWeaponInventory();
+            DisplayCharacterArmorInventory();
+            DisplayCharacterPotionInventory();
+
+            DisplayWeaponShopArr();
+            DisplayArmorShopArr();
+            DisplayPotionShopArr();
+
+            Console.WriteLine();
+        }
+
+
+        /*
         void CharacterInventoryCheck()
         {
             // weapon check
@@ -267,28 +328,6 @@ namespace TextRPG_Team_Project.Item
                 }
             }
         }
-
-        void CharacterInventoryReset()
-        {
-            character.Weapon.Clear();
-            character.armor.Clear();
-            character.potion.Clear();
-        }
-
-        public void DebugInventory()
-        {
-            CharacterInventoryCheck();
-
-            DisplayCharacterWeaponInventory();
-            DisplayCharacterArmorInventory();
-            DisplayCharacterPotionInventory();
-
-            DisplayWeaponShopArr();
-            DisplayArmorShopArr();
-            DisplayPotionShopArr();
-
-            CharacterInventoryReset();
-            Console.WriteLine();
-        }
+        */
     }
 }

@@ -4,13 +4,11 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using TextRPG_Team_Project.Item;
 
 namespace TextRPG_Team_Project.Scene
 {
 	public class InventoryScene : Scene
 	{
-		Shop shop = new Shop();
 		// 인벤토리를 받거나
 		// 인벤토리의 함수들을 받기
 
@@ -23,7 +21,6 @@ namespace TextRPG_Team_Project.Scene
 			DisplayIntro("인벤토리");
 			Console.WriteLine();
 			Console.WriteLine("인벤토리 목록 출력");
-            shop.DebugInventory();
             DisplayOption(new List<string>() { "장착 관리", "아이템 사용" });
 			Console.WriteLine("0. 나가기");
 			DisplayGetInputNumber();
