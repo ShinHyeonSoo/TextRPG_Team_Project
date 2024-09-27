@@ -22,7 +22,7 @@ namespace TextRPG_Team_Project.Scene
 		public override int PlayScene()
 		{
 			DisplayInitScene();
-			return GameManager.GetNumberInput(0, 1);
+			return Utils.GetNumberInput(0, 1);
 		}
 	}
 }
