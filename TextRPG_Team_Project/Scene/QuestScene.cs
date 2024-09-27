@@ -57,7 +57,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("0. 나가기");
 		}
 
-		public override int PlayScene()
+		public override void PlayScene()
 		{
 			int userInput = 0;
 			switch (_state)
@@ -65,7 +65,7 @@ namespace TextRPG_Team_Project.Scene
 				case Defines.QuestSceneState.QuestList:
 					DisplayInitScene();
 					userInput = Utils.GetNumberInput(0, _questManager.Quests.Count+1);
-					if(userInput == 0) { return  0; }
+					if(userInput == 0) { GameManager.Instance.GoHomeScene(); }
 
 					_state = Defines.QuestSceneState.Quest;
 					_selectedQuest = userInput - 1;
@@ -74,15 +74,13 @@ namespace TextRPG_Team_Project.Scene
 				case Defines.QuestSceneState.Quest:
 					DisplayQuest();
 					ProcessQuestAcceptDecision();
-
-
 					break;
 
 				case Defines.QuestSceneState.QuestComplete:
 					DisplayQuestCompletion();
-					return 0;
+					GameManager.Instance.GoHomeScene();
+					break;
 			}
-			return (int)Defines.GameStatus.Quest;
 		}
 
 		public void ProcessQuestAcceptDecision()
