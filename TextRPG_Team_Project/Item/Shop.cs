@@ -50,10 +50,12 @@ namespace TextRPG_Team_Project.Item
                 case 1:
                     Console.WriteLine("무기 가방");
                     DisplayCharacterWeaponInventory();
+                    WeaponEquipment();
                     break;
                 case 2:
                     Console.WriteLine("방어구 가방");
                     DisplayCharacterArmorInventory();
+                    ArmorEquipment();
                     break;
                 case 3:
                     Console.WriteLine("물약 가방");
@@ -70,7 +72,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("===무기 가방===");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
 
-            for (int i = 1; i < character.Weapon.Count ; i++)
+            for (int i = 1; i < character.Weapon.Count; i++)
             {
                 DisplayWeaponInventory(i);
             }
@@ -97,13 +99,41 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
         }
 
+        void WeaponEquipment()
+        {
+            Console.WriteLine("어떤 무기 장착? (0 눌러 취소)");
+            int tempInput = int.Parse(Console.ReadLine());
+            if (tempInput != 0)
+            {
+                if (tempInput > character.Weapon.Count)
+                {
+                    if (!character.Weapon[tempInput].IsEquipped)
+                    {
+                        character.Weapon[tempInput].EquipThis(character);
+                    }
+                    else
+                    {
+                        character.Weapon[tempInput].UnEquipThis(character);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("올바른 값 입력");
+                }
+            }
+            else
+            {
+                Console.WriteLine("나갑니다.");
+            }
+        }
+
         void DisplayCharacterArmorInventory()
         {
             CharacterInventoryReset();
             Console.WriteLine("==방어구 가방==");
             Console.WriteLine(" |이름|\t방어력|\t가격|  소지수");
 
-            for (int i = 1; i < character.armor.Count ; i++)
+            for (int i = 1; i < character.armor.Count; i++)
             {
                 DisplayArmorInventory(i);
             }
@@ -130,6 +160,34 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
         }
 
+        void ArmorEquipment()
+        {
+            Console.WriteLine("어떤 방어구 장착? (0 눌러 취소)");
+            int tempInput = int.Parse(Console.ReadLine());
+            if (tempInput != 0)
+            {
+                if (tempInput > character.armor.Count)
+                {
+                    if (!character.armor[tempInput].IsEquipped)
+                    {
+                        character.armor[tempInput].EquipThis(character);
+                    }
+                    else
+                    {
+                        character.armor[tempInput].UnEquipThis(character);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("올바른 값 입력");
+                }
+            }
+            else
+            {
+                Console.WriteLine("나갑니다.");
+            }
+        }
+
         void DisplayCharacterPotionInventory()
         {
             CharacterInventoryReset();
@@ -139,7 +197,7 @@ namespace TextRPG_Team_Project.Item
             {
                 DisplayPotionInventory(i);
             }
-            
+
             Console.WriteLine("==========");
             Console.WriteLine();
         }
@@ -312,7 +370,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
         }
 
-        
+
         void SellItems()
         {
             Console.WriteLine("어떤 물건 판매?");
@@ -405,48 +463,16 @@ namespace TextRPG_Team_Project.Item
             character.armor.Clear();
             character.potion.Clear();
 
-            // weapon check
-            for (int i = 0; i < weaponArr.Length; i++)
-            {
-                if (weaponArr[i].ItemCount > 0)
-                {
-                    character.Weapon.Add(weaponArr[i]);
-                }
-                else
-                {
-                    character.Weapon.Remove(weaponArr[i]);
-                }
-            }
-            // armor check
-            for (int i = 0; i < armorArr.Length; i++)
-            {
-                if (armorArr[i].ItemCount > 0)
-                {
-                    character.armor.Add(armorArr[i]);
-                }
-                else
-                {
-                    character.armor.Remove(armorArr[i]);
-                }
-            }
-            // potion check
-            for (int i = 1; i < potionArr.Length; i++)
-            {
-                if (potionArr[i].ItemCount > 0)
-                {
-                    character.potion.Add(potionArr[i]);
-                }
-                else
-                {
-                    character.potion.Remove(potionArr[i]);
-                }
-            }
+            CharacterInventoryCheck();
         }
 
         public void DebugInventory()
         {
-            while(true)
+            // 디버깅 원할 시 원하는 Shop shop = new Shop();
+            // 추가 후 shop.DebugInventory(); 로 본 메서드 출력 가능
+            while (true)
             {
+                Console.WriteLine("인벤토리 디버그 시작");
                 Console.WriteLine("1. 인벤토리 출력 테스트");
                 Console.WriteLine("2. 무기 상점 테스트");
                 Console.WriteLine("3. 방어구 상점 테스트");
@@ -481,17 +507,14 @@ namespace TextRPG_Team_Project.Item
                         break;
 
                 }
-                if(tempInput == 0)
+                if (tempInput == 0)
                 {
                     break;
-                }    
+                }
             }
-
             Console.WriteLine("인벤토리 디버그 종료");
         }
 
-
-        /*
         void CharacterInventoryCheck()
         {
             // weapon check
@@ -531,6 +554,5 @@ namespace TextRPG_Team_Project.Item
                 }
             }
         }
-        */
     }
 }
