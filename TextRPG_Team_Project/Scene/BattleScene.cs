@@ -34,6 +34,8 @@ namespace TextRPG_Team_Project.Scene
             _battleManager = new();
 
             _status = BattleStatus.Start;
+
+			
 		}
 
 		public override void DisplayInitScene()
