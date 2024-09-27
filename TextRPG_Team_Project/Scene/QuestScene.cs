@@ -31,6 +31,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine("0. 나가기");
 		}
+
 		public void DisplayQuest()
 		{
 			DisplayIntro("Quest");
@@ -41,6 +42,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			DisplayOption(new List<string>() { "1. 수락하기", "2. 거절하기" });
 		}
+
 		public void DisplayQuestCompletion()
 		{
 			DisplayIntro("Quest");
