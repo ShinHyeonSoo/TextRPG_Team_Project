@@ -26,7 +26,7 @@ namespace TextRPG_Team_Project.Scene
             UseItem = 2,
             Shop = 3
         }
-        private InventoryState _state;
+        private Defines.InventoryState _state;
 
         public InventoryScene() { }
 
@@ -110,22 +110,16 @@ namespace TextRPG_Team_Project.Scene
         {
             switch (_state)
             {
-                case InventoryState.Start:
+                case Defines.InventoryState.Start:
                     DisplayInitScene();
-                    _state = (InventoryState)GameManager.GetNumberInput(0, 3);
-                    if (_state == InventoryState.Start) { return 0; }
+                    _state = (Defines.InventoryState)Utils.GetNumberInput(0, 2);
+                    if (_state == Defines.InventoryState.Start) { return 0; }
                     break;
-                case InventoryState.ManagingEuipment:
+                case Defines.InventoryState.ManagingEuipment:
                     DisplayManagingEuipment();
-                    if (_state == InventoryState.Start) { return 1; }
                     break;
-                case InventoryState.UseItem:
+                case Defines.InventoryState.UseItem:
                     DisplayUsetItem();
-                    if (_state == InventoryState.Start) { return 2; }
-                    break;
-                case InventoryState.Shop:
-                    DisplayShop();
-                    if (_state == InventoryState.Start) { return 3; }
                     break;
             }
             return 0;
