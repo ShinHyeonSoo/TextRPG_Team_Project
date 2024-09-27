@@ -1,4 +1,4 @@
-﻿namespace TextRPG_Team_Project.Scene
+﻿namespace TextRPG_Team_Project
 {
     public class BattleManager
     {
