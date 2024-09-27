@@ -24,6 +24,7 @@ namespace TextRPG_Team_Project.Scene
 		private GameStatus _status = GameStatus.Start;
 
 		private QuestManger _questManager;
+		private DataManager _dataManager;
 
 		private StartScene _startScene;
 		private HomeScene _homeScene;
@@ -35,8 +36,9 @@ namespace TextRPG_Team_Project.Scene
 		public GameManager()
 		{
 			_questManager = new QuestManger();
+			_dataManager = DataManager.Instance();
 
-			_startScene = new StartScene();
+            _startScene = new StartScene();
 			_homeScene = new HomeScene();
 			_statusScene = new StatusScene();
 			_battleScene = new BattleScene();

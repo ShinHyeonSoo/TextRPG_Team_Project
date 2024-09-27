@@ -64,7 +64,7 @@
             }
         }
 
-        public void MonsterAttack(float damage)
+        public void BasicAttack(float damage)
         {
             OnAttack?.Invoke(damage);
         }
