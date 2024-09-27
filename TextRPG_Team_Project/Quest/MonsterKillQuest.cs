@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project.Quest
 
 		public int GoalKillCount { get; init; }
 		#region Constructor
-		public MonsterKillQuest(string name, string description, string monsterName, int killCount, int goalKillCount, QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public MonsterKillQuest(string name, string description, string monsterName, int killCount, int goalKillCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
 			_monsterName = monsterName;
 			_killCount = killCount;

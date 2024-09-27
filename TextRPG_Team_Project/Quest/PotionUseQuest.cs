@@ -15,7 +15,7 @@ namespace TextRPG_Team_Project.Quest
 		public int GoalUseCount { get; init; }
 
 		#region Constructor
-		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
 			_potionName = potionName;
 			_useCount = useCount;
