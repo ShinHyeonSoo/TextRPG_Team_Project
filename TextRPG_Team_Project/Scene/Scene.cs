@@ -10,7 +10,8 @@ namespace TextRPG_Team_Project.Scene
 	public abstract class Scene
 	{
 		public abstract void DisplayInitScene();
-		public abstract int PlayScene();
+		public abstract void PlayScene();
+		// 빠져나가길 원할때 GameManager.instance.GoHomeScene(); 호출
 
 		public void DisplayIntro(string name) 
 		{
@@ -27,6 +28,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine($"원하시는 {setting}을 입력해주세요.");
 			Console.Write(">>>   ");
 		}
+
 		public void DisplayOption(List<string> choiceOptions)
 			/*
 			 * 선택지들을 출력해주는 함수입니다. 매개변수 (List<string>)

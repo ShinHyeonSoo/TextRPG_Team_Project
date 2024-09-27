@@ -50,7 +50,14 @@ namespace TextRPG_Team_Project.Scene
 				_questScene.Init();
 			}
 		}
-
+		public void GoHomeScene()
+		{
+			_status = Defines.GameStatus.Home;
+		}
+		public void GoAnySScene(Defines.GameStatus status)
+		{
+			_status = status;
+		}
 		public void GameMain()
 			/*
 			 디버깅을 위한 임시 게임메인
@@ -61,22 +68,22 @@ namespace TextRPG_Team_Project.Scene
 				switch (_status)
 				{
 					case Defines.GameStatus.Start:	 // -1 
-						_status = (Defines.GameStatus)_startScene.PlayScene();
+						_startScene.PlayScene();
 						break;
 					case Defines.GameStatus.Home:	 // 0
-						_status = (Defines.GameStatus)_homeScene.PlayScene();
+						_homeScene.PlayScene();
 						break;
 					case Defines.GameStatus.Status:  // 1
-						_status = (Defines.GameStatus)_statusScene.PlayScene();
+						_statusScene.PlayScene();
 						break;
 					case Defines.GameStatus.Battle:  // 2
-						_status = (Defines.GameStatus)_battleScene.PlayScene();
+						_battleScene.PlayScene();
 						break;
 					case Defines.GameStatus.Inventory:  // 3
-						_status = (Defines.GameStatus)_inventoryScene.PlayScene();
+						_inventoryScene.PlayScene();
 						break;
 					case Defines.GameStatus.Quest:  // 4
-						_status = (Defines.GameStatus)_questScene.PlayScene();
+						_questScene.PlayScene();
 						break;
 					case Defines.GameStatus.Save:  // 5
 						break;
