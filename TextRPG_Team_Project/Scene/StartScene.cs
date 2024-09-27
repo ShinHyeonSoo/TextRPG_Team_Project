@@ -42,11 +42,12 @@ namespace TextRPG_Team_Project.Scene
 			DisplaySetCharacterName();
 			string characterName = Console.ReadLine();
 			// 케릭터의 이름을 정하는  부분 추가 필요
-			DataManager.Instance().CreatePlayer(characterName); // 임시 메서드
+			/*DataManager.Instance().CreatePlayer(characterName);*/ // 임시 메서드
 			DisplaySetCharacterJob();
-			Utils.GetNumberInput(1, 4);
+			int jobSelect = Utils.GetNumberInput(1, 3);
 			// 케릭터의 직업을 정하는 부분 추가 필요
-
+			GameManager.Instance.Data.CreatePlayer(characterName, jobSelect);			
+			Character he = GameManager.Instance.Data.GetPlayer();	
 			GameManager.Instance.GoHomeScene();
 		}
 	}
