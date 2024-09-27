@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project.Scene
     public class InventoryScene : Scene
     {
         // 이 이하는 임시코드
-        Character character = new Character("테스터", 1, 100, 15, 10);
+        Character character = DataManager.Instance().GetPlayer();
         Shop shop = new Shop();
         // 임시코드 끝
         // 인벤토리를 받거나
@@ -117,12 +117,15 @@ namespace TextRPG_Team_Project.Scene
                     break;
                 case InventoryState.ManagingEuipment:
                     DisplayManagingEuipment();
+                    if (_state == InventoryState.Start) { return 1; }
                     break;
                 case InventoryState.UseItem:
                     DisplayUsetItem();
+                    if (_state == InventoryState.Start) { return 2; }
                     break;
                 case InventoryState.Shop:
                     DisplayShop();
+                    if (_state == InventoryState.Start) { return 3; }
                     break;
             }
             return 0;
