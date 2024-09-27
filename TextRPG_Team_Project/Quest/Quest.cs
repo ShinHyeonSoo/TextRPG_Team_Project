@@ -32,17 +32,27 @@ namespace TextRPG_Team_Project.Quest
 
 		public string Name { get; init; }
 		public string Description { get; init; }
-		public string ShortDiscription {  get; init; }
 		public Reward? Reward {  get; init; }
+
+		#region Constructor
 		[JsonConstructor]
-		public Quest(string name, string description, string shortDiscription, QuestStatus status, Reward reward)
+		public Quest(string name, string description, QuestStatus status, Reward reward)
 		{
 			Name = name;
 			Description = description;
-			ShortDiscription = shortDiscription;
 			_status = status;
 			Reward = reward;
 		}
+		public Quest(string name, string description, Reward reward)
+		{
+			Name = name;
+			Description = description;
+			_status = QuestStatus.NotStarted;
+			Reward = reward;
+		}
+		#endregion
+
+
 		public void AcceptQuest()
 		{
 			if (_status == QuestStatus.NotStarted)
@@ -64,9 +74,9 @@ namespace TextRPG_Team_Project.Quest
 			}
 			else { return null; }
 		}
-		public string Tostring()
+		public virtual string Tostring()
 		{
-			string thisString = $"{Name} | {ShortDiscription}";
+			string thisString = $"{Name}";
 			switch (_status)
 			{
 				case QuestStatus.NotStarted:

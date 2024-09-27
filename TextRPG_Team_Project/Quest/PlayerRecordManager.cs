@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace TextRPG_Team_Project.Quest
 {
-	internal class PlayerRecordTracker
+	internal class PlayerRecordManager
 	{
 		private int monsterKillCount;
 		private int potionUseCount;

@@ -12,13 +12,31 @@ namespace TextRPG_Team_Project.Quest
 		private int _useCount;
 
 		public int GoalUseCount { get; init; }
-		public PotionUseQuest(string name, string description, string shortDiscription, string monsterName, int killCount, int goalKillCount, QuestStatus status, Reward reward) : base(name, description, shortDiscription, status, reward)
+
+		#region Constructor
+		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
-			_potionName = monsterName;
-			_useCount = killCount;
-			GoalUseCount = goalKillCount;
+			_potionName = potionName;
+			_useCount = useCount;
+			GoalUseCount = goalUseCount;
 		}
+		public PotionUseQuest(string name, string description, string potionName, int goalUseCount, Reward reward) : base(name, description, reward)
+		{
+			_potionName = potionName;
+			_useCount = 0;
+			GoalUseCount = goalUseCount;
+		}
+		#endregion
+		public override string Tostring()
+		{
+			string str = $"{base.Tostring()} | {_potionName}을 {GoalUseCount}회 사용";
+			return str;
+		}
+
 		public void increaseKillCount(string name)
+		/*
+		 * PlayerRecordManager의 TrackkillCount에 할당합니다
+		 */
 		{
 			if (name == _potionName)
 			{

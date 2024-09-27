@@ -92,7 +92,7 @@ namespace TextRPG_Team_Project.Scene
 			{
 				case BattleStatus.Start:
 					DisplayInitScene();
-					return GameManager.GetNumberInput(0, 1);
+					return Utils.GetNumberInput(0, 1);
 					break;
 				case BattleStatus.PlayerTurn:
 					DisplayInitScene();
@@ -107,7 +107,7 @@ namespace TextRPG_Team_Project.Scene
 					DisplayEnemyAttackLog();
 					break;
 			}
-			return GameManager.GetNumberInput(0,1);
+			return Utils.GetNumberInput(0,1);
 		}
 	}
 }
