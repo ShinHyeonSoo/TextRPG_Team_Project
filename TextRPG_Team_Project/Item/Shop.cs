@@ -1,24 +1,20 @@
 ﻿using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
-using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item
 {
     public class Shop
     {
-        // 테스트용
-        Character character = DataManager.Instance().GetPlayer();
-        // 테스트용 끝
         public Weapon[] WeaponList = {
-            new Weapon("맨주먹", 0, 1, true, 0),
+            new Weapon("Empty", 0, 0, false, 0),
             new Weapon("무기1", 100, 0, false, 5),
             new Weapon("무기2", 200, 0, false, 10),
             new Weapon("무기3", 500, 0, false, 15),
             new Weapon("무기4", 1000, 0, false, 20)
         };
         public Armor[] ArmorList = {
-            new Armor("기본옷", 0, 1, true, 0),
+            new Armor("Empty", 0, 0, false, 0),
             new Armor("아머1", 100, 0, false, 5),
             new Armor("아머2", 200, 0, false, 10),
             new Armor("아머3", 500, 0, false, 15),
@@ -27,9 +23,8 @@ namespace TextRPG_Team_Project.Item
 
         public Potion[] PotionList = {
             new Potion(),
-            new HealthPotion("체력 포션", 50, 30, 30)
+            new HealthPotion("체력 포션", 50, 3, 30)
         };
-
 
         public void DisplayWeaponShopList()
         {
@@ -119,53 +114,6 @@ namespace TextRPG_Team_Project.Item
             string potionEffect = $"{PotionList[indexNum].PotionEffect}";
 
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
-        }
-
-        void CharacterInventoryCheck()
-        {
-            // weapon check
-            for(int i = 1;i < WeaponList.Length;i++)
-            {
-                if (WeaponList[i].ItemCount > 0)
-                {
-                    character.Weapon.Add(WeaponList[i]);
-                }
-                else
-                {
-                    character.Weapon.Remove(WeaponList[i]);
-                }
-            }
-            // armor check
-            for (int i = 1; i < ArmorList.Length; i++)
-            {
-                if (ArmorList[i].ItemCount > 0)
-                {
-                    character.armor.Add(ArmorList[i]);
-                }
-                else
-                {
-                    character.armor.Remove(ArmorList[i]);
-                }
-            }
-            // potion check
-            for (int i = 1; i < PotionList.Length; i++)
-            {
-                if (PotionList[i].ItemCount > 0)
-                {
-                    character.potion.Add(PotionList[i]);
-                }
-                else
-                {
-                    character.potion.Remove(PotionList[i]);
-                }
-            }
-        }
-
-        void CharacterInventoryReset()
-        {
-            character.Weapon.Clear();
-            character.armor.Clear();
-            character.potion.Clear();
         }
     }
 }
