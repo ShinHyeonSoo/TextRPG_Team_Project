@@ -40,7 +40,12 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine(_questManager.Quests[_selectedQuest].Description);
 			Console.WriteLine();
-			DisplayOption(new List<string>() { "1. 수락하기", "2. 거절하기" });
+			if (_questManager.IsAcceptedQuest(_selectedQuest))
+			{
+				Console.WriteLine("이미 수락한 퀘스트 입니다.");
+				Console.WriteLine("2. 나가기");
+			}
+			else { DisplayOption(new List<string>() { "1. 수락하기", "2. 거절하기" }); }
 		}
 
 		public void DisplayQuestCompletion()
@@ -68,11 +73,9 @@ namespace TextRPG_Team_Project.Scene
 
 				case Defines.QuestSceneState.Quest:
 					DisplayQuest();
+					ProcessQuestAcceptDecision();
 
-					userInput = Utils.GetNumberInput(0, _questManager.Quests.Count+1);
-					if (userInput == 1) _questManager.AcceptQuest(_selectedQuest);
 
-					_state = Defines.QuestSceneState.QuestList;
 					break;
 
 				case Defines.QuestSceneState.QuestComplete:
@@ -82,10 +85,19 @@ namespace TextRPG_Team_Project.Scene
 			return (int)Defines.GameStatus.Quest;
 		}
 
-		public int ProcessQuestDecision(int input)
+		public void ProcessQuestAcceptDecision()
 		{
-			
-			return 0;
+			int userInput = 0;
+			if (_questManager.IsAcceptedQuest(_selectedQuest))
+			{
+				userInput = Utils.GetNumberInput(2,3);
+			}
+			else
+			{
+				userInput = Utils.GetNumberInput(1, 3);
+				if (userInput == 1) _questManager.AcceptQuest(_selectedQuest);
+			}
+			_state = Defines.QuestSceneState.QuestList;
 		}
 	}
 }

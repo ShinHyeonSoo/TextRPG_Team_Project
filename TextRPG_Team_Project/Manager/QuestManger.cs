@@ -64,5 +64,14 @@ namespace TextRPG_Team_Project.Quest
 		{
 			Quests[index].AcceptQuest();
 		}
+		public bool IsAcceptedQuest(int index)
+		{
+			if ((int)Quests[index].Status > 0) { return true; }
+			else { return false; }
+		}
+		public Defines.QuestStatus GetQuestStatus(int index)
+		{
+			return Quests[index].Status;
+		}
 	}
 }

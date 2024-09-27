@@ -20,24 +20,19 @@ namespace TextRPG_Team_Project.Quest
 	}
 	public abstract class Quest
 	{
-		public enum QuestStatus
-		{
-			NotStarted = 0,
-			InProgress,
-			Completed,
-			RewardClaimed
-		}
+
 
 		[JsonInclude]
-		protected QuestStatus _status;
+		protected Defines.QuestStatus _status;
 
 		public string Name { get; init; }
 		public string Description { get; init; }
 		public Reward? Reward {  get; init; }
+		public Defines.QuestStatus Status { get { return _status; } }
 
 		#region Constructor
 		[JsonConstructor]
-		public Quest(string name, string description, QuestStatus status, Reward reward)
+		public Quest(string name, string description, Defines.QuestStatus status, Reward reward)
 		{
 			Name = name;
 			Description = description;
@@ -48,7 +43,7 @@ namespace TextRPG_Team_Project.Quest
 		{
 			Name = name;
 			Description = description;
-			_status = QuestStatus.NotStarted;
+			_status = Defines.QuestStatus.NotStarted;
 			Reward = reward;
 		}
 		#endregion
@@ -56,45 +51,45 @@ namespace TextRPG_Team_Project.Quest
 
 		public virtual void AcceptQuest()
 		{
-			if (_status == QuestStatus.NotStarted)
+			if (_status == Defines.QuestStatus.NotStarted)
 			{
-				_status = QuestStatus.InProgress;
+				_status = Defines.QuestStatus.InProgress;
 			}
 		}
 		public void CompleteQuest()
 		{
-			if (_status == QuestStatus.InProgress)
-				_status = QuestStatus.Completed;
+			if (_status == Defines.QuestStatus.InProgress)
+				_status = Defines.QuestStatus.Completed;
 		}
 		public Reward? GiveReward() 
 		{
-			if(_status == QuestStatus.Completed)
+			if(_status == Defines.QuestStatus.Completed)
 			{
-				_status = QuestStatus.RewardClaimed;
+				_status = Defines.QuestStatus.RewardClaimed;
 				return Reward;
 			}
 			else { return null; }
 		}
+
 		public virtual string Tostring()
 		{
 			string thisString = $"{Name}";
 			switch (_status)
 			{
-				case QuestStatus.NotStarted:
+				case Defines.QuestStatus.NotStarted:
 					break;
-				case QuestStatus.InProgress:
+				case Defines.QuestStatus.InProgress:
 					thisString = $"[진행중] {thisString}";
 					break;
-				case QuestStatus.Completed:
+				case Defines.QuestStatus.Completed:
 					thisString = $"[완료가능] {thisString}";
 					break;
-				case QuestStatus.RewardClaimed:
+				case Defines.QuestStatus.RewardClaimed:
 					thisString = $"[완료] {thisString}";
 					break;
 			}
 
 			return thisString;
 		}
-
 	}
 }

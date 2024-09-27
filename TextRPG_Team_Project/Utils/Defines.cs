@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team_Project
 {
-	internal class Defines
+	public class Defines
 	{
 		public enum GameStatus
 		{
@@ -30,5 +30,14 @@ namespace TextRPG_Team_Project
 			ManagingEuipment = 1,
 			UseItem = 2,
 		}
+		public enum QuestStatus
+		{
+			NotStarted = 0,
+			InProgress,
+			Completed,
+			RewardClaimed
+		}
+
+
 	}
 }

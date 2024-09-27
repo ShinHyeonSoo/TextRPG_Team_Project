@@ -36,9 +36,9 @@ namespace TextRPG_Team_Project.Quest
 
 		public override void AcceptQuest()
 		{
-			if (_status == QuestStatus.NotStarted)
+			if (_status == Defines.QuestStatus.NotStarted)
 			{
-				_status = QuestStatus.InProgress;
+				_status = Defines.QuestStatus.InProgress;
 				GameManager.Instance.PlayerRecored.TrackPotionUse += increaseUseCount;
 			}
 		}
