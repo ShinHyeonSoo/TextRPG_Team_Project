@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project.Quest
 
 		public QuestManger() 
 		{
-			Quests.Add(new Quest("첫번째 임무", "첫번째 설명", (Quest.QuestStatus)0, new Reward(1000)));
+			//Quests.Add(new Quest("첫번째 임무", "첫번째 설명", (Quest.QuestStatus)0, new Reward(1000)));
 		}
 
 		public string DisplayQuestList()

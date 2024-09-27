@@ -17,7 +17,7 @@ namespace TextRPG_Team_Project.Quest
 			return $"Gold : {Gold}";
 		}
 	}
-	public class Quest
+	public abstract class Quest
 	{
 		public enum QuestStatus
 		{
@@ -26,38 +26,47 @@ namespace TextRPG_Team_Project.Quest
 			Completed,
 			RewardClaimed
 		}
+
 		[JsonInclude]
-		private QuestStatus _status;
+		protected QuestStatus _status;
 
 		public string Name { get; init; }
 		public string Description { get; init; }
-		public string Goal {  get; init; }
-		public Reward Reward {  get; init; }
+		public string ShortDiscription {  get; init; }
+		public Reward? Reward {  get; init; }
 		[JsonConstructor]
-		public Quest(string name, string description, QuestStatus status, Reward reward)
+		public Quest(string name, string description, string shortDiscription, QuestStatus status, Reward reward)
 		{
 			Name = name;
 			Description = description;
+			ShortDiscription = shortDiscription;
 			_status = status;
 			Reward = reward;
 		}
-
 		public void AcceptQuest()
 		{
-			_status = QuestStatus.InProgress;
+			if (_status == QuestStatus.NotStarted)
+			{
+				_status = QuestStatus.InProgress;
+			}
 		}
 		public void CompleteQuest()
 		{
-			_status = QuestStatus.Completed;
+			if (_status == QuestStatus.InProgress)
+				_status = QuestStatus.Completed;
 		}
-		public Reward GiveReward() 
+		public Reward? GiveReward() 
 		{
-			_status = QuestStatus.RewardClaimed;
-			return Reward;
+			if(_status == QuestStatus.Completed)
+			{
+				_status = QuestStatus.RewardClaimed;
+				return Reward;
+			}
+			else { return null; }
 		}
 		public string Tostring()
 		{
-			string thisString = $"{Name} | {Goal}";
+			string thisString = $"{Name} | {ShortDiscription}";
 			switch (_status)
 			{
 				case QuestStatus.NotStarted:
