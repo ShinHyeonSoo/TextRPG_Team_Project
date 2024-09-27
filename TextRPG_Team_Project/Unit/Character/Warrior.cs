@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project
 
         }
 
-        public void Skill()
+        public void Skill1()
         {
 
 
