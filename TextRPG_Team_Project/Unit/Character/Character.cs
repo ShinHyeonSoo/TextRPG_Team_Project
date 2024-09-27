@@ -16,11 +16,13 @@ namespace TextRPG_Team_Project
         public string Name { get; private set; }
         public int Gold { get; }
         public int Level { get; private set; }
-        public int MaxHealth { get; private set; }
-        public int Health { get; private set; }      
+        public int MaxHealth { get; set; }
+        public int Health { get; set; }      
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
         public bool IsDead { get; private set; }
+        
+        public string Job { get; protected set; }
 
         private int exp = 0;
 
@@ -113,12 +115,18 @@ namespace TextRPG_Team_Project
             
         }
 
-        public string GetStatus()
+        public string GetStatus() // 유저의 status의 정보를 알려주는 함수
         {
             string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
             return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{weaponName}, 방어구{armorName}";
+
+        }
+
+        public string GetUserinfoShort()
+        {
+            return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}";
 
         }
 
@@ -145,13 +153,7 @@ namespace TextRPG_Team_Project
 
         }
 
-        public void UsePotion(Potion _potion)
-        {
-            Health += _potion.PotionEffect;
-            if(Health > MaxHealth) { Health = MaxHealth; }
-            
-        }
-
+     
    
       
 
