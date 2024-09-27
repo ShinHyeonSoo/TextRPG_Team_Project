@@ -98,9 +98,20 @@ namespace TextRPG_Team_Project.Scene
 			_targetNum = input;
 
 			if (input == 0)
+			{
 				_status = (BattleStatus)input;
+			}
 			else
-				_status = BattleStatus.PlayerTurn;
+			{
+                if (_battleManager.Monsters[_targetNum - 1].IsDead)
+                {
+                    _status = BattleStatus.TargetSelect;
+                    Console.WriteLine("\n사망한 몬스터는 선택할 수 없습니다...");
+                    Thread.Sleep(1000);
+                    return input;
+                }
+                _status = BattleStatus.PlayerTurn;
+			}
 
             return input;
         }
@@ -116,13 +127,23 @@ namespace TextRPG_Team_Project.Scene
 			Monster monster = _battleManager.TargetInfo(_targetNum);
             player.AttackEnemy(monster);
 
-            Console.WriteLine($"{player.Name} 가 {monster.Name} 에게 일반 공격!");
+            Console.WriteLine($"[{player.Name}] 가 [{monster.Name}] 에게 일반 공격!");
 
-			// TODO : 사망처리
+            if (monster.IsDead)
+			{
+                Thread.Sleep(1000);
+                Console.WriteLine($"[{monster.Name}] 가 쓰러졌습니다!!!");
+
+				// TODO : 몬스터가 모두 죽었을 때 보상화면
+
+                _status = BattleStatus.Start;
+                Thread.Sleep(1000);
+                return;
+            }
 
             _status = BattleStatus.EnermyTurn;
-            Thread.Sleep(1500);
-		}
+            Thread.Sleep(1000);
+        }
 		public void DisplayEnemyAttackLog()
 		{
             ++_depth;
@@ -135,15 +156,15 @@ namespace TextRPG_Team_Project.Scene
             Monster monster = _battleManager.TargetInfo(_targetNum);
 			monster.OnAttack += player.TakeDamage;
 
-            Console.WriteLine($"\n{monster.Name} 가 {player.Name} 에게 공격!");
+            Console.WriteLine($"\n[{monster.Name}] 가 [{player.Name}] 에게 공격!");
 
             monster.BasicAttack(monster.Attack);
             monster.OnAttack -= player.TakeDamage;
 
-            // TODO : 사망처리
+            // TODO : 플레이어 사망처리
 
             _status = BattleStatus.Start;
-            Thread.Sleep(1500);
+            Thread.Sleep(1000);
 
 			--_depth;
         }

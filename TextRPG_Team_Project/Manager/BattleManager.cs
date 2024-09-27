@@ -109,7 +109,8 @@ namespace TextRPG_Team_Project
             }
             else
             {
-                throw new Exception("error");
+                Console.WriteLine("죽었어...");
+                return null;
             }
         }
     }

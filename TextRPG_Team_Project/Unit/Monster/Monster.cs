@@ -69,7 +69,7 @@ namespace TextRPG_Team_Project
 
             _health -= totalDamage;
 
-            if (_health < 0)
+            if (_health < 1)
             {
                 _health = 0;
                 GameManager.Instance.PlayerRecored.increseMonsterKillCount(_name);
@@ -84,11 +84,8 @@ namespace TextRPG_Team_Project
 
         public void Recovery()
         {
-            //if(_isDead)
-            //{
-                _health = _maxHealth;
-                _isDead = false;
-            //}
+            _health = _maxHealth;
+            _isDead = false;
         }
     }
 }
