@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
@@ -17,64 +18,78 @@ namespace TextRPG_Team_Project.Quest
 			return $"Gold : {Gold}";
 		}
 	}
-	public class Quest
+	public abstract class Quest
 	{
-		public enum QuestStatus
-		{
-			NotStarted = 0,
-			InProgress,
-			Completed,
-			RewardClaimed
-		}
+
+
 		[JsonInclude]
-		private QuestStatus _status;
+		protected Defines.QuestStatus _status;
 
 		public string Name { get; init; }
 		public string Description { get; init; }
-		public string Goal {  get; init; }
-		public Reward Reward {  get; init; }
+		public Reward? Reward {  get; init; }
+		public Defines.QuestStatus Status { get { return _status; } }
+
+		#region Constructor
 		[JsonConstructor]
-		public Quest(string name, string description, QuestStatus status, Reward reward)
+		public Quest(string name, string description, Defines.QuestStatus status, Reward reward)
 		{
 			Name = name;
 			Description = description;
 			_status = status;
 			Reward = reward;
 		}
-
-		public void AcceptQuest()
+		public Quest(string name, string description, Reward reward)
 		{
-			_status = QuestStatus.InProgress;
+			Name = name;
+			Description = description;
+			_status = Defines.QuestStatus.NotStarted;
+			Reward = reward;
+		}
+		#endregion
+
+
+		public virtual void AcceptQuest()
+		{
+			if (_status == Defines.QuestStatus.NotStarted)
+			{
+				_status = Defines.QuestStatus.InProgress;
+			}
 		}
 		public void CompleteQuest()
 		{
-			_status = QuestStatus.Completed;
+			if (_status == Defines.QuestStatus.InProgress)
+				_status = Defines.QuestStatus.Completed;
 		}
-		public Reward GiveReward() 
+		public Reward? GiveReward() 
 		{
-			_status = QuestStatus.RewardClaimed;
-			return Reward;
+			if(_status == Defines.QuestStatus.Completed)
+			{
+				_status = Defines.QuestStatus.RewardClaimed;
+				return Reward;
+			}
+			else { return null; }
 		}
-		public string Tostring()
+
+		public virtual string Tostring()
 		{
-			string thisString = $"{Name} | {Goal}";
+			string thisString = $"{Name}";
 			switch (_status)
 			{
-				case QuestStatus.NotStarted:
+				case Defines.QuestStatus.NotStarted:
 					break;
-				case QuestStatus.InProgress:
+				case Defines.QuestStatus.InProgress:
 					thisString = $"[진행중] {thisString}";
 					break;
-				case QuestStatus.Completed:
+				case Defines.QuestStatus.Completed:
 					thisString = $"[완료가능] {thisString}";
 					break;
-				case QuestStatus.RewardClaimed:
+				case Defines.QuestStatus.RewardClaimed:
 					thisString = $"[완료] {thisString}";
 					break;
 			}
 
 			return thisString;
 		}
-
 	}
 }

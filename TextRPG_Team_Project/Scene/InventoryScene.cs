@@ -11,13 +11,8 @@ namespace TextRPG_Team_Project.Scene
 	{
 		// 인벤토리를 받거나
 		// 인벤토리의 함수들을 받기
-		enum InventoryState
-		{
-			Start = 0,
-			ManagingEuipment = 1,
-			UseItem =2,
-		}
-		private InventoryState _state;
+
+		private Defines.InventoryState _state;
 
 		public InventoryScene() { }
 
@@ -54,15 +49,15 @@ namespace TextRPG_Team_Project.Scene
 		{
 			switch (_state)
 			{
-				case InventoryState.Start:
+				case Defines.InventoryState.Start:
 					DisplayInitScene();
-					_state = (InventoryState)GameManager.GetNumberInput(0, 2);
-					if(_state == InventoryState.Start) { return 0; }
+					_state = (Defines.InventoryState)Utils.GetNumberInput(0, 2);
+					if(_state == Defines.InventoryState.Start) { return 0; }
 					break;
-				case InventoryState.ManagingEuipment:
+				case Defines.InventoryState.ManagingEuipment:
 					DisplayManagingEuipment();
 					break;
-				case InventoryState.UseItem:
+				case Defines.InventoryState.UseItem:
 					DisplayUsetItem();
 					break;
 			}

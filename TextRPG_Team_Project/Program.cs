@@ -6,8 +6,8 @@ namespace TextRPG_Team_Project
     {
         static void Main(string[] args)
         {
-            GameManager tempGameManager = new GameManager();
-            tempGameManager.GameMain();
+            GameManager gameManager = new GameManager();
+			GameManager.Instance.GameMain();
         }
     }
 }
