@@ -13,17 +13,17 @@ namespace TextRPG_Team_Project.Item
 
         public Weapon[] weaponList = {
             new Weapon("맨주먹", 0, 1, true, 0),
-            new Weapon("무기1", 100, 0, false, 5),
-            new Weapon("무기2", 200, 0, false, 10),
-            new Weapon("무기3", 500, 0, false, 15),
-            new Weapon("무기4", 1000, 0, false, 20)
+            new Weapon("무기1", 100, 1, false, 5),
+            new Weapon("무기2", 200, 1, false, 10),
+            new Weapon("무기3", 500, 1, false, 15),
+            new Weapon("무기4", 1000, 1, false, 20)
         };
         public Armor[] armorList = {
             new Armor("기본옷", 0, 1, true, 0),
-            new Armor("아머1", 100, 0, false, 5),
-            new Armor("아머2", 200, 0, false, 10),
-            new Armor("아머3", 500, 0, false, 15),
-            new Armor("아머4", 1000, 0, false, 20)
+            new Armor("아머1", 100, 1, false, 5),
+            new Armor("아머2", 200, 1, false, 10),
+            new Armor("아머3", 500, 1, false, 15),
+            new Armor("아머4", 1000, 1, false, 20)
         };
 
         public Potion[] potionList = {
