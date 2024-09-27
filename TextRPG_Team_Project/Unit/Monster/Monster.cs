@@ -1,6 +1,15 @@
-﻿namespace TextRPG_Team_Project
+﻿using TextRPG_Team_Project.Scene;
+
+namespace TextRPG_Team_Project
 {
     public delegate void MonsterAttackHandler(float damage);
+
+    public enum MonsterType
+    {
+        MINION,
+        CANNON_MINION,
+        VOILDING,
+    }
 
     public class Monster : IUnit
     {
@@ -15,6 +24,8 @@
         private int _gold;
         private bool _isDead;
 
+        protected MonsterType _type;
+
         public string Name { get { return _name ?? "Unknown"; } private set { _name = value; } }
         public int Level { get => _level; private set => _level = value; }
         public int Health { get => _health; private set => _health = value; }
@@ -23,6 +34,7 @@
         public int Defense { get => _defense; private set => _defense = value; }
         public int Gold { get => _gold; private set => _gold = value; }
         public bool IsDead { get => _isDead; private set => _isDead = value; }
+        public MonsterType Type { get => _type; }
 
         public Monster(string name, int level, int maxHealth, float attack, int defense, int gold)
         {
@@ -50,16 +62,17 @@
         {
             int error = (int)Math.Ceiling(damage * 0.1f); // 소수 첫번째 자리 올림
 
-            Random random = new Random();
+            Random rand = DataManager.Instance().GetRandom();
             int minRange = (int)damage - error;
             int maxRange = (int)damage + error + 1;
-            int totalDamage = random.Next(minRange, maxRange);
+            int totalDamage = rand.Next(minRange, maxRange);
 
             _health -= totalDamage;
 
-            if (_health < 0)
+            if (_health < 1)
             {
                 _health = 0;
+                GameManager.Instance.PlayerRecored.increseMonsterKillCount(_name);
                 _isDead = true;
             }
         }
@@ -71,11 +84,8 @@
 
         public void Recovery()
         {
-            if(_isDead)
-            {
-                _health = _maxHealth;
-                _isDead = false;
-            }
+            _health = _maxHealth;
+            _isDead = false;
         }
     }
 }
