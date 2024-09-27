@@ -7,19 +7,10 @@ namespace TextRPG_Team_Project.Item.Potions
         Character character = DataManager.Instance().GetPlayer();
 
         protected string name = "보이면 안되는 물약이름";
-        protected int itemPrice;
-        protected int itemCount;
+        protected int itemPrice = 0;
+        protected int itemCount = 0;
         protected int itemCountMax = 30;
-        protected int potionEffect;
-
-        public Potion(string _name, int _itemPrice, int _itemCount, int _potionEffect)
-        {
-            name = _name;
-            itemPrice = _itemPrice;
-            itemCount = _itemCount;
-            potionEffect = _potionEffect;
-        }
-
+        protected int potionEffect = 0;
 
         public virtual void ConsumeThis(Character character)
         {
@@ -89,7 +80,7 @@ namespace TextRPG_Team_Project.Item.Potions
     }
     class HealthPotion : Potion
     {
-        public HealthPotion(string _name, int _itemPrice, int _itemCount, int _potionEffect) : base(_name, _itemPrice, _itemCount, _potionEffect)
+        public HealthPotion(string _name, int _itemPrice, int _itemCount, int _potionEffect)
         {
             name = _name;
             itemPrice = _itemPrice;

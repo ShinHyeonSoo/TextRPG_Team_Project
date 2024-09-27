@@ -46,7 +46,7 @@
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
-                // character.currentWeapon = shop.WeaponList[0];
+                character.currentWeapon = shop.WeaponList[0];
             }
             // 아닐 때
             else
