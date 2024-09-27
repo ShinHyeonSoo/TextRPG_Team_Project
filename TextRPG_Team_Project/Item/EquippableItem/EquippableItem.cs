@@ -2,7 +2,6 @@
 {
     public class EquippableItem : IItem, IEquippable
     {
-        protected Shop shop = new Shop();
         Character character = DataManager.Instance().GetPlayer();
 
         protected string name = "보이면 안되는 장비이름";
