@@ -21,10 +21,12 @@ namespace TextRPG_Team_Project.Scene
 			DisplayGetInputNumber();
 		}
 
-		public override int PlayScene()
+		public override void PlayScene()
 		{
 			DisplayInitScene();
-			return Utils.GetNumberInput(1, 5);
+			GameManager.Instance.GoAnySScene((Defines.GameStatus)Utils.GetNumberInput(1, 5));
+
+
 		}
 	}
 }

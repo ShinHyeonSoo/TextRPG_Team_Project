@@ -84,13 +84,12 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("공격로그");
 		}
 
-		public override int PlayScene()
+		public override void PlayScene()
 		{
 			switch (_status)
 			{
 				case BattleStatus.Start:
 					DisplayInitScene();
-					return Utils.GetNumberInput(0, 1);
 					break;
 				case BattleStatus.PlayerTurn:
 					DisplayInitScene();
@@ -105,7 +104,6 @@ namespace TextRPG_Team_Project.Scene
 					DisplayEnemyAttackLog();
 					break;
 			}
-			return Utils.GetNumberInput(0,1);
 		}
 	}
 }
