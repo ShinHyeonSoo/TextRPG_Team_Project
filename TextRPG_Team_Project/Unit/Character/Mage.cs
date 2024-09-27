@@ -16,7 +16,7 @@ namespace TextRPG_Team_Project
 
         }
 
-        public void Skill1(Monster _target) // 스킬 사용 디테일한 내용 미정
+        public override void Skill1(Monster _target) // 스킬 사용 디테일한 내용 미정
         {
             string skillName = "스킬1";
             float damage = Attack + 20;
@@ -24,7 +24,7 @@ namespace TextRPG_Team_Project
             _target.TakeDamage(damage);
 
         }
-        public void Skill2(Monster _target) // 스킬 사용 디테일한 내용 미정
+        public override void Skill2(Monster _target) // 스킬 사용 디테일한 내용 미정
         {
             string skillName = "스킬2";
             float damage = Attack + 20;
