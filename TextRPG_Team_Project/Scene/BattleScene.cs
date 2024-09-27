@@ -15,14 +15,15 @@ namespace TextRPG_Team_Project.Scene
 
 		enum BattleStatus
 		{
-			Start=0,
-			PlayerTurn,
-			SkillSelect,
+			Start,
 			TargetSelect,
+			SkillSelect,
+			PlayerTurn,
 			EnermyTurn,
-
 		}
 		private BattleStatus _status;
+		private int _depth;
+		private int _targetNum;
 
 		// 플레이어 할당받을 변수 필요
 		// 던전등 배틀을 관리하는 매니저 필요
@@ -34,76 +35,162 @@ namespace TextRPG_Team_Project.Scene
             _battleManager = new();
 
             _status = BattleStatus.Start;
+			_depth = 0;
+			_targetNum = 0;
         }
 
 		public override void DisplayInitScene()
 		{
 			DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("적들의 정보 출력\n");
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine("캐릭터의 간단한 정보 출력");
+            Console.WriteLine("[내 정보]");
 
-			DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
+            #region 플레이어 정보 임시
+            Character temp = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            #endregion
+
+            DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
 			DisplayGetInputNumber();
 		}
 
-		public void DisplayPlayerSkillSelect()
+        public void DisplayPlayerSkillSelect()
 		{
-			DisplayIntro("Battle");
+            ++_depth;
+
+            DisplayIntro("Battle");
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-			Console.WriteLine("캐릭터의 간단한 정보 출력");
+            Console.WriteLine("[내 정보]");
 
-			Console.WriteLine("캐릭터의 스킬 출력");
-			Console.WriteLine("0. 취소");
+            #region 플레이어 정보 임시
+            Character temp = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            #endregion
+
+            Console.WriteLine("캐릭터의 스킬 출력");
+			Console.WriteLine("0. 취소\n");
 			DisplayGetInputNumber();
 		}
-		public void DisplayPlayerTargetSelect()
+		public int DisplayPlayerTargetSelect()
 		{
-			DisplayIntro("Battle");
-			Console.WriteLine();
-			Console.WriteLine("적들의 정보 출력");
-			Console.WriteLine();
-			Console.WriteLine("캐릭터의 간단한 정보 출력");
-			Console.WriteLine("캐릭터의 선택된 행동에 대한 설명 출력");
-			Console.WriteLine("0. 취소");
-		}
+			++_depth;
+
+            DisplayIntro("Battle");
+			Console.WriteLine(); 
+			_battleManager.MonsterInfo(StageEnemyInfo);
+            Console.WriteLine();
+            Console.WriteLine("[내 정보]");
+
+            #region 플레이어 정보 임시
+            Character temp = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            #endregion
+
+            Console.WriteLine("\n기본 공격!\n");
+			DisplayGetInputString("대상");
+
+			int maxValue = _battleManager.Monsters.Count + 1;
+			int input = Utils.GetNumberInput(0, maxValue);
+			_targetNum = input;
+
+			if (input == 0)
+				_status = (BattleStatus)input;
+			else
+				_status = BattleStatus.PlayerTurn;
+
+            return input;
+        }
 		public void DisplayPlayerAttackLog()
 		{
-			DisplayIntro("Battle");
+            ++_depth;
+
+            DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("공격로그");
+			Console.WriteLine("[플레이어 공격로그]\n");
+			
+			Character player = DataManager.Instance().GetPlayer();
+			Monster monster = _battleManager.TargetInfo(_targetNum);
+            player.AttackEnemy(monster);
+
+            Console.WriteLine($"{player.Name} 가 {monster.Name} 에게 일반 공격!");
+
+			// TODO : 사망처리
+
+            _status = BattleStatus.EnermyTurn;
+            Thread.Sleep(1500);
 		}
 		public void DisplayEnemyAttackLog()
 		{
-			DisplayIntro("Battle");
+            ++_depth;
+
+            DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("공격로그");
-		}
+			Console.WriteLine("[몬스터 공격로그]\n");
+
+            Character player = DataManager.Instance().GetPlayer();
+            Monster monster = _battleManager.TargetInfo(_targetNum);
+			monster.OnAttack += player.TakeDamage;
+
+            Console.WriteLine($"\n{monster.Name} 가 {player.Name} 에게 공격!");
+
+            monster.BasicAttack(monster.Attack);
+            monster.OnAttack -= player.TakeDamage;
+
+            // TODO : 사망처리
+
+            _status = BattleStatus.Start;
+            Thread.Sleep(1500);
+
+			--_depth;
+        }
 
 		public override void PlayScene()
 		{
-			switch (_status)
+			int input = -1;
+
+            switch (_status)
 			{
-				case BattleStatus.Start:
+                case BattleStatus.Start:
 					DisplayInitScene();
-					break;
-				case BattleStatus.PlayerTurn:
-					DisplayInitScene();
-					break;
+                    input = Utils.GetNumberInput(0, 2);
+                    break;
+				case BattleStatus.TargetSelect:
+                    input = DisplayPlayerTargetSelect();
+                    break;
 				case BattleStatus.SkillSelect:
 					DisplayPlayerSkillSelect();
 					break;
-				case BattleStatus.TargetSelect:
-					DisplayPlayerTargetSelect();
-					break;
+				case BattleStatus.PlayerTurn:
+                    DisplayPlayerAttackLog();
+                    break;
 				case BattleStatus.EnermyTurn:
 					DisplayEnemyAttackLog();
 					break;
 			}
-		}
+
+			if(_depth == 0)
+			{
+				switch(input)
+				{
+					case 0:
+                        _battleManager.CollectMonster();
+                        GameManager.Instance.GoHomeScene();
+                        break;
+                    case 1:
+						_status = BattleStatus.TargetSelect;
+                        break;
+                    case 2:
+						_status = BattleStatus.SkillSelect;
+                        break;
+                }
+				return;
+            }
+
+			--_depth;
+        }
 	}
 }

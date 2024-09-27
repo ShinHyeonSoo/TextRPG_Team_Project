@@ -1,4 +1,6 @@
-﻿namespace TextRPG_Team_Project
+﻿using TextRPG_Team_Project.Scene;
+
+namespace TextRPG_Team_Project
 {
     public delegate void MonsterAttackHandler(float damage);
 
@@ -70,6 +72,7 @@
             if (_health < 0)
             {
                 _health = 0;
+                GameManager.Instance.PlayerRecored.increseMonsterKillCount(_name);
                 _isDead = true;
             }
         }
@@ -81,11 +84,11 @@
 
         public void Recovery()
         {
-            if(_isDead)
-            {
+            //if(_isDead)
+            //{
                 _health = _maxHealth;
                 _isDead = false;
-            }
+            //}
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Threading;
 
 namespace TextRPG_Team_Project
 {
@@ -72,14 +73,14 @@ namespace TextRPG_Team_Project
                         _voidlings.Enqueue(monster);
                         break;
                 }
-
-                _monsters.Remove(monster);
             }
+            _monsters.Clear();
         }
 
         public void MonsterInfo(Func<string> callback)
         {
-            ShuffleMonster();
+            if(_monsters.Count == 0)
+                ShuffleMonster();
 
             int count = 0;
             foreach (var monster in _monsters)
@@ -97,6 +98,18 @@ namespace TextRPG_Team_Project
                 }
                 Console.WriteLine("{0}  " + callback(), count);
                 Console.ResetColor();
+            }
+        }
+
+        public Monster TargetInfo(int num)
+        {
+            if (!_monsters[num - 1].IsDead)
+            {
+                return _monsters[num - 1];
+            }
+            else
+            {
+                throw new Exception("error");
             }
         }
     }
