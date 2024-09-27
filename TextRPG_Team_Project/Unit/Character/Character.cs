@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project
 
 
         public string Name { get; private set; }
-        public int Gold { get; }
+        public int Gold { get; set; }
         public int Level { get; private set; }
         public int MaxHealth { get; set; }
         public int Health { get; set; }      
