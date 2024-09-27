@@ -71,6 +71,8 @@
             if (itemCount > 0)
             { 
                 Console.WriteLine("판매완료");
+                this.itemCount--;
+                // character.Gold += this.itemPrice;
                 
             }
             // 없을 때
@@ -86,6 +88,8 @@
             if (itemCount < itemCountMax)
             {
                 Console.WriteLine("구입완료");
+                this.itemCount++;
+                // character.Gold -= this.itemPrice;
             }
             else
             {
