@@ -17,16 +17,17 @@ namespace TextRPG_Team_Project.Quest
 		{
 			return $"Gold : {Gold}";
 		}
+
 	}
 	public abstract class Quest
 	{
-
-
 		[JsonInclude]
 		protected Defines.QuestStatus _status;
 
 		public string Name { get; init; }
 		public string Description { get; init; }
+		[JsonIgnore]
+		public string ShortDescriptoin { get { return ""; } }
 		public Reward? Reward {  get; init; }
 		public Defines.QuestStatus Status { get { return _status; } }
 
@@ -77,21 +78,25 @@ namespace TextRPG_Team_Project.Quest
 		public virtual string Tostring()
 		{
 			string thisString = $"{Name}";
+			return thisString;
+		}
+		public virtual string StateInfo()
+		{
+			string thisString ="";
 			switch (_status)
 			{
 				case Defines.QuestStatus.NotStarted:
 					break;
 				case Defines.QuestStatus.InProgress:
-					thisString = $"[진행중] {thisString}";
+					thisString = $"[진행중]";
 					break;
 				case Defines.QuestStatus.Completed:
-					thisString = $"[완료가능] {thisString}";
+					thisString = $"[완료가능]";
 					break;
 				case Defines.QuestStatus.RewardClaimed:
-					thisString = $"[완료] {thisString}";
+					thisString = $"[완료]";
 					break;
 			}
-
 			return thisString;
 		}
 	}
