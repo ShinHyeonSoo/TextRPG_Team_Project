@@ -72,7 +72,7 @@
             { 
                 Console.WriteLine("판매완료");
                 this.itemCount--;
-                // character.Gold += this.itemPrice;
+                character.Gold += this.itemPrice;
                 
             }
             // 없을 때
@@ -89,7 +89,7 @@
             {
                 Console.WriteLine("구입완료");
                 this.itemCount++;
-                // character.Gold -= this.itemPrice;
+                character.Gold -= this.itemPrice;
             }
             else
             {
