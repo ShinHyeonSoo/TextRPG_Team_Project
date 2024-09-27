@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TextRPG_Team_Project.Scene
@@ -20,10 +21,13 @@ namespace TextRPG_Team_Project.Scene
 			SkillSelect,
 			PlayerTurn,
 			EnermyTurn,
+			Victory,
 		}
 		private BattleStatus _status;
 		private int _depth;
 		private int _targetNum;
+        private int _prevPlayerHealth;
+        private int _monstersCount;
 
 		// 플레이어 할당받을 변수 필요
 		// 던전등 배틀을 관리하는 매니저 필요
@@ -48,8 +52,10 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine("[내 정보]");
 
             #region 플레이어 정보 임시
-            Character temp = DataManager.Instance().GetPlayer();
-            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            Character player = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
+            _prevPlayerHealth = player.Health;
+            _monstersCount = _battleManager.Monsters.Count;
             #endregion
 
             DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
@@ -86,8 +92,8 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine("[내 정보]");
 
             #region 플레이어 정보 임시
-            Character temp = DataManager.Instance().GetPlayer();
-            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            Character player = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
             #endregion
 
             Console.WriteLine("\n기본 공격!\n");
@@ -121,28 +127,16 @@ namespace TextRPG_Team_Project.Scene
 
             DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("[플레이어 공격로그]\n");
+
+            _battleManager.AttacktoMonster(_targetNum);
 			
-			Character player = DataManager.Instance().GetPlayer();
-			Monster monster = _battleManager.TargetInfo(_targetNum);
-            player.AttackEnemy(monster);
-
-            Console.WriteLine($"[{player.Name}] 가 [{monster.Name}] 에게 일반 공격!");
-
-            if (monster.IsDead)
-			{
-                Thread.Sleep(1000);
-                Console.WriteLine($"[{monster.Name}] 가 쓰러졌습니다!!!");
-
-				// TODO : 몬스터가 모두 죽었을 때 보상화면
-
-                _status = BattleStatus.Start;
-                Thread.Sleep(1000);
+            if(!_battleManager.CheckAliveMonsters())
+            {
+                _status = BattleStatus.Victory;
                 return;
             }
 
             _status = BattleStatus.EnermyTurn;
-            Thread.Sleep(1000);
         }
 		public void DisplayEnemyAttackLog()
 		{
@@ -150,26 +144,47 @@ namespace TextRPG_Team_Project.Scene
 
             DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("[몬스터 공격로그]\n");
 
-            Character player = DataManager.Instance().GetPlayer();
-            Monster monster = _battleManager.TargetInfo(_targetNum);
-			monster.OnAttack += player.TakeDamage;
-
-            Console.WriteLine($"\n[{monster.Name}] 가 [{player.Name}] 에게 공격!");
-
-            monster.BasicAttack(monster.Attack);
-            monster.OnAttack -= player.TakeDamage;
+            _battleManager.AttacktoPlayer(_targetNum);
 
             // TODO : 플레이어 사망처리
+            
 
             _status = BattleStatus.Start;
-            Thread.Sleep(1000);
 
 			--_depth;
         }
 
-		public override void PlayScene()
+        public void DisplayVictoryLog()
+        {
+            ++_depth;
+
+            DisplayIntro("Battle");
+
+            Console.WriteLine("[Result]\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Victory\n");
+            Console.ResetColor();
+
+            Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
+
+            //#region 플레이어 정보 임시
+            //Character player = DataManager.Instance().GetPlayer();
+            //Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+            //Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
+            //#endregion
+
+            Utils.GetNumberInput(0, 1);
+
+            _battleManager.CollectMonster();
+            GameManager.Instance.GoHomeScene();
+            _status = BattleStatus.Start;
+
+            --_depth;
+        }
+
+        public override void PlayScene()
 		{
 			int input = -1;
 
@@ -191,7 +206,10 @@ namespace TextRPG_Team_Project.Scene
 				case BattleStatus.EnermyTurn:
 					DisplayEnemyAttackLog();
 					break;
-			}
+                case BattleStatus.Victory:
+                    DisplayVictoryLog();
+                    break;
+            }
 
 			if(_depth == 0)
 			{
