@@ -73,6 +73,13 @@ namespace TextRPG_Team_Project
 
                 Console.WriteLine($"{Name} 이(가) 사망하였습니다.");
             }
+            else
+            {
+
+                Console.WriteLine($"{reducedDamage} 의 피해를 입었습니다 ! {Name}의 남은 체력: {Health}");
+            }
+
+
         }
 
 
@@ -102,8 +109,10 @@ namespace TextRPG_Team_Project
 
         public string GetStatus()
         {
+            string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
+            string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
-            return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{currentWeapon.Name}, 방어구{currentArmor.Name}";
+            return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{weaponName}, 방어구{armorName}";
 
         }
 
@@ -122,7 +131,7 @@ namespace TextRPG_Team_Project
             Defense += _armor.ArmorDefence;
         }
 
-        public void AttackEnemy(Monster _target)
+        public virtual void AttackEnemy(Monster _target)
         {
             float damage = Attack;
 
