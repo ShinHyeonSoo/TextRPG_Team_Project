@@ -2,11 +2,11 @@
 {
     class Potion : IItem, IConsumable
     {
-        string name = "보이면 안되는 물약이름";
-        int itemPrice = 0;
-        int itemCount = 0;
-        int itemCountMax = 30;
-        int potionEffect = 0;
+        protected string name = "보이면 안되는 물약이름";
+        protected int itemPrice = 0;
+        protected int itemCount = 0;
+        protected int itemCountMax = 30;
+        protected int potionEffect = 0;
 
         public virtual void ConsumeThis(Character character)
         {
@@ -23,9 +23,11 @@
 
         public void GetItem(int addItemCount)
         {
+            // 획득
             Console.WriteLine($"{name}을(를) {addItemCount}개 얻었다.");
             itemCount += addItemCount;
 
+            // 최대치 초과량 제어
             int overItemCount = itemCount - itemCountMax;
 
             if (overItemCount > 0)

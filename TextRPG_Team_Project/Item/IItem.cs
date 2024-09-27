@@ -8,6 +8,10 @@
         int ItemCountMax { get; }
 
         void GetItem(int addItemCount);
+
+        void SellThis();
+
+        void BuyThis();
     }
 
     interface IEquippable

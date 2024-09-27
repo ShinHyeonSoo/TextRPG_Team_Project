@@ -2,11 +2,11 @@
 {
     class EquippableItem : IItem, IEquippable
     {
-        string name = "보이면 안되는 장비이름";
-        int itemPrice = 0;
-        int itemCount = 0;
-        int itemCountMax = 1;
-        bool isEquipped = false;
+        protected string name = "보이면 안되는 장비이름";
+        protected int itemPrice = 0;
+        protected int itemCount = 0;
+        protected int itemCountMax = 1;
+        protected bool isEquipped = false;
 
         public string Name { get { return name; } private set { name = value; } }
         public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
@@ -65,11 +65,14 @@
             }
         }
 
-        int SetPrice()
+        public void SellThis()
         {
-            int price = 0;
 
-            return price;
+        }
+
+        public void BuyThis()
+        {
+
         }
     }
 }
