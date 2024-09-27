@@ -59,7 +59,7 @@ namespace TextRPG_Team_Project.Item
         public void DisplayArmorShopList()
         {
             Console.WriteLine("==방어구상점==");
-            Console.WriteLine(" |이름|\t방어력|\t가격|  소지수");
+            Console.WriteLine(" |\t이름|\t방어력|\t가격|  소지수");
             for (int i = 1; i < ArmorList.Length; i++)
             {
                 DisplayArmor(i);
@@ -89,7 +89,7 @@ namespace TextRPG_Team_Project.Item
         public void DisplayPotionShopList()
         {
             Console.WriteLine("==물약상점==");
-            Console.WriteLine(" |이름| 효과|\t가격|  소지수");
+            Console.WriteLine(" |\t이름| 효과|\t가격|  소지수");
             for (int i = 1; i < PotionList.Length; i++)
             {
                 DisplayPotion(i);
