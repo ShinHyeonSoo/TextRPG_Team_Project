@@ -39,6 +39,7 @@ namespace TextRPG_Team_Project.Quest
 			_status = status;
 			Reward = reward;
 		}
+
 		public Quest(string name, string description, Reward reward)
 		{
 			Name = name;
@@ -56,11 +57,13 @@ namespace TextRPG_Team_Project.Quest
 				_status = Defines.QuestStatus.InProgress;
 			}
 		}
+
 		public void CompleteQuest()
 		{
 			if (_status == Defines.QuestStatus.InProgress)
 				_status = Defines.QuestStatus.Completed;
 		}
+
 		public Reward? GiveReward() 
 		{
 			if(_status == Defines.QuestStatus.Completed)
