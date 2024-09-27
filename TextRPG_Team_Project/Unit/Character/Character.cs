@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project
 
 
         public string Name { get; private set; }
-        public int Gold { get; }
+        public int Gold { get; set; }
         public int Level { get; private set; }
         public int MaxHealth { get; set; }
         public int Health { get; set; }      
@@ -120,9 +120,11 @@ namespace TextRPG_Team_Project
             string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
-            return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{weaponName}, 방어구{armorName}";
+            return $"LV. {Level},\n{Name}  ({Job})\n공격력: {Attack}\n방어력: {Defense}\n체 력 : {Health}/{MaxHealth}\nGold : {Gold} G\n무기{weaponName}\n방어구{armorName}";
 
         }
+        // Lv. 01      
+
 
         public string GetUserinfoShort()
         {
