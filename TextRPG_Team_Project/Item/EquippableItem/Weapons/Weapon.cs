@@ -16,6 +16,65 @@
 
         public float WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
 
+        public override void EquipThis(Character character)
+        {
+            // 장비하지 않았을 때.
+            if (!isEquipped)
+            {
+                if (itemCount > 0)
+                {
+                    Console.WriteLine($"{Name} 장착.");
+                    isEquipped = true;
+                    character.currentWeapon = this;
+                }
+                else
+                {
+                    Console.WriteLine($"{Name}이(가) 없습니다.");
+                }
+            }
+            // 이미 장비되었을 때.
+            else
+            {
+                Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
+            }
+        }
+
+        public override void UnEquipThis(Character character)
+        {
+            // 장비되어 있을 때
+            if (isEquipped)
+            {
+                Console.WriteLine($"{Name} 장착해제");
+                isEquipped = false;
+                // character.currentWeapon = shop.WeaponList[0];
+            }
+            // 아닐 때
+            else
+            {
+                Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
+            }
+        }
+
+        public override void SellThis(Character character)
+        {
+            // 있을 때
+            if (itemCount > 0)
+            {
+                if (this.isEquipped)
+                {
+                    this.UnEquipThis(character);
+                }
+                Console.WriteLine($"{this.name} 판매완료");
+                this.itemCount--;
+                character.Gold += this.itemPrice;
+            }
+            // 없을 때
+            else
+            {
+                Console.WriteLine("판매할 아이템이 없습니다.");
+            }
+        }
+
     }
     /*
     class TestWeapon : Weapon

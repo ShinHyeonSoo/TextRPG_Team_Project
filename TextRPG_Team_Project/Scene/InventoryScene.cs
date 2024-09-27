@@ -21,7 +21,7 @@ namespace TextRPG_Team_Project.Scene
 			DisplayIntro("인벤토리");
 			Console.WriteLine();
 			Console.WriteLine("인벤토리 목록 출력");
-			DisplayOption(new List<string>() { "장착 관리", "아이템 사용" });
+            DisplayOption(new List<string>() { "장착 관리", "아이템 사용" });
 			Console.WriteLine("0. 나가기");
 			DisplayGetInputNumber();
 		}
@@ -47,6 +47,7 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void PlayScene()
 		{
+
 			int userInput = 0;
 			switch (_state)
 			{

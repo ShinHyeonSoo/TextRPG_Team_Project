@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,11 +46,13 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void DisplayInitScene()
 		{
-			DisplayIntro("Battle");
+            //Character player = GameManager.Instance.Data.GetPlayer();
+            //UserInfo += player.GetUserInfoShort;
+            DisplayIntro("Battle");
 			Console.WriteLine();
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine("[내 정보]");
+            //Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
             #region 플레이어 정보 임시
             Character player = DataManager.Instance().GetPlayer();
@@ -70,7 +73,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-            Console.WriteLine("[내 정보]");
+			//Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
             #region 플레이어 정보 임시
             Character temp = DataManager.Instance().GetPlayer();
@@ -89,7 +92,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine(); 
 			_battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine("[내 정보]");
+            //Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
 
             #region 플레이어 정보 임시
             Character player = DataManager.Instance().GetPlayer();
@@ -121,6 +124,7 @@ namespace TextRPG_Team_Project.Scene
 
             return input;
         }
+
 		public void DisplayPlayerAttackLog()
 		{
             ++_depth;

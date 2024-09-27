@@ -2,6 +2,8 @@
 {
     public class EquippableItem : IItem, IEquippable
     {
+        Character character = DataManager.Instance().GetPlayer();
+
         protected string name = "보이면 안되는 장비이름";
         protected int itemPrice = 0;
         protected int itemCount = 0;
@@ -12,7 +14,7 @@
         public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
-        public bool IsEquipped { get { return isEquipped; } private set { isEquipped = value; } }
+        public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
 
         public void GetItem(int addItemCount)
         {
@@ -28,7 +30,7 @@
             }
         }
 
-        public void EquipThis(Character character)
+        public virtual void EquipThis(Character character)
         {
             // 장비하지 않았을 때.
             if (!isEquipped)
@@ -50,7 +52,7 @@
             }
         }
 
-        public void UnEquipThis(Character character)
+        public virtual void UnEquipThis(Character character)
         {
             // 장비되어 있을 때
             if (isEquipped)
@@ -65,19 +67,24 @@
             }
         }
 
-        public void SellThis(Character character)
+        public virtual void SellThis(Character character)
         {
             // 있을 때
             if (itemCount > 0)
-            { 
-                Console.WriteLine("판매완료");
-                
+            {
+                if (this.isEquipped)
+                {
+                    this.UnEquipThis(character);
+                }
+                Console.WriteLine($"{this.name} 판매완료");
+                this.itemCount--;
+                character.Gold += this.itemPrice;
             }
             // 없을 때
             else
             {
-                Console.WriteLine("판매할 수 없습니다.");
-            }    
+                Console.WriteLine("판매할 아이템이 없습니다.");
+            }
         }
 
         public void BuyThis(Character character)
@@ -85,11 +92,13 @@
             // 최대치보다 적을 때
             if (itemCount < itemCountMax)
             {
-                Console.WriteLine("구입완료");
+                Console.WriteLine($"{this.name} 구입완료");
+                this.itemCount++;
+                character.Gold -= this.itemPrice;
             }
             else
             {
-                Console.WriteLine("구입할 수 없습니다.");
+                Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
             }
         }
     }

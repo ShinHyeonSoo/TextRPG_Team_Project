@@ -6,15 +6,16 @@ using TextRPG_Team_Project;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
+using TextRPG_Team_Project.Scene;
 namespace TextRPG_Team_Project
 {
 
-    public class Character : IUnit
+    public abstract class Character : IUnit
     {
 
 
         public string Name { get; private set; }
-        public int Gold { get; }
+        public int Gold { get; set; }
         public int Level { get; private set; }
         public int MaxHealth { get; set; }
         public int Health { get; set; }      
@@ -110,7 +111,7 @@ namespace TextRPG_Team_Project
             MaxHealth += 10;
             Attack += 10;
             Level += 1;
-
+            GameManager.Instance.PlayerRecored.NotifyUserLevelUp();
             Console.WriteLine($"Level Up !! / 최대 체력 : +10 증가하여 {MaxHealth} , 공격력 : + 10 증가하여 {Attack} , 레벨 : +1 증가하여 {Level}");
             
         }
@@ -120,11 +121,13 @@ namespace TextRPG_Team_Project
             string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
-            return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{weaponName}, 방어구{armorName}";
+            return $"LV.{Level}\n{Name}  ({Job})\n공격력: {Attack}\n방어력: {Defense}\n체 력 : {Health}/{MaxHealth}\nGold : {Gold} G\n무기{weaponName}\n방어구{armorName}";
 
         }
+        // Lv. 01      
 
-        public string GetUserinfoShort()
+
+        public string GetUserInfoShort()
         {
             return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}";
 
@@ -133,7 +136,12 @@ namespace TextRPG_Team_Project
      
         public void EquipWeapon(Weapon _weapon)
         {
+            if (currentWeapon != null)
+            {
+                Attack -= currentWeapon.WeaponAttack;
+            }
 
+            GameManager.Instance.PlayerRecored.NotifyUserEuipment(_weapon.Name);
             currentWeapon = _weapon;
             Attack += _weapon.WeaponAttack;
 
@@ -141,7 +149,12 @@ namespace TextRPG_Team_Project
     
         public void EquipArmor(Armor _armor)
         {
-            currentArmor = _armor;
+            if(currentArmor != null)
+            {
+                Attack -= currentArmor.ArmorDefence;
+            }
+			GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
+			currentArmor = _armor;
             Defense += _armor.ArmorDefence;
         }
 
@@ -153,9 +166,11 @@ namespace TextRPG_Team_Project
 
         }
 
-     
-   
-      
+        public abstract void Skill1(Monster _target);
+
+        public abstract void Skill2(Monster _target);
+
+
 
     }
 
