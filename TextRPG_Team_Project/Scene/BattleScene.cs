@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,16 +37,20 @@ namespace TextRPG_Team_Project.Scene
             _status = BattleStatus.Start;
 
 			
+				
+			
 		}
 
 		public override void DisplayInitScene()
 		{
-			DisplayIntro("Battle");
+            Character player = GameManager.Instance.Data.GetPlayer();
+            UserInfo += player.GetUserInfoShort;
+            DisplayIntro("Battle");
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력\n");
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine("캐릭터의 간단한 정보 출력");
+            Console.WriteLine(UserInfo?.Invoke());
 
 			DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
 			DisplayGetInputNumber();
