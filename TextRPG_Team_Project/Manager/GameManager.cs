@@ -86,7 +86,8 @@ namespace TextRPG_Team_Project.Scene
 						_questScene.PlayScene();
 						break;
 					case Defines.GameStatus.Save:  // 5
-						_saveScene.PlayScene();
+						GameManager.Instance.PlayerRecored.increseMonsterKillCount("미니언");
+						GoHomeScene();
 						break;
 				}
 			}

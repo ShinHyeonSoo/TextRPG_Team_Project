@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team_Project
 {
+	// ConsoleWrapper
+	// 콘솔을 알록달록...
     public static class StyleConsole
     {
         public static ConsoleColor defaultForeColor = ConsoleColor.White;

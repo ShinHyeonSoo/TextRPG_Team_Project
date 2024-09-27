@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,8 +32,7 @@ namespace TextRPG_Team_Project.Scene
 		public void DisplayIntro(string name)
 		{
 			Console.Clear();
-			Console.WriteLine();
-			StyleConsole.WriteLine($"", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"[{name}]", ConsoleColor.Yellow);
 			Console.WriteLine();
 		}
 		public void DisplayGetInputNumber()
