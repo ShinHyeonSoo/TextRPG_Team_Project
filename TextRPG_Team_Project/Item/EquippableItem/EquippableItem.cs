@@ -79,7 +79,7 @@
             else
             {
                 Console.WriteLine("판매할 수 없습니다.");
-            }    
+            }
         }
 
         public void BuyThis(Character character)

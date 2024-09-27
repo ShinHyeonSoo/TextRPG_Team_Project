@@ -4,8 +4,10 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Item;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
+using TextRPG_Team_Project.Item.Potions;
 
 namespace TextRPG_Team_Project.Scene
 {
@@ -13,16 +15,7 @@ namespace TextRPG_Team_Project.Scene
     {
         // 이 이하는 임시코드
         Character character = new Character("테스터", 1, 100, 15, 10);
-        Weapon[] WeaponList = {
-            new Weapon("테스트 무기1", 0, 0, false, 5),
-            new Weapon("테스트 무기2", 0, 0, false, 10),
-            new Weapon("테스트 무기3", 0, 0, false, 15)
-        };
-        Armor[] ArmorList = {
-            new Armor("테스트 아머1", 0, 0, false, 5),
-            new Armor("테스트 아머2", 0, 0, false, 10),
-            new Armor("테스트 아머3", 0, 0, false, 15)
-            };
+        Shop shop = new Shop();
         // 임시코드 끝
         // 인벤토리를 받거나
         // 인벤토리의 함수들을 받기
@@ -31,7 +24,7 @@ namespace TextRPG_Team_Project.Scene
             Start = 0,
             ManagingEuipment = 1,
             UseItem = 2,
-            Shop = 3,
+            Shop = 3
         }
         private InventoryState _state;
 
@@ -42,7 +35,12 @@ namespace TextRPG_Team_Project.Scene
             DisplayIntro("인벤토리");
             Console.WriteLine();
             Console.WriteLine("인벤토리 목록 출력");
-            DisplayOption(new List<string>() { "1. 장착 관리", "2. 아이템 사용", "3. 아이템 구입" });
+
+            shop.DisplayWeaponShopList();
+            shop.DisplayArmorShopList();
+            shop.DisplayPotionShopList();
+
+            DisplayOption(new List<string>() { "1. 장착 관리", "2. 아이템 사용", "3. 아이템 구입/판매" });
             Console.WriteLine("0. 나가기");
             DisplayGetInputNumber();
         }
@@ -122,6 +120,9 @@ namespace TextRPG_Team_Project.Scene
                     break;
                 case InventoryState.UseItem:
                     DisplayUsetItem();
+                    break;
+                case InventoryState.Shop:
+                    DisplayShop();
                     break;
             }
             return 0;

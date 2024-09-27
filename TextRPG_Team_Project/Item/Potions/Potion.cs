@@ -74,14 +74,15 @@
             }
         }
     }
-    /*
     class HealthPotion : Potion
     {
-        string name = "체력 물약";
-        int itemPrice = 0;
-        int itemCount = 3;
-        int itemCountMax = 30;
-        int potionEffect = 30;
+        public HealthPotion(string _name, int _itemPrice, int _itemCount, int _potionEffect)
+        {
+            name = _name;
+            itemPrice = _itemPrice;
+            itemCount = _itemCount;
+            potionEffect = _potionEffect;
+        }
 
         public override void ConsumeThis(Character character)
         {
@@ -111,5 +112,4 @@
             }
         }
     }
-    */
 }
