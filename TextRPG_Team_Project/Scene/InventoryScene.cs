@@ -45,14 +45,16 @@ namespace TextRPG_Team_Project.Scene
 			DisplayGetInputNumber();
 		}
 
-		public override int PlayScene()
+		public override void PlayScene()
 		{
+			int userInput = 0;
 			switch (_state)
 			{
 				case Defines.InventoryState.Start:
 					DisplayInitScene();
-					_state = (Defines.InventoryState)Utils.GetNumberInput(0, 2);
-					if(_state == Defines.InventoryState.Start) { return 0; }
+					userInput = Utils.GetNumberInput(0, 2);
+					if(userInput == 0) { GameManager.Instance.GoHomeScene(); }
+
 					break;
 				case Defines.InventoryState.ManagingEuipment:
 					DisplayManagingEuipment();
@@ -61,7 +63,6 @@ namespace TextRPG_Team_Project.Scene
 					DisplayUsetItem();
 					break;
 			}
-			return 0;
 		}
 	}
 }

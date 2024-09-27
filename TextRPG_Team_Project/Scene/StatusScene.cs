@@ -19,10 +19,10 @@ namespace TextRPG_Team_Project.Scene
 			DisplayGetInputNumber();
 		}
 
-		public override int PlayScene()
+		public override void PlayScene()
 		{
 			DisplayInitScene();
-			return Utils.GetNumberInput(0, 1);
+			if (Utils.GetNumberInput(0, 1) == 0) { GameManager.Instance.GoHomeScene(); }
 		}
 	}
 }
