@@ -1,4 +1,7 @@
-﻿namespace TextRPG_Team_Project
+﻿using System.ComponentModel.Design;
+using System.Xml.Linq;
+
+namespace TextRPG_Team_Project
 {
     public class DataManager
     {
@@ -20,14 +23,24 @@
         public Character GetPlayer() 
         {
             if (_player == null)
-                return null;
+                return new Character("홍길동", 1,100,1,1);
 
             return _player; 
         }
 
-        public void CreatePlayer(string name)
+        public void CreatePlayer(string name, int _jobNum)
         {
-            _player = new Character(name, 1, 100, 3, 1);
+
+            if(_jobNum == 1)
+            {
+                _player = new Warrior(name, 1, 100, 10, 5);
+            }
+
+                
+            else if(_jobNum == 2)
+            {
+                _player = new Mage(name, 1, 100, 10, 5);
+            }
         }
         #endregion
     }

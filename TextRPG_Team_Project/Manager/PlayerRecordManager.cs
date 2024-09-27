@@ -14,6 +14,8 @@ namespace TextRPG_Team_Project
 
 		public event Action<string> TrackMonsterKills = (string name)=> { };
 		public event Action<string> TrackPotionUse = (string name) => { };
+		public event Action<string> TrackEquip = (string name) => { };
+		public event Action TrackLevel =() => { };
 
 		public void increseMonsterKillCount(string name)
 		{
@@ -25,6 +27,14 @@ namespace TextRPG_Team_Project
 		{
 			potionUseCount += 1;
 			TrackPotionUse.Invoke(name);
+		}
+		public void NotifyUserEuipment(string name)
+		{
+			TrackEquip.Invoke(name);
+		}
+		public void NotifyUserLevelUp()
+		{
+			TrackLevel.Invoke();
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
@@ -13,6 +14,9 @@ namespace TextRPG_Team_Project.Quest
 		private int _killCount;
 
 		public int GoalKillCount { get; init; }
+		[JsonIgnore]
+		public string ShortDescription { get { return $"{_monsterName}을(를) {GoalKillCount} 마리 처치 | {_killCount}/{GoalKillCount}"; } }
+
 		#region Constructor
 		public MonsterKillQuest(string name, string description, string monsterName, int killCount, int goalKillCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
@@ -30,9 +34,10 @@ namespace TextRPG_Team_Project.Quest
 
 		public override string Tostring()
 		{
-			string str = $"{base.Tostring()} | {_monsterName}을 {GoalKillCount} 마리 처치";
+			string str = $"{base.Tostring()} | {ShortDescription}";
 			return str ;
 		}
+
 		public override void AcceptQuest()
 		{
 			if (_status == Defines.QuestStatus.NotStarted)
