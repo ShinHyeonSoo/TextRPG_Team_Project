@@ -59,26 +59,31 @@ namespace TextRPG_Team_Project.Scene
 					DisplayInitScene();
 					userInput = Utils.GetNumberInput(0, _questManager.Quests.Count+1);
 					if(userInput == 0) { return  0; }
-					else
-					{
-						_state = Defines.QuestSceneState.Quest;
-						_selectedQuest = userInput;
-					}
+
+					_state = Defines.QuestSceneState.Quest;
+					_selectedQuest = userInput - 1;
 					break;
+
 				case Defines.QuestSceneState.Quest:
 					DisplayQuest();
+
 					userInput = Utils.GetNumberInput(0, _questManager.Quests.Count+1);
-					if(userInput == 0) { return 0; }
-					else
-					{
-						_state = Defines.QuestSceneState.Quest;
-					}
+					if (userInput == 1) _questManager.AcceptQuest(_selectedQuest);
+
+					_state = Defines.QuestSceneState.QuestList;
 					break;
+
 				case Defines.QuestSceneState.QuestComplete:
 					DisplayQuestCompletion();
 					return 0;
 			}
 			return (int)Defines.GameStatus.Quest;
+		}
+
+		public int ProcessQuestDecision(int input)
+		{
+			
+			return 0;
 		}
 	}
 }

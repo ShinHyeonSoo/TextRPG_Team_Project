@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
@@ -53,7 +54,7 @@ namespace TextRPG_Team_Project.Quest
 		#endregion
 
 
-		public void AcceptQuest()
+		public virtual void AcceptQuest()
 		{
 			if (_status == QuestStatus.NotStarted)
 			{

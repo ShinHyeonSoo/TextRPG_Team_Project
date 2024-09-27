@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
@@ -33,9 +34,18 @@ namespace TextRPG_Team_Project.Quest
 			return str;
 		}
 
-		public void increaseKillCount(string name)
+		public override void AcceptQuest()
+		{
+			if (_status == QuestStatus.NotStarted)
+			{
+				_status = QuestStatus.InProgress;
+				GameManager.Instance.PlayerRecored.TrackPotionUse += increaseUseCount;
+			}
+		}
+
+		public void increaseUseCount(string name)
 		/*
-		 * PlayerRecordManager의 TrackkillCount에 할당합니다
+		 * PlayerRecordManager의 TrackUseCount에 할당합니다
 		 */
 		{
 			if (name == _potionName)

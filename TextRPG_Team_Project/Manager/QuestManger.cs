@@ -60,5 +60,9 @@ namespace TextRPG_Team_Project.Quest
 			}
 			return sb.ToString();
 		}
+		public void AcceptQuest(int index)
+		{
+			Quests[index].AcceptQuest();
+		}
 	}
 }

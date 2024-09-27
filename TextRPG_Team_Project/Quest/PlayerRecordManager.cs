@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
-	internal class PlayerRecordManager
+	public class PlayerRecordManager
 	{
 		private int monsterKillCount;
 		private int potionUseCount;
 
-		event Action<string> TrackMonsterKills = (string name)=> { };
-		event Action<string> TrackPotionUse = (string name) => { };
+		public event Action<string> TrackMonsterKills = (string name)=> { };
+		public event Action<string> TrackPotionUse = (string name) => { };
 
 		public void increseMonsterKillCount(string name)
 		{

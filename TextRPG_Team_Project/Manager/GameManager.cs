@@ -19,11 +19,17 @@ namespace TextRPG_Team_Project.Scene
 
 		#region Mangers
 		private static GameManager _instance;
-		public static GameManager Instance { get { return _instance; } }
+
 		private QuestManger _questManager = new QuestManger();
-		public QuestManger Quest { get { return _questManager; } }
 		private DataManager _dataManager = new DataManager();
+		private PlayerRecordManager _playerRecordManager = new PlayerRecordManager();
+
+		public static GameManager Instance { get { return _instance; } }
+
+		
+		public QuestManger Quest { get { return _questManager; } }
 		public DataManager Data { get { return _dataManager; } }
+		public PlayerRecordManager PlayerRecored {  get { return _playerRecordManager; } }
 		#endregion
 
 		#region Scenes

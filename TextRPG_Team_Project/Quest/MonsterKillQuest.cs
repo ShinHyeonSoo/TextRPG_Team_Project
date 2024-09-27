@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
@@ -32,6 +33,15 @@ namespace TextRPG_Team_Project.Quest
 			string str = $"{base.Tostring()} | {_monsterName}을 {GoalKillCount} 마리 처치";
 			return str ;
 		}
+		public override void AcceptQuest()
+		{
+			if (_status == QuestStatus.NotStarted)
+			{
+				_status = QuestStatus.InProgress;
+				GameManager.Instance.PlayerRecored.TrackMonsterKills += increaseKillCount;
+			}
+		}
+
 		public void increaseKillCount(string name)
 			/*
 			 * PlayerRecordManager의 TrackkillCount에 할당합니다
