@@ -13,10 +13,27 @@ namespace TextRPG_Team_Project.Scene
 		public abstract void PlayScene();
 		// 빠져나가길 원할때 GameManager.instance.GoHomeScene(); 호출
 
-		public void DisplayIntro(string name) 
+
+		public void DisplayIntro()
 		{
 			Console.Clear();
-			Console.WriteLine("[name]");
+			Console.WriteLine();
+			StyleConsole.WriteLine($" **********                   **         *******   *******    ******** ", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"/////**///                   /**        /**////** /**////**  **//////**", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    /**      *****  **   ** ******      /**   /** /**   /** **      // ", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    /**     **///**//** ** ///**/       /*******  /******* /**         ", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    /**    /******* //***    /**        /**///**  /**////  /**    *****", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    /**    /**////   **/**   /**        /**  //** /**      //**  ////**", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    /**    //****** ** //**  //**       /**   //**/**       //******** ", ConsoleColor.Yellow);
+			StyleConsole.WriteLine($"    //      ////// //   //    //        //     // //         ////////  ", ConsoleColor.Yellow);
+			Console.WriteLine();
+		}
+		public void DisplayIntro(string name)
+		{
+			Console.Clear();
+			Console.WriteLine();
+			StyleConsole.WriteLine($"", ConsoleColor.Yellow);
+			Console.WriteLine();
 		}
 		public void DisplayGetInputNumber()
 		{
@@ -39,14 +56,16 @@ namespace TextRPG_Team_Project.Scene
 		{
 			for( int i = 0; i < choiceOptions.Count; i++)
 			{
-				Console.WriteLine($" - {choiceOptions[i]}");
+				string[] parsedOptionText = choiceOptions[i].Split(".");
+				StyleConsole.Write($" {parsedOptionText[0]}. ", ConsoleColor.Cyan);
+				Console.WriteLine($"{parsedOptionText[1]}");
 			}
 		}
 		public static void WrongInput()
 		{
 			(int left, int top) = Console.GetCursorPosition();
 			Console.SetCursorPosition(0, top-2);
-			Console.WriteLine("잘못입력하셨습니다. 다시 입력해주세요.");
+			StyleConsole.WriteLine("잘못입력하셨습니다. 다시 입력해주세요.", ConsoleColor.White, ConsoleColor.Red);
 			Console.Write(">>>   ");
 		}
 	}
