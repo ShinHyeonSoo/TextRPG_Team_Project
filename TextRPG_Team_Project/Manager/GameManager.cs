@@ -38,6 +38,7 @@ namespace TextRPG_Team_Project.Scene
 		private BattleScene _battleScene = new BattleScene();
 		private InventoryScene _inventoryScene = new InventoryScene();
 		private QuestScene _questScene = new QuestScene();
+		private SaveScene _saveScene = new SaveScene();
 		#endregion
 
 		public GameManager()
@@ -58,9 +59,6 @@ namespace TextRPG_Team_Project.Scene
 			_status = status;
 		}
 		public void GameMain()
-			/*
-			 디버깅을 위한 임시 게임메인
-			 */
 		{
 			while (true)
 			{
@@ -81,10 +79,11 @@ namespace TextRPG_Team_Project.Scene
 					case Defines.GameStatus.Inventory:  // 3
 						_inventoryScene.PlayScene();
 						break;
-					case Defines.GameStatus.Quest:  // 4
+					case Defines.GameStatus.Quest:      // 4
 						_questScene.PlayScene();
 						break;
-					case Defines.GameStatus.Save:  // 5
+					case Defines.GameStatus.Save:     // 5
+						_saveScene.PlayScene();
 						break;
 				}
 			}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,24 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			for (int i = 0; i < _questManager.Quests.Count; i++) 
 			{
-				Console.WriteLine($" - {i+1} {_questManager.Quests[i].StateInfo()} {_questManager.Quests[i].Tostring()}");
+				StyleConsole.Write($" {i + 1} ", ConsoleColor.Cyan);
+				switch(_questManager.Quests[i].Status)
+				{
+					case Defines.QuestStatus.InProgress:
+						StyleConsole.Write($" {_questManager.Quests[i].StateInfo()} ", ConsoleColor.Blue);
+						Console.WriteLine($" {_questManager.Quests[i].Tostring()}");
+						break;
+					case Defines.QuestStatus.Completed:
+						StyleConsole.Write($" {_questManager.Quests[i].StateInfo()} ", ConsoleColor.Magenta);
+						Console.WriteLine($" {_questManager.Quests[i].Tostring()}");
+						break;
+					case Defines.QuestStatus.RewardClaimed:
+						StyleConsole.WriteLine($"{_questManager.Quests[i].StateInfo()} {_questManager.Quests[i].Tostring()}", ConsoleColor.DarkGray);
+						break;
+					default:
+						Console.WriteLine($"{_questManager.Quests[i].StateInfo()} {_questManager.Quests[i].Tostring()}");
+						break;
+				}
 			}
 			Console.WriteLine();
 			Console.WriteLine("0. 나가기");
@@ -37,7 +55,6 @@ namespace TextRPG_Team_Project.Scene
 		public void DisplayQuest()
 		{
 			DisplayIntro("Quest");
-			Console.WriteLine();
 			Console.WriteLine(_questManager.Quests[_selectedQuest].Name);
 			Console.WriteLine();
 			Console.WriteLine(_questManager.Quests[_selectedQuest].Description);
@@ -55,7 +72,6 @@ namespace TextRPG_Team_Project.Scene
 		public void DisplayQuestCompletion()
 		{
 			DisplayIntro("Quest");
-			Console.WriteLine();
 			Console.WriteLine($"{_questManager.Quests[_selectedQuest].Name} 완료!");
 			Console.WriteLine();
 			Console.WriteLine(_questManager.Quests[_selectedQuest].Description);
@@ -65,7 +81,22 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine($"보상");
 			Console.WriteLine($"{_questManager.Quests[_selectedQuest].Reward.ToString()}");
 			Console.WriteLine();
-			Console.WriteLine("0. 나가기");
+			Console.WriteLine("1. 보상받기");
+			Console.WriteLine("2. 돌아가기");
+			DisplayGetInputNumber();
+		}
+
+		public void DisplayGetQuestReward()
+		{
+			DisplayIntro("Quest");
+			Console.WriteLine($"{_questManager.Quests[_selectedQuest].Name} 완료!");
+			Console.WriteLine();
+			Console.WriteLine($"보상");
+			StyleConsole.WriteLine($"{_questManager.Quests[_selectedQuest].Reward.ToString()}",ConsoleColor.DarkGreen);
+			Console.WriteLine("획득 완료");
+			Console.WriteLine();
+			Console.WriteLine("2.돌아가기");
+			Console.WriteLine();
 			DisplayGetInputNumber();
 		}
 
@@ -94,6 +125,10 @@ namespace TextRPG_Team_Project.Scene
 				case Defines.QuestSceneState.QuestComplete:
 					DisplayQuestCompletion();
 					ProcessQuestCompletion();
+					break;
+				case Defines.QuestSceneState.QuestReward:
+					DisplayGetQuestReward();
+					ProcessQuestReward();
 					break;
 			}
 		}
@@ -140,10 +175,15 @@ namespace TextRPG_Team_Project.Scene
 
 		public void ProcessQuestCompletion()
 		{
-			_questManager.GiveQuestReward(_selectedQuest);
 			int userInput = 0;
-			userInput = Utils.GetNumberInput(0,1);
-			_state = Defines.QuestSceneState.QuestList;
+			userInput = Utils.GetNumberInput(1,3);
+			if (userInput == 1) { _state = Defines.QuestSceneState.QuestReward; }
+			else { _state = Defines.QuestSceneState.QuestList; }
+		}
+		public void ProcessQuestReward()
+		{
+			_questManager.GiveQuestReward(_selectedQuest);
+			if (Utils.GetNumberInput(2, 3) == 2) { _state = Defines.QuestSceneState.QuestList; }
 		}
 
 	}

@@ -23,6 +23,7 @@ namespace TextRPG_Team_Project
 			QuestList = 0,
 			Quest = 1,
 			QuestComplete = 2,
+			QuestReward,
 		}
 		public enum InventoryState
 		{

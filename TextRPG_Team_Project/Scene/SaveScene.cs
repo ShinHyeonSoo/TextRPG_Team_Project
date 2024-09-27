@@ -10,12 +10,16 @@ namespace TextRPG_Team_Project.Scene
 	{
 		public override void DisplayInitScene()
 		{
-			throw new NotImplementedException();
+			DisplayIntro("저장하기");
+			Console.WriteLine();
+			Console.WriteLine("0. 나가기");
 		}
 
 		public override void PlayScene()
 		{
-			throw new NotImplementedException();
+			DisplayInitScene();
+			int input = Utils.GetNumberInput(0, 1);
+			GameManager.Instance.GoHomeScene();
 		}
 	}
 }
