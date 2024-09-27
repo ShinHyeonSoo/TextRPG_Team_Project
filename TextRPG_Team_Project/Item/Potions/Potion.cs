@@ -1,4 +1,6 @@
-﻿namespace TextRPG_Team_Project.Item.Potions
+﻿using TextRPG_Team_Project.Scene;
+
+namespace TextRPG_Team_Project.Item.Potions
 {
     public class Potion : IItem, IConsumable
     {
@@ -86,24 +88,23 @@
 
         public override void ConsumeThis(Character character)
         {
-            // 매개변수로 플레이어 받을 예정.
-            // 던전 입장 전 포션 사용
-
             // 보유량 충분하면 회복 완료 메세지
             if (itemCount > 0)
             {
                 // 포션의 회복량은 30(potionEffect)
 
-                character.Health += potionEffect;                // Character의 set 접근자제한걸림
+                character.Health += potionEffect;                
                 Console.WriteLine($"체력이 {this.potionEffect}만큼 회복되었습니다.");
 
                 // 최대체력보다 높게 회복되지는 않음
-                
                 if(character.Health > character.MaxHealth)
                 {
-                    character.Health = character.MaxHealth;      // Character의 set 접근자제한걸림
+                    character.Health = character.MaxHealth;
                 }
                 itemCount--;
+
+                // 포션퀘스트 체크용
+                GameManager.Instance.PlayerRecored.incresePotionUseCount(this.name);
             }
             // 보유량 부족하면 포션 부족 메세지
             else

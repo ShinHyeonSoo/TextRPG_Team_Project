@@ -19,10 +19,9 @@ namespace TextRPG_Team_Project.Item
             new Armor("아머2", 200, 0, false, 10),
             new Armor("아머3", 500, 0, false, 15),
             new Armor("아머4", 1000, 0, false, 20)
-            };
+        };
 
-        public Potion[] PotionList =
-        {
+        public Potion[] PotionList = {
             new Potion(),
             new HealthPotion("체력 포션", 50, 3, 30)
         };
