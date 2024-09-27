@@ -8,7 +8,7 @@ namespace TextRPG_Team_Project.Item
     public class Shop
     {
         // 테스트용
-        Character character = new Character("asdf", 1, 100, 1, 1);
+        Character character = DataManager.Instance().GetPlayer();
         // 테스트용 끝
 
         public Weapon[] weaponList = {

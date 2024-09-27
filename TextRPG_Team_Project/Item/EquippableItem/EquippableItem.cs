@@ -14,7 +14,7 @@
         public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
         public int ItemCount { get { return itemCount; } set { itemCount = value; } }
         public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
-        public bool IsEquipped { get { return isEquipped; } private set { isEquipped = value; } }
+        public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
 
         public void GetItem(int addItemCount)
         {
