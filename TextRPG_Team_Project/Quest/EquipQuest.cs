@@ -14,7 +14,9 @@ namespace TextRPG_Team_Project.Quest
 		private string _equipmentItem;
 
 		[JsonIgnore]
-		public string ShortDescription { get { return $"{_equipmentItem}을 착용하기."; } }
+		public string ShortDescription { get { return $"{_equipmentItem}을(를) 착용하기."; } }
+
+		#region [Conductor]
 		public EquipQuest(string name, string description, string equipment, Reward reward) : base(name, description, reward)
 		{
 			_equipmentItem = equipment;
@@ -23,6 +25,13 @@ namespace TextRPG_Team_Project.Quest
 		public EquipQuest(string name, string description, string equipment, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
 			_equipmentItem = equipment;
+		}
+		#endregion
+
+		public override string Tostring()
+		{
+			string str = $"{base.Tostring()} | {ShortDescription}";
+			return str;
 		}
 
 		public override void AcceptQuest()

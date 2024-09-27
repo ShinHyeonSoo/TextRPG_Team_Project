@@ -16,7 +16,7 @@ namespace TextRPG_Team_Project.Quest
 		public int GoalUseCount { get; init; }
 
 		[JsonIgnore]
-		public string ShortDescription { get { return $"{_potionName}을/를 {_useCount}개 사용 | {_potionName}/{_useCount}"; } }
+		public string ShortDescription { get { return $"{_potionName}을(를) {_useCount}개 사용 | {_potionName}/{_useCount}"; } }
 
 		#region Constructor
 		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)

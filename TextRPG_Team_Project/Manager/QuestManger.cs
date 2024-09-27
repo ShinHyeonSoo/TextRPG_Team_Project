@@ -42,11 +42,22 @@ namespace TextRPG_Team_Project.Quest
 				"공허충",
 				1,
 				new Reward(700)));
-			Quests.Add(new MonsterKillQuest(
+			Quests.Add(new PotionUseQuest(
 				"회복 포션 사용",
 				"모험가라면 회복 포션도 사용할 줄 알아야하는 법.\n 회복포션을 사용해보고오면 보상을 줄께",
 				"회복포션",
 				1,
+				new Reward(700)));
+			Quests.Add(new EquipQuest(
+				"나무칼 착용",
+				"모험하러 가는데 그 꼴로 갈거야? \n나무칼이라도 챙기지 그래?",
+				"나무 칼",
+				new Reward(700)));
+
+			Quests.Add(new LevelQuest(
+				"2레벨 달성",
+				"레벨 2레벨을 달성해오라구~",
+				2,
 				new Reward(700)));
 
 		}

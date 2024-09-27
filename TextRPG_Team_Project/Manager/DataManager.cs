@@ -20,7 +20,7 @@
         public Character GetPlayer() 
         {
             if (_player == null)
-                return null;
+                return new Character("홍길동", 1,100,1,1);
 
             return _player; 
         }

@@ -8,21 +8,29 @@ using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
-	public class CharacterLevelQuest : Quest
+	public class LevelQuest : Quest
 	{
 		private int _targetLevel;
 
 		[JsonIgnore]
 		public string ShortDescription { get { return $"{_targetLevel} 달성 | {GameManager.Instance.Data.GetPlayer().Level}/{_targetLevel}"; } }
 
-		public CharacterLevelQuest(string name, string description, int targetLevel, Reward reward) : base(name, description, reward)
+		#region [Conductor]
+		public LevelQuest(string name, string description, int targetLevel, Reward reward) : base(name, description, reward)
 		{
 			_targetLevel = targetLevel;
 		}
 
-		public CharacterLevelQuest(string name, string description, int targetLevel, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public LevelQuest(string name, string description, int targetLevel, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
 		{
 			_targetLevel = targetLevel;
+		}
+		#endregion
+
+		public override string Tostring()
+		{
+			string str = $"{base.Tostring()} | {ShortDescription}";
+			return str;
 		}
 
 		public override void AcceptQuest()
@@ -36,7 +44,7 @@ namespace TextRPG_Team_Project.Quest
 
 		public void CheckUserLevel()
 		{
-			if(level == _targetLevel)
+			if(GameManager.Instance.Data.GetPlayer().Level == _targetLevel)
 			{
 				CompleteQuest();
 			}
