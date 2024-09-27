@@ -59,9 +59,6 @@ namespace TextRPG_Team_Project.Scene
 			_status = status;
 		}
 		public void GameMain()
-			/*
-			 디버깅을 위한 임시 게임메인
-			 */
 		{
 			while (true)
 			{
@@ -82,12 +79,11 @@ namespace TextRPG_Team_Project.Scene
 					case Defines.GameStatus.Inventory:  // 3
 						_inventoryScene.PlayScene();
 						break;
-					case Defines.GameStatus.Quest:  // 4
+					case Defines.GameStatus.Quest:      // 4
 						_questScene.PlayScene();
 						break;
-					case Defines.GameStatus.Save:  // 5
-						GameManager.Instance.PlayerRecored.increseMonsterKillCount("미니언");
-						GoHomeScene();
+					case Defines.GameStatus.Save:     // 5
+						_saveScene.PlayScene();
 						break;
 				}
 			}
