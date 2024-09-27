@@ -37,14 +37,14 @@ namespace TextRPG_Team_Project.Scene
 		public override int PlayScene()
 		{
 			DisplayInitScene();
-			GameManager.GetNumberInput(1, 2);
+			Utils.GetNumberInput(1, 2);
 
 			DisplaySetCharacterName();
 			string characterName = Console.ReadLine();
 			// 케릭터의 이름을 정하는  부분 추가 필요
 			DataManager.Instance().CreatePlayer(characterName); // 임시 메서드
 			DisplaySetCharacterJob();
-			GameManager.GetNumberInput(1, 4);
+			Utils.GetNumberInput(1, 4);
 			// 케릭터의 직업을 정하는 부분 추가 필요
 
 			return 0;
