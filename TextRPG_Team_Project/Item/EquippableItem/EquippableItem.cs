@@ -2,6 +2,9 @@
 {
     public class EquippableItem : IItem, IEquippable
     {
+        protected Shop shop = new Shop();
+        Character character = DataManager.Instance().GetPlayer();
+
         protected string name = "보이면 안되는 장비이름";
         protected int itemPrice = 0;
         protected int itemCount = 0;
@@ -28,7 +31,7 @@
             }
         }
 
-        public void EquipThis(Character character)
+        public virtual void EquipThis(Character character)
         {
             // 장비하지 않았을 때.
             if (!isEquipped)
@@ -50,7 +53,7 @@
             }
         }
 
-        public void UnEquipThis(Character character)
+        public virtual void UnEquipThis(Character character)
         {
             // 장비되어 있을 때
             if (isEquipped)
@@ -65,20 +68,23 @@
             }
         }
 
-        public void SellThis(Character character)
+        public virtual void SellThis(Character character)
         {
             // 있을 때
             if (itemCount > 0)
-            { 
+            {
+                if (this.isEquipped)
+                {
+                    this.UnEquipThis(character);
+                }
                 Console.WriteLine("판매완료");
                 this.itemCount--;
                 character.Gold += this.itemPrice;
-                
             }
             // 없을 때
             else
             {
-                Console.WriteLine("판매할 수 없습니다.");
+                Console.WriteLine("판매할 아이템이 없습니다.");
             }
         }
 
@@ -93,7 +99,7 @@
             }
             else
             {
-                Console.WriteLine("구입할 수 없습니다.");
+                Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
             }
         }
     }

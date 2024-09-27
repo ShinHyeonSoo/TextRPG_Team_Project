@@ -4,6 +4,8 @@ namespace TextRPG_Team_Project.Item.Potions
 {
     public class Potion : IItem, IConsumable
     {
+        Character character = DataManager.Instance().GetPlayer();
+
         protected string name = "보이면 안되는 물약이름";
         protected int itemPrice = 0;
         protected int itemCount = 0;
@@ -57,7 +59,7 @@ namespace TextRPG_Team_Project.Item.Potions
             // 없을 때
             else
             {
-                Console.WriteLine("판매할 수 없습니다.");
+                Console.WriteLine("판매할 아이템이 없습니다.");
             }
         }
 
@@ -72,7 +74,7 @@ namespace TextRPG_Team_Project.Item.Potions
             }
             else
             {
-                Console.WriteLine("구입할 수 없습니다.");
+                Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
             }
         }
     }
