@@ -17,6 +17,7 @@ namespace TextRPG_Team_Project
 
         public void Skill1(Monster _target)
         {
+            string name = "스킬1";
             float damage = Attack + 20;
             Console.WriteLine($"{Name}가 추가될 스킬을 사용하여 {_target.Name}에게 {damage}의 데미지를 주었습니다.");
             _target.TakeDamage(damage);
@@ -24,13 +25,29 @@ namespace TextRPG_Team_Project
         }
         public void Skill2(Monster _target)
         {
+            string name = "스킬2";
             float damage = Attack + 20;
             Console.WriteLine($"{Name}가 추가될 스킬을 사용하여 {_target.Name}에게 {damage}의 데미지를 주었습니다.");
             _target.TakeDamage(damage);
 
         }
+        public void UseSkill(int skillNumber, Monster target)
+        {
+            switch (skillNumber)
+            {
+                case 1:
+                    Skill1(target);
+                    break;
+                case 2:
+                    Skill2(target);
+                    break;
+                default:
+                    Console.WriteLine($"사용할 수 있는 스킬이 아닙니다.");
+                    break;
+            }
 
 
+        }
 
     }
 }
