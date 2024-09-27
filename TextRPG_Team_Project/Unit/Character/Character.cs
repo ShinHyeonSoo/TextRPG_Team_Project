@@ -16,11 +16,13 @@ namespace TextRPG_Team_Project
         public string Name { get; private set; }
         public int Gold { get; }
         public int Level { get; private set; }
-        public int MaxHealth { get; }
-        public int Health { get; private set; }      
+        public int MaxHealth { get; set; }
+        public int Health { get; set; }      
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
         public bool IsDead { get; private set; }
+        
+        public string Job { get; protected set; }
 
         private int exp = 0;
 
@@ -31,15 +33,20 @@ namespace TextRPG_Team_Project
         public Weapon currentWeapon;
         public Armor currentArmor;
 
-        public Character(String _name , int _level, int _health , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
+        public Character(String _name , int _level, int _maxHealth , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
         {
 
             Name = _name;
             Level = _level;
-            Health = _health;
+            MaxHealth = _maxHealth;
+            Health = MaxHealth;
             Attack = _attack;
             Defense = _defense;
             IsDead = false;
+
+            Weapon = new List<Weapon>();
+            armor = new List<Armor>();  
+            potion = new List<Potion>();    
             
             
         }
@@ -100,19 +107,26 @@ namespace TextRPG_Team_Project
 
         public void LevelUp() // 경험치 100초과시 레벨업 
         {
-            Health += 10;
+            MaxHealth += 10;
             Attack += 10;
             Level += 1;
 
+            Console.WriteLine($"Level Up !! / 최대 체력 : +10 증가하여 {MaxHealth} , 공격력 : + 10 증가하여 {Attack} , 레벨 : +1 증가하여 {Level}");
             
         }
 
-        public string GetStatus()
+        public string GetStatus() // 유저의 status의 정보를 알려주는 함수
         {
             string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
             return $"이름: {Name}, 레벨: {Level}, 체력: {Health}, 공격력: {Attack}, 방어력: {Defense}, 무기{weaponName}, 방어구{armorName}";
+
+        }
+
+        public string GetUserinfoShort()
+        {
+            return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}";
 
         }
 
@@ -139,6 +153,7 @@ namespace TextRPG_Team_Project
 
         }
 
+     
    
       
 
