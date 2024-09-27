@@ -50,7 +50,7 @@
             {
                 Console.WriteLine("판매완료");
                 this.itemCount--;
-                // character.Gold += this.itemPrice;
+                //character.Gold += this.itemPrice;
             }
             // 없을 때
             else
@@ -94,14 +94,14 @@
             {
                 // 포션의 회복량은 30(potionEffect)
 
-                // character.Health += potionEffect;                // Character의 set 접근자제한걸림
+                character.Health += potionEffect;                // Character의 set 접근자제한걸림
                 Console.WriteLine($"체력이 {this.potionEffect}만큼 회복되었습니다.");
 
                 // 최대체력보다 높게 회복되지는 않음
                 
                 if(character.Health > character.MaxHealth)
                 {
-                    // character.Health = character.MaxHealth;      // Character의 set 접근자제한걸림
+                    character.Health = character.MaxHealth;      // Character의 set 접근자제한걸림
                 }
                 itemCount--;
             }
