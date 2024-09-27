@@ -6,6 +6,7 @@ using TextRPG_Team_Project;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
+using TextRPG_Team_Project.Scene;
 namespace TextRPG_Team_Project
 {
 
@@ -110,7 +111,7 @@ namespace TextRPG_Team_Project
             MaxHealth += 10;
             Attack += 10;
             Level += 1;
-
+            GameManager.Instance.PlayerRecored.NotifyUserLevelUp();
             Console.WriteLine($"Level Up !! / 최대 체력 : +10 증가하여 {MaxHealth} , 공격력 : + 10 증가하여 {Attack} , 레벨 : +1 증가하여 {Level}");
             
         }
@@ -135,7 +136,7 @@ namespace TextRPG_Team_Project
      
         public void EquipWeapon(Weapon _weapon)
         {
-
+            GameManager.Instance.PlayerRecored.NotifyUserEuipment(_weapon.Name);
             currentWeapon = _weapon;
             Attack += _weapon.WeaponAttack;
 
@@ -143,7 +144,8 @@ namespace TextRPG_Team_Project
     
         public void EquipArmor(Armor _armor)
         {
-            currentArmor = _armor;
+			GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
+			currentArmor = _armor;
             Defense += _armor.ArmorDefence;
         }
 
