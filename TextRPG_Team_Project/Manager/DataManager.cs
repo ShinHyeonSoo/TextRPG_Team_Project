@@ -7,7 +7,13 @@ namespace TextRPG_Team_Project
     {
         private static DataManager _instance;
 
+        private Random _random;
         private Character _player;
+
+        public DataManager()
+        {
+            _random = new Random();
+        }
 
         public static DataManager Instance()
         {
@@ -17,6 +23,14 @@ namespace TextRPG_Team_Project
             }
 
             return _instance;
+        }
+
+        public Random GetRandom()
+        {
+            if (_random == null)
+                return null;
+
+            return _random;
         }
 
         #region 임시 메서드

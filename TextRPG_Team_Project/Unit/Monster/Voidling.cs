@@ -5,7 +5,7 @@
         public Voidling(string name, int level, int maxHealth, float attack, int defense, int gold)
             : base(name, level, maxHealth, attack, defense, gold)
         {
-
+            _type = MonsterType.VOILDING;
         }
 
         public override string MonsterInfo()

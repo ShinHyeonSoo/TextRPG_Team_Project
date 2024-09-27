@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TextRPG_Team_Project.Scene
@@ -16,14 +17,18 @@ namespace TextRPG_Team_Project.Scene
 
 		enum BattleStatus
 		{
-			Start=0,
-			PlayerTurn,
-			SkillSelect,
+			Start,
 			TargetSelect,
+			SkillSelect,
+			PlayerTurn,
 			EnermyTurn,
-
+			Victory,
 		}
 		private BattleStatus _status;
+		private int _depth;
+		private int _targetNum;
+        private int _prevPlayerHealth;
+        private int _monstersCount;
 
 		// 플레이어 할당받을 변수 필요
 		// 던전등 배틀을 관리하는 매니저 필요
@@ -35,82 +40,200 @@ namespace TextRPG_Team_Project.Scene
             _battleManager = new();
 
             _status = BattleStatus.Start;
-
-			
-				
-			
-		}
+			_depth = 0;
+			_targetNum = 0;
+        }
 
 		public override void DisplayInitScene()
 		{
-            Character player = GameManager.Instance.Data.GetPlayer();
-            UserInfo += player.GetUserInfoShort;
+            //Character player = GameManager.Instance.Data.GetPlayer();
+            //UserInfo += player.GetUserInfoShort;
             DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("적들의 정보 출력\n");
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
+            //Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
-            DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
+            #region 플레이어 정보 임시
+            Character player = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
+            _prevPlayerHealth = player.Health;
+            _monstersCount = _battleManager.Monsters.Count;
+            #endregion
+
+            DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
 			DisplayGetInputNumber();
 		}
 
-		public void DisplayPlayerSkillSelect()
+        public void DisplayPlayerSkillSelect()
 		{
-			DisplayIntro("Battle");
+            ++_depth;
+
+            DisplayIntro("Battle");
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-			Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
+			//Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
+
+            #region 플레이어 정보 임시
+            Character temp = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
+            #endregion
 
             Console.WriteLine("캐릭터의 스킬 출력");
-			Console.WriteLine("0. 취소");
+			Console.WriteLine("0. 취소\n");
 			DisplayGetInputNumber();
 		}
-		public void DisplayPlayerTargetSelect()
+		public int DisplayPlayerTargetSelect()
 		{
-			DisplayIntro("Battle");
-			Console.WriteLine();
-			Console.WriteLine("적들의 정보 출력");
-			Console.WriteLine();
-			Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
-			Console.WriteLine("캐릭터의 선택된 행동에 대한 설명 출력");
-			Console.WriteLine("0. 취소");
-		}
+			++_depth;
+
+            DisplayIntro("Battle");
+			Console.WriteLine(); 
+			_battleManager.MonsterInfo(StageEnemyInfo);
+            Console.WriteLine();
+            //Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
+
+            #region 플레이어 정보 임시
+            Character player = DataManager.Instance().GetPlayer();
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
+            #endregion
+
+            Console.WriteLine("\n기본 공격!\n");
+			DisplayGetInputString("대상");
+
+			int maxValue = _battleManager.Monsters.Count + 1;
+			int input = Utils.GetNumberInput(0, maxValue);
+			_targetNum = input;
+
+			if (input == 0)
+			{
+				_status = (BattleStatus)input;
+			}
+			else
+			{
+                if (_battleManager.Monsters[_targetNum - 1].IsDead)
+                {
+                    _status = BattleStatus.TargetSelect;
+                    Console.WriteLine("\n사망한 몬스터는 선택할 수 없습니다...");
+                    Thread.Sleep(1000);
+                    return input;
+                }
+                _status = BattleStatus.PlayerTurn;
+			}
+
+            return input;
+        }
+
 		public void DisplayPlayerAttackLog()
 		{
-			DisplayIntro("Battle");
+            ++_depth;
+
+            DisplayIntro("Battle");
 			Console.WriteLine();
-			Console.WriteLine("공격로그");
-		}
+
+            _battleManager.AttacktoMonster(_targetNum);
+			
+            if(!_battleManager.CheckAliveMonsters())
+            {
+                _status = BattleStatus.Victory;
+                return;
+            }
+
+            _status = BattleStatus.EnermyTurn;
+        }
 		public void DisplayEnemyAttackLog()
 		{
-			DisplayIntro("Battle");
-			Console.WriteLine();
-			Console.WriteLine("공격로그");
-		}
+            ++_depth;
 
-		public override void PlayScene()
+            DisplayIntro("Battle");
+			Console.WriteLine();
+
+            _battleManager.AttacktoPlayer(_targetNum);
+
+            // TODO : 플레이어 사망처리
+            
+
+            _status = BattleStatus.Start;
+
+			--_depth;
+        }
+
+        public void DisplayVictoryLog()
+        {
+            ++_depth;
+
+            DisplayIntro("Battle");
+
+            Console.WriteLine("[Result]\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Victory\n");
+            Console.ResetColor();
+
+            Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
+
+            //#region 플레이어 정보 임시
+            //Character player = DataManager.Instance().GetPlayer();
+            //Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+            //Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
+            //#endregion
+
+            Utils.GetNumberInput(0, 1);
+
+            _battleManager.CollectMonster();
+            GameManager.Instance.GoHomeScene();
+            _status = BattleStatus.Start;
+
+            --_depth;
+        }
+
+        public override void PlayScene()
 		{
-			switch (_status)
+			int input = -1;
+
+            switch (_status)
 			{
-				case BattleStatus.Start:
+                case BattleStatus.Start:
 					DisplayInitScene();
-					break;
-				case BattleStatus.PlayerTurn:
-					DisplayInitScene();
-					break;
+                    input = Utils.GetNumberInput(0, 2);
+                    break;
+				case BattleStatus.TargetSelect:
+                    input = DisplayPlayerTargetSelect();
+                    break;
 				case BattleStatus.SkillSelect:
 					DisplayPlayerSkillSelect();
 					break;
-				case BattleStatus.TargetSelect:
-					DisplayPlayerTargetSelect();
-					break;
+				case BattleStatus.PlayerTurn:
+                    DisplayPlayerAttackLog();
+                    break;
 				case BattleStatus.EnermyTurn:
 					DisplayEnemyAttackLog();
 					break;
-			}
-		}
+                case BattleStatus.Victory:
+                    DisplayVictoryLog();
+                    break;
+            }
+
+			if(_depth == 0)
+			{
+				switch(input)
+				{
+					case 0:
+                        _battleManager.CollectMonster();
+                        GameManager.Instance.GoHomeScene();
+                        break;
+                    case 1:
+						_status = BattleStatus.TargetSelect;
+                        break;
+                    case 2:
+						_status = BattleStatus.SkillSelect;
+                        break;
+                }
+				return;
+            }
+
+			--_depth;
+        }
 	}
 }
