@@ -62,6 +62,7 @@ namespace TextRPG_Team_Project.Item
                     DisplayCharacterPotionInventory();
                     break;
             }
+            
         }
 
         // 인벤토리 메서드
@@ -105,7 +106,7 @@ namespace TextRPG_Team_Project.Item
             int tempInput = int.Parse(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput > character.Weapon.Count)
+                if (tempInput < character.Weapon.Count)
                 {
                     if (!character.Weapon[tempInput].IsEquipped)
                     {
@@ -166,7 +167,7 @@ namespace TextRPG_Team_Project.Item
             int tempInput = int.Parse(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput > character.armor.Count)
+                if (tempInput < character.armor.Count)
                 {
                     if (!character.armor[tempInput].IsEquipped)
                     {
