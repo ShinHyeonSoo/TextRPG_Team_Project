@@ -1,7 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using TextRPG_Team_Project;
+using TextRPG_Team_Project.Item.EquippableItem.Armors;
+using TextRPG_Team_Project.Item.EquippableItem.Weapons;
+using TextRPG_Team_Project.Item.Potions;
 namespace TextRPG_Team_Project
 {
 
@@ -18,8 +22,11 @@ namespace TextRPG_Team_Project
         public int Defense { get; }     
         public bool IsDead { get; private set; }
 
-        private int exp = 0;      
+        private int exp = 0;
 
+        public List<Weapon> Weapon;
+        public List<Armor> armor;
+        public List<Potion> potion;
 
 
         public Character(String _name , int _level, int _health , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
@@ -32,8 +39,9 @@ namespace TextRPG_Team_Project
             Defense = _defense;
             IsDead = false;
 
-
-
+            Weapon = new List<Weapon>();    
+            armor = new List<Armor>();
+            potion = new List<Potion>();
 
         }
 
@@ -103,7 +111,6 @@ namespace TextRPG_Team_Project
         
 
     
-
 
 
     }
