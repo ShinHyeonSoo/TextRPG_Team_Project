@@ -10,7 +10,7 @@ using TextRPG_Team_Project.Scene;
 namespace TextRPG_Team_Project
 {
 
-    public class Character : IUnit
+    public abstract class Character : IUnit
     {
 
 
@@ -136,6 +136,11 @@ namespace TextRPG_Team_Project
      
         public void EquipWeapon(Weapon _weapon)
         {
+            if (currentWeapon != null)
+            {
+                Attack -= currentWeapon.WeaponAttack;
+            }
+
             GameManager.Instance.PlayerRecored.NotifyUserEuipment(_weapon.Name);
             currentWeapon = _weapon;
             Attack += _weapon.WeaponAttack;
@@ -144,6 +149,10 @@ namespace TextRPG_Team_Project
     
         public void EquipArmor(Armor _armor)
         {
+            if(currentArmor != null)
+            {
+                Attack -= currentArmor.ArmorDefence;
+            }
 			GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
 			currentArmor = _armor;
             Defense += _armor.ArmorDefence;
@@ -157,9 +166,11 @@ namespace TextRPG_Team_Project
 
         }
 
-     
-   
-      
+        public abstract void Skill1(Monster _target);
+
+        public abstract void Skill2(Monster _target);
+
+
 
     }
 

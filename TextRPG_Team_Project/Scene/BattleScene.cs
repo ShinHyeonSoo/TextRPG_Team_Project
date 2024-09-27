@@ -50,9 +50,9 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("적들의 정보 출력\n");
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine(UserInfo?.Invoke());
+            Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
-			DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
+            DisplayOption(new List<string>() { "1. 공격", "2. 스킬" });
 			DisplayGetInputNumber();
 		}
 
@@ -62,9 +62,9 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-			Console.WriteLine("캐릭터의 간단한 정보 출력");
+			Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
-			Console.WriteLine("캐릭터의 스킬 출력");
+            Console.WriteLine("캐릭터의 스킬 출력");
 			Console.WriteLine("0. 취소");
 			DisplayGetInputNumber();
 		}
@@ -74,7 +74,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-			Console.WriteLine("캐릭터의 간단한 정보 출력");
+			Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
 			Console.WriteLine("캐릭터의 선택된 행동에 대한 설명 출력");
 			Console.WriteLine("0. 취소");
 		}
