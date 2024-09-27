@@ -23,7 +23,7 @@ namespace TextRPG_Team_Project
         public Character GetPlayer() 
         {
             if (_player == null)
-                return new Character("홍길동", 1,100,1,1);
+                return new Warrior("홍길동", 1,100,1,1);
 
             return _player; 
         }
