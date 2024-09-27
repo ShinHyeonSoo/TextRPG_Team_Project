@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
@@ -13,6 +14,9 @@ namespace TextRPG_Team_Project.Quest
 		private int _useCount;
 
 		public int GoalUseCount { get; init; }
+
+		[JsonIgnore]
+		public string ShortDescription { get { return $"{_potionName}을(를) {_useCount}개 사용 | {_potionName}/{_useCount}"; } }
 
 		#region Constructor
 		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
@@ -30,7 +34,7 @@ namespace TextRPG_Team_Project.Quest
 		#endregion
 		public override string Tostring()
 		{
-			string str = $"{base.Tostring()} | {_potionName}을 {GoalUseCount}회 사용";
+			string str = $"{base.Tostring()} | {ShortDescription}";
 			return str;
 		}
 

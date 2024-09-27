@@ -47,6 +47,7 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void PlayScene()
 		{
+
 			int userInput = 0;
 			switch (_state)
 			{

@@ -20,11 +20,13 @@ namespace TextRPG_Team_Project.Scene
 		}
 		public void DisplayGetInputNumber()
 		{
+			Console.WriteLine();
 			Console.WriteLine("원하시는 행동을 입력해주세요.");
 			Console.Write(">>>   ");
 		}
 		public void DisplayGetInputString(string setting)
 		{
+			Console.WriteLine();
 			Console.WriteLine($"원하시는 {setting}을 입력해주세요.");
 			Console.Write(">>>   ");
 		}
@@ -42,7 +44,10 @@ namespace TextRPG_Team_Project.Scene
 		}
 		public static void WrongInput()
 		{
-			Console.WriteLine("잘못입력하셨습니다.");
+			(int left, int top) = Console.GetCursorPosition();
+			Console.SetCursorPosition(0, top-2);
+			Console.WriteLine("잘못입력하셨습니다. 다시 입력해주세요.");
+			Console.Write(">>>   ");
 		}
 	}
 }
