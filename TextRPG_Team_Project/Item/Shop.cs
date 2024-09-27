@@ -13,17 +13,17 @@ namespace TextRPG_Team_Project.Item
 
         public Weapon[] weaponArr = {
             new Weapon("맨주먹", 0, 1, true, 0),
-            new Weapon("무기1", 100, 1, false, 5),
-            new Weapon("무기2", 200, 1, false, 10),
-            new Weapon("무기3", 500, 1, false, 15),
-            new Weapon("무기4", 1000, 1, false, 20)
+            new Weapon("무기1", 100, 0, false, 5),
+            new Weapon("무기2", 200, 0, false, 10),
+            new Weapon("무기3", 500, 0, false, 15),
+            new Weapon("무기4", 1000, 0, false, 20)
         };
         public Armor[] armorArr = {
             new Armor("기본옷", 0, 1, true, 0),
-            new Armor("아머1", 100, 1, false, 5),
-            new Armor("아머2", 200, 1, false, 10),
-            new Armor("아머3", 500, 1, false, 15),
-            new Armor("아머4", 1000, 1, false, 20)
+            new Armor("아머1", 100, 0, false, 5),
+            new Armor("아머2", 200, 0, false, 10),
+            new Armor("아머3", 500, 0, false, 15),
+            new Armor("아머4", 1000, 0, false, 20)
         };
 
         public Potion[] potionArr = {
@@ -39,14 +39,38 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("2. 방어구 가방");
             Console.WriteLine("3. 물약 가방");
             Console.WriteLine("==========");
+
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Console.WriteLine("무기 가방");
+                    DisplayCharacterWeaponInventory();
+                    break;
+                case 2:
+                    Console.WriteLine("방어구 가방");
+                    DisplayCharacterArmorInventory();
+                    break;
+                case 3:
+                    Console.WriteLine("물약 가방");
+                    DisplayCharacterPotionInventory();
+                    break;
+            }
         }
+
+        // 인벤토리 메서드
 
         void DisplayCharacterWeaponInventory()
         {
+            CharacterInventoryReset();
             Console.WriteLine("===무기 가방===");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
 
-            for (int i = 0; i < character.Weapon.Count; i++)
+            for (int i = 1; i < character.Weapon.Count ; i++)
             {
                 DisplayWeaponInventory(i);
             }
@@ -54,12 +78,32 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine();
         }
 
+        void DisplayWeaponInventory(int indexNum)
+        {
+            string indexNumber = $"{indexNum}";
+            string weaponName = $"{character.Weapon[indexNum].Name}";
+            string weaponPrice = $"{character.Weapon[indexNum].ItemPrice}";
+            string weaponCount;
+            if (character.Weapon[indexNum].ItemCount < character.Weapon[indexNum].ItemCountMax)
+            {
+                weaponCount = $"{character.Weapon[indexNum].ItemCount}개 보유";
+            }
+            else
+            {
+                weaponCount = "[최대보유]";
+            }
+            string WeaponAttack = $"{character.Weapon[indexNum].WeaponAttack}";
+
+            Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+        }
+
         void DisplayCharacterArmorInventory()
         {
+            CharacterInventoryReset();
             Console.WriteLine("==방어구 가방==");
             Console.WriteLine(" |이름|\t방어력|\t가격|  소지수");
 
-            for (int i = 0; i < character.armor.Count; i++)
+            for (int i = 1; i < character.armor.Count ; i++)
             {
                 DisplayArmorInventory(i);
             }
@@ -67,8 +111,28 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine();
         }
 
+        void DisplayArmorInventory(int indexNum)
+        {
+            string indexNumber = $"{indexNum}";
+            string armorName = $"{character.armor[indexNum].Name}";
+            string armorPrice = $"{character.armor[indexNum].ItemPrice}";
+            string armorCount;
+            if (character.armor[indexNum].ItemCount < character.armor[indexNum].ItemCountMax)
+            {
+                armorCount = $"{character.armor[indexNum].ItemCount}개 보유";
+            }
+            else
+            {
+                armorCount = "[최대보유]";
+            }
+            string armorDefence = $"{character.armor[indexNum].ArmorDefence}";
+
+            Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
+        }
+
         void DisplayCharacterPotionInventory()
         {
+            CharacterInventoryReset();
             Console.WriteLine("===물약 가방===");
             Console.WriteLine(" |이름|\t효과|\t가격|  소지수");
             for (int i = 0; i < character.potion.Count; i++)
@@ -80,8 +144,48 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine();
         }
 
+        void DisplayPotionInventory(int indexNum)
+        {
+            string indexNumber = $"{indexNum}";
+            string potionName = $"{character.potion[indexNum].Name}";
+            string potionPrice = $"{character.potion[indexNum].ItemPrice}";
+            string potionCount;
+            if (character.potion[indexNum].ItemCount < character.potion[indexNum].ItemCountMax)
+            {
+                potionCount = $"{character.potion[indexNum].ItemCount}개 보유";
+            }
+            else
+            {
+                potionCount = "[최대보유]";
+            }
+            string potionEffect = $"{character.potion[indexNum].PotionEffect}";
 
-        public void DisplayWeaponShopArr()
+            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
+        }
+
+        // 상점 메서드
+
+        void WeaponShop()
+        {
+            DisplayWeaponShopArr();
+
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    weaponArr[tempInput].BuyThis(character);
+                    break;
+            }
+        }
+
+        void DisplayWeaponShopArr()
         {
             Console.WriteLine("==무기상점==");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
@@ -111,26 +215,27 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
         }
 
-        void DisplayWeaponInventory(int indexNum)
+        void ArmorShop()
         {
-            string indexNumber = $"{indexNum}";
-            string weaponName = $"{character.Weapon[indexNum].Name}";
-            string weaponPrice = $"{character.Weapon[indexNum].ItemPrice}";
-            string weaponCount;
-            if (character.Weapon[indexNum].ItemCount < character.Weapon[indexNum].ItemCountMax)
-            {
-                weaponCount = $"{character.Weapon[indexNum].ItemCount}개 보유";
-            }
-            else
-            {
-                weaponCount = "[최대보유]";
-            }
-            string WeaponAttack = $"{character.Weapon[indexNum].WeaponAttack}";
+            DisplayArmorShopArr();
 
-            Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    armorArr[tempInput].BuyThis(character);
+                    break;
+            }
         }
 
-        public void DisplayArmorShopArr()
+        void DisplayArmorShopArr()
         {
             Console.WriteLine("==방어구상점==");
             Console.WriteLine(" |\t이름|\t방어력|\t가격|  소지수");
@@ -160,26 +265,24 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
         }
 
-        void DisplayArmorInventory(int indexNum)
+        void PotionShop()
         {
-            string indexNumber = $"{indexNum}";
-            string armorName = $"{character.armor[indexNum].Name}";
-            string armorPrice = $"{character.armor[indexNum].ItemPrice}";
-            string armorCount;
-            if (character.armor[indexNum].ItemCount < character.armor[indexNum].ItemCountMax)
-            {
-                armorCount = $"{character.armor[indexNum].ItemCount}개 보유";
-            }
-            else
-            {
-                armorCount = "[최대보유]";
-            }
-            string armorDefence = $"{character.armor[indexNum].ArmorDefence}";
+            DisplayPotionShopArr();
 
-            Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    potionArr[tempInput].BuyThis(character);
+                    break;
+            }
         }
 
-        public void DisplayPotionShopArr()
+        void DisplayPotionShopArr()
         {
             Console.WriteLine("==물약상점==");
             Console.WriteLine(" |\t이름| 효과|\t가격|  소지수");
@@ -209,23 +312,91 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
         }
 
-        void DisplayPotionInventory(int indexNum)
+        
+        void SellItems()
         {
-            string indexNumber = $"{indexNum}";
-            string potionName = $"{character.potion[indexNum].Name}";
-            string potionPrice = $"{character.potion[indexNum].ItemPrice}";
-            string potionCount;
-            if (character.potion[indexNum].ItemCount < character.potion[indexNum].ItemCountMax)
-            {
-                potionCount = $"{character.potion[indexNum].ItemCount}개 보유";
-            }
-            else
-            {
-                potionCount = "[최대보유]";
-            }
-            string potionEffect = $"{character.potion[indexNum].PotionEffect}";
+            Console.WriteLine("어떤 물건 판매?");
+            Console.WriteLine("1. 무기");
+            Console.WriteLine("2. 방어구");
+            Console.WriteLine("3. 물약");
 
-            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
+            CharacterInventoryReset(); Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Console.WriteLine("무기 판매");
+                    SellWeapons();
+                    break;
+                case 2:
+                    Console.WriteLine("방어구 판매");
+                    SellArmors();
+                    break;
+                case 3:
+                    Console.WriteLine("물약 판매");
+                    SellPotions();
+                    break;
+            }
+        }
+
+        void SellWeapons()
+        {
+            DisplayWeaponShopArr();
+
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    weaponArr[tempInput].SellThis(character);
+                    break;
+            }
+        }
+
+        void SellArmors()
+        {
+            DisplayArmorShopArr();
+
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    armorArr[tempInput].SellThis(character);
+                    break;
+            }
+        }
+
+        void SellPotions()
+        {
+            DisplayPotionShopArr();
+
+            Console.Write("디버그 선택: ");
+            int tempInput = int.Parse(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    potionArr[tempInput].SellThis(character);
+                    break;
+            }
         }
 
         void CharacterInventoryReset()
@@ -274,17 +445,49 @@ namespace TextRPG_Team_Project.Item
 
         public void DebugInventory()
         {
-            CharacterInventoryReset();
+            while(true)
+            {
+                Console.WriteLine("1. 인벤토리 출력 테스트");
+                Console.WriteLine("2. 무기 상점 테스트");
+                Console.WriteLine("3. 방어구 상점 테스트");
+                Console.WriteLine("4. 물약 상점 테스트");
+                Console.WriteLine("5. 판매 테스트");
+                Console.Write("디버그 선택: ");
+                int tempInput = int.Parse(Console.ReadLine());
 
-            DisplayCharacterWeaponInventory();
-            DisplayCharacterArmorInventory();
-            DisplayCharacterPotionInventory();
+                switch (tempInput)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.WriteLine("인벤토리 출력");
+                        DisplayCharacterInventory();
+                        break;
+                    case 2:
+                        Console.WriteLine("무기 상점");
+                        WeaponShop();
+                        break;
+                    case 3:
+                        Console.WriteLine("방어구 상점");
+                        ArmorShop();
+                        break;
+                    case 4:
+                        Console.WriteLine("물약 상점");
+                        PotionShop();
+                        break;
+                    case 5:
+                        Console.WriteLine("아이템 판매");
+                        SellItems();
+                        break;
 
-            DisplayWeaponShopArr();
-            DisplayArmorShopArr();
-            DisplayPotionShopArr();
+                }
+                if(tempInput == 0)
+                {
+                    break;
+                }    
+            }
 
-            Console.WriteLine();
+            Console.WriteLine("인벤토리 디버그 종료");
         }
 
 

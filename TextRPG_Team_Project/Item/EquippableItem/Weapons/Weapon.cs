@@ -64,10 +64,9 @@
                 {
                     this.UnEquipThis(character);
                 }
-                Console.WriteLine("판매완료");
+                Console.WriteLine($"{this.name} 판매완료");
                 this.itemCount--;
                 character.Gold += this.itemPrice;
-                character.Weapon.Remove(this);
             }
             // 없을 때
             else

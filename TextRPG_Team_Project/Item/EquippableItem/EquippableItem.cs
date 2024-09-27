@@ -76,7 +76,7 @@
                 {
                     this.UnEquipThis(character);
                 }
-                Console.WriteLine("판매완료");
+                Console.WriteLine($"{this.name} 판매완료");
                 this.itemCount--;
                 character.Gold += this.itemPrice;
             }
@@ -92,7 +92,7 @@
             // 최대치보다 적을 때
             if (itemCount < itemCountMax)
             {
-                Console.WriteLine("구입완료");
+                Console.WriteLine($"{this.name} 구입완료");
                 this.itemCount++;
                 character.Gold -= this.itemPrice;
             }

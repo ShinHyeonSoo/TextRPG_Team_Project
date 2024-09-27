@@ -61,7 +61,7 @@ namespace TextRPG_Team_Project.Item.Potions
             // 있을 때
             if (itemCount > 0)
             {
-                Console.WriteLine("판매완료");
+                Console.WriteLine($"{this.name} 판매완료");
                 this.itemCount--;
                 character.Gold += this.itemPrice;
             }
@@ -77,7 +77,7 @@ namespace TextRPG_Team_Project.Item.Potions
             // 최대치보다 적을 때
             if (itemCount < itemCountMax)
             {
-                Console.WriteLine("구입완료");
+                Console.WriteLine($"{this.name} 구입완료");
                 this.itemCount++;
                 character.Gold -= this.itemPrice;
             }
@@ -87,6 +87,7 @@ namespace TextRPG_Team_Project.Item.Potions
             }
         }
     }
+
     class HealthPotion : Potion
     {
         public HealthPotion(string _name, int _itemPrice, int _itemCount, int _potionEffect) : base(_name, _itemPrice, _itemCount, _potionEffect)
