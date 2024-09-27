@@ -1,12 +1,12 @@
 ﻿namespace TextRPG_Team_Project.Item.EquippableItem
 {
-    class EquippableItem : IItem, IEquippable
+    public class EquippableItem : IItem, IEquippable
     {
-        string name = "보이면 안되는 장비이름";
-        int itemPrice = 0;
-        int itemCount = 0;
-        int itemCountMax = 1;
-        bool isEquipped = false;
+        protected string name = "보이면 안되는 장비이름";
+        protected int itemPrice = 0;
+        protected int itemCount = 0;
+        protected int itemCountMax = 1;
+        protected bool isEquipped = false;
 
         public string Name { get { return name; } private set { name = value; } }
         public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
@@ -28,7 +28,7 @@
             }
         }
 
-        public void EquipThis()
+        public void EquipThis(Character character)
         {
             // 장비하지 않았을 때.
             if (!isEquipped)
@@ -50,7 +50,7 @@
             }
         }
 
-        public void UnEquipThis()
+        public void UnEquipThis(Character character)
         {
             // 장비되어 있을 때
             if (isEquipped)
@@ -65,11 +65,32 @@
             }
         }
 
-        int SetPrice()
+        public void SellThis(Character character)
         {
-            int price = 0;
+            // 있을 때
+            if (itemCount > 0)
+            { 
+                Console.WriteLine("판매완료");
+                
+            }
+            // 없을 때
+            else
+            {
+                Console.WriteLine("판매할 수 없습니다.");
+            }    
+        }
 
-            return price;
+        public void BuyThis(Character character)
+        {
+            // 최대치보다 적을 때
+            if (itemCount < itemCountMax)
+            {
+                Console.WriteLine("구입완료");
+            }
+            else
+            {
+                Console.WriteLine("구입할 수 없습니다.");
+            }
         }
     }
 }

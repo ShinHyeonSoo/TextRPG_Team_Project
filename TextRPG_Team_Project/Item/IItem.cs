@@ -1,6 +1,6 @@
 ﻿namespace TextRPG_Team_Project.Item
 {
-    interface IItem
+    public interface IItem
     {
         string Name { get; }
         int ItemPrice { get; }
@@ -8,19 +8,23 @@
         int ItemCountMax { get; }
 
         void GetItem(int addItemCount);
+
+        void SellThis(Character character);
+
+        void BuyThis(Character character);
     }
 
-    interface IEquippable
+    public interface IEquippable
     {
         bool IsEquipped { get; }
 
-        void EquipThis();
+        void EquipThis(Character character);
 
-        void UnEquipThis();
+        void UnEquipThis(Character character);
     }
 
-    interface IConsumable
+    public interface IConsumable
     {
-        void ConsumeThis();
+        void ConsumeThis(Character character);
     }
 }
