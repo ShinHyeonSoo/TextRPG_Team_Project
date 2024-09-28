@@ -52,42 +52,30 @@ namespace TextRPG_Team_Project
             
         }
 
-        public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음 , 정수면 그대로계산 , 소수면 올림후 계산
+        public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음
         {
-            Random random = new Random();
-            int intDamage;
+            Random random = GameManager.Instance.Data.GetRandom();
 
-            if(damage % 1 == 0)
-            {
-                intDamage = (int)damage;
-            }
+            
+            float errorMargin = (float)Math.Ceiling(damage * 0.1f);
 
-            else
-            {
-                intDamage = (int)damage + 1;
-            }
 
-            intDamage = random.Next((int)(intDamage * 0.9), intDamage + 1);
+            int intDamage = random.Next((int)(damage - errorMargin), (int)(damage + errorMargin+1));
 
-            int reducedDamage = intDamage - Defense;
-
-            if (reducedDamage < 0) reducedDamage = 0;
-
+            
+            int reducedDamage = Math.Max(0, intDamage - Defense);
             Health -= reducedDamage;
 
-            if (Health <= 0) // 사망판정
+            if (Health <= 0) 
             {
+                Health = 0;
                 IsDead = true;
-
                 Console.WriteLine($"{Name} 이(가) 사망하였습니다.");
             }
             else
             {
-
-                Console.WriteLine($"{reducedDamage} 의 피해를 입었습니다 ! {Name}의 남은 체력: {Health}");
+                Console.WriteLine($"{reducedDamage} 의 피해를 입었습니다! {Name}의 남은 체력: {Health}");
             }
-
-
         }
 
 
