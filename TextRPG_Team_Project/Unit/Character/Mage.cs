@@ -12,7 +12,12 @@ namespace TextRPG_Team_Project
         public Mage(String _name, int _level, int _health, int _attack, int _defense, int _mp) : base(_name, _level, _health, _attack, _defense , _mp)
         {
             Job = "마법사";
-           
+
+            Skill = new List<Skill>
+            {
+                new Skill("파이어볼", 2 , "공격력 * 2 로 하나의 적을 공격합니다." , 20),
+                new Skill("아이스 볼트", 2 , "공격력 * 1.5 로 하나의 적을 공격합니다." , 20)
+            };
 
         }
 

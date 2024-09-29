@@ -24,14 +24,10 @@ namespace TextRPG_Team_Project
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
         public bool IsDead { get; private set; }
-
         public int CurrentSkill { get; private set; } = 0;
-
         public int Mp { get; private set;}
         public int MaxMp { get; private set; }
-
-        public int CurrentAttack { get; private set; }
-        
+        public int CurrentAttack { get; private set; }     
         public string Job { get; protected set; }
 
         private int exp = 0;
@@ -128,7 +124,7 @@ namespace TextRPG_Team_Project
 
         public string GetUserInfoShort()
         {
-            return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}\nMP {MaxMp}/{Mp}";
+            return $"LV.{Level} {Name}  ({Job})\nHP {Health}/{MaxHealth}\nMP {Mp}/{MaxMp}";
 
         }
 
