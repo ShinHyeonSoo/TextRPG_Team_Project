@@ -98,7 +98,7 @@ namespace TextRPG_Team_Project.Scene
                 {
                     _skillInput = player.SetCurrentSkill(player.ManaChecker(_skillInput));
 
-                    if (_skillInput == 0)
+                    if (_skillInput < 0)
                     {
                         _status = BattleStatus.SkillSelect;
                         Console.WriteLine("마나가 부족합니다");                        
@@ -131,7 +131,7 @@ namespace TextRPG_Team_Project.Scene
             //Character player = DataManager.Instance().GetPlayer();
             //Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
             //#endregion
-            if (player.CurrentSkill == 0)
+            if (player.CurrentSkill < 0)
             {
                 Console.WriteLine("\n기본 공격!\n");
             }

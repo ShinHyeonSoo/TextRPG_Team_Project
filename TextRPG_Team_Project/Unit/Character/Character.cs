@@ -162,7 +162,7 @@ namespace TextRPG_Team_Project
 
             float damage;
 
-            if (CurrentSkill == 0)
+            if (CurrentSkill < 0)
             {
                 damage = Attack;
                 CurrentAttack = (int)Math.Ceiling(damage);
@@ -172,6 +172,7 @@ namespace TextRPG_Team_Project
             {
                 damage = Attack * Skill[CurrentSkill].DamageMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
+                Mp -= Skill[CurrentSkill].ManaCost;
                 CurrentSkill = 0;
             }
 

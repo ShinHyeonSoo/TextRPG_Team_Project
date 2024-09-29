@@ -128,7 +128,7 @@ namespace TextRPG_Team_Project
 
         public void AttacktoPlayer(int targetNum)
         {
-            Character player = DataManager.Instance().GetPlayer();
+            Character player = GameManager.Instance.Data.GetPlayer();
 
             foreach (var monster in _monsters)
             {
