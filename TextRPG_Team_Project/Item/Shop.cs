@@ -7,9 +7,7 @@ namespace TextRPG_Team_Project.Item
 {
     public class Shop
     {
-        // 테스트용
         Character character = DataManager.Instance().GetPlayer();
-        // 테스트용 끝
 
         public Weapon[] weaponArr = {
             new Weapon("맨주먹", 0, 1, true, 0),
@@ -33,7 +31,7 @@ namespace TextRPG_Team_Project.Item
 
 
         void DisplayCharacterInventory()
-        {
+        {   
             Console.WriteLine("=====가방=====");
             Console.WriteLine("1. 무기 가방");
             Console.WriteLine("2. 방어구 가방");
@@ -62,7 +60,7 @@ namespace TextRPG_Team_Project.Item
                     DisplayCharacterPotionInventory();
                     break;
             }
-            
+
         }
 
         // 인벤토리 메서드
