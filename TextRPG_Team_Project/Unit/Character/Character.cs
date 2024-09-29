@@ -173,7 +173,7 @@ namespace TextRPG_Team_Project
                 damage = Attack * Skill[CurrentSkill].DamageMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
                 Mp -= Skill[CurrentSkill].ManaCost;
-                CurrentSkill = 0;
+                CurrentSkill = -1;
             }
 
             _target.TakeDamage(damage);

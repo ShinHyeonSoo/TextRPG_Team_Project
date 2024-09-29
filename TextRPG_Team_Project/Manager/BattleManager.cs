@@ -29,9 +29,9 @@ namespace TextRPG_Team_Project
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 100, 1, 1, 100));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 100, 5, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 100, 3, 0, 100));
+                _minions.Enqueue(new Minion("미니언", 2, 10, 1, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 20, 5, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 30, 3, 0, 100));
             }
         }
 
