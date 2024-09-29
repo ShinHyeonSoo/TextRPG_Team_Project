@@ -2,15 +2,17 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using TextRPG_Team_Project;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
 using TextRPG_Team_Project.Scene;
+using static System.Net.Mime.MediaTypeNames;
 namespace TextRPG_Team_Project
 {
 
-    public abstract class Character : IUnit
+    public class Character : IUnit
     {
 
 
@@ -22,6 +24,13 @@ namespace TextRPG_Team_Project
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
         public bool IsDead { get; private set; }
+
+        public int CurrentSkill { get; private set; } = 0;
+
+        public int Mp { get; private set;}
+        public int MaxMp { get; private set; }
+
+        public int CurrentAttack { get; private set; }
         
         public string Job { get; protected set; }
 
@@ -30,13 +39,15 @@ namespace TextRPG_Team_Project
         public List<Weapon> Weapon;
         public List<Armor> armor;
         public List<Potion> potion;
+        public List<Skill> Skill;
 
         public Weapon currentWeapon;
         public Armor currentArmor;
 
-        public Character(String _name , int _level, int _maxHealth , int _attack , int _defense) // 캐릭터 생성시 초기값 설정
+        public Character(String _name , int _level, int _maxHealth , int _attack , int _defense , int _mp) // 캐릭터 생성시 초기값 설정
         {
-
+            MaxMp = _mp;
+            Mp = MaxMp;
             Name = _name;
             Level = _level;
             MaxHealth = _maxHealth;
@@ -48,7 +59,7 @@ namespace TextRPG_Team_Project
             Weapon = new List<Weapon>();
             armor = new List<Armor>();  
             potion = new List<Potion>();    
-            
+           
             
         }
 
@@ -117,7 +128,7 @@ namespace TextRPG_Team_Project
 
         public string GetUserInfoShort()
         {
-            return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}";
+            return $"LV.{Level} {Name}  ({Job})\nHP {MaxHealth}/{Health}\nMP {MaxMp}/{Mp}";
 
         }
 
@@ -148,15 +159,78 @@ namespace TextRPG_Team_Project
 
         public virtual void AttackEnemy(Monster _target)
         {
-            float damage = Attack;
+
+            float damage;
+
+            if (CurrentSkill == 0)
+            {
+                damage = Attack;
+                CurrentAttack = (int)Math.Ceiling(damage);
+            }
+
+            else
+            {
+                damage = Attack * Skill[CurrentSkill].DamageMulti;
+                CurrentAttack = (int)Math.Ceiling(damage);
+                CurrentSkill = 0;
+            }
 
             _target.TakeDamage(damage);
+            
+
+        }
+        
+        public string GetSkillInfo()
+        {
+            StringBuilder skillList = new StringBuilder(); 
+
+            int index = 1; // 스킬 번호 초기화
+            foreach (var skill in Skill)
+            {
+                skillList.AppendLine($"{index}. {skill.Name} - MP {skill.ManaCost}"); 
+                skillList.AppendLine($"   {skill.Description}"); 
+                index++; 
+            }
+
+            return skillList.ToString();
 
         }
 
-        public abstract void Skill1(Monster _target);
+        public int ManaChecker(int select)
+        {
+            if (Mp >= Skill[select-1].ManaCost)
+            {
+                return select;
 
-        public abstract void Skill2(Monster _target);
+            }
+
+            else
+            {
+                
+                return 0;
+            }
+                
+
+        }
+
+        public int SetCurrentSkill(int input)
+        {
+            CurrentSkill = input-1;
+            
+            return CurrentSkill;
+            
+
+        }
+
+        public string GetCurrentSkillInfo()
+        {
+
+            return $"{Skill[CurrentSkill].Name}";
+
+        }
+
+        
+
 
 
 

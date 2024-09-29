@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Threading;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project
 {
@@ -28,9 +29,9 @@ namespace TextRPG_Team_Project
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 3, 1, 100));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 2, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 5, 0, 100));
+                _minions.Enqueue(new Minion("미니언", 2, 100, 1, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 100, 5, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 100, 3, 0, 100));
             }
         }
 
@@ -107,13 +108,13 @@ namespace TextRPG_Team_Project
 
         public void AttacktoMonster(int targetNum)
         {
-            Character player = DataManager.Instance().GetPlayer();
+            Character player = GameManager.Instance.Data.GetPlayer();
             Monster monster = _monsters[targetNum - 1];
             int prevHp = monster.Health;
             player.AttackEnemy(monster);
 
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.Attack}]");
+            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
             Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
             if (monster.IsDead)

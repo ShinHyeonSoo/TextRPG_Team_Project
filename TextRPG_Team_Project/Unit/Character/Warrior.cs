@@ -11,46 +11,22 @@ namespace TextRPG_Team_Project
     {
         
 
-        public Warrior(String _name, int _level, int _health, int _attack, int _defense) : base(_name, _level, _health, _attack, _defense) // 전사 생성시 초기값 설정
+        public Warrior(String _name, int _level, int _health, int _attack, int _defense , int _mp) : base(_name, _level, _health, _attack, _defense , _mp) // 전사 생성시 초기값 설정
         {
             Job = "전사";
-
-        }
-
-        public override void Skill1(Monster _target) // 스킬 사용 디테일한 내용 미정
-        {
-            string skillName = "스킬1";
-            float damage = Attack + 20;
-            Console.WriteLine($"{Name}가 {skillName}을 사용하여 {_target.Name}에게 {damage}의 데미지를 주었습니다.");
-            _target.TakeDamage(damage);
-
-        }
-        public override void Skill2(Monster _target)  // 스킬 사용 디테일한 내용 미정
-        {
-            string skillName = "스킬2";
-            float damage = Attack + 20;
-            Console.WriteLine($"{Name}가 {skillName}을 사용하여 {_target.Name}에게 {damage}의 데미지를 주었습니다.");
-            _target.TakeDamage(damage);
-
-        }
-
-        public void UseSkill(int skillNumber, Monster target)
-        {
-            switch (skillNumber)
+            
+            Skill = new List<Skill>
             {
-                case 1:
-                    Skill1(target);
-                    break;
-                case 2:
-                    Skill2(target);
-                    break;
-                default:
-                    Console.WriteLine($"사용할 수 있는 스킬이 아닙니다.");
-                    break;
-            }
+                new Skill ("알파 스트라이크", 2, "공격력 * 2 로 하나의 적을 공격합니다.", 20 ),
+                new Skill ("더블 스트라이크", 1.5f, "공격력 * 1.5 로 하나의 적을 공격합니다", 15)
+
+            };
 
 
         }
+
+  
+
 
     }
 }
