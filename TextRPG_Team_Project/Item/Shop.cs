@@ -45,7 +45,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("2. 방어구 가방");
             Console.WriteLine("3. 물약 가방");
             Console.WriteLine("==========");
-
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.Write("디버그 선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
@@ -204,7 +204,12 @@ namespace TextRPG_Team_Project.Item
             {
                 DisplayPotionInventory(i);
             }
-            
+            // 디버그용 코드
+            if(character.potion.Count > 0)
+                character.potion[0].ConsumeThis(character);
+            else 
+                Console.WriteLine("물약이 없습니다.");
+            // 코드 끝
             Console.WriteLine("==========");
             Console.WriteLine();
         }
@@ -257,6 +262,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayWeaponShopArr()
         {
             Console.WriteLine("==무기상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
             for (int i = 1; i < weaponArr.Length; i++)
             {
@@ -311,6 +317,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayArmorShopArr()
         {
             Console.WriteLine("==방어구상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |\t이름|\t방어력|\t가격|  소지수");
             for (int i = 1; i < armorArr.Length; i++)
             {
@@ -358,6 +365,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayPotionShopArr()
         {
             Console.WriteLine("==물약상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |\t이름| 효과|\t가격|  소지수");
             for (int i = 1; i < potionArr.Length; i++)
             {

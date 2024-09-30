@@ -74,16 +74,24 @@ namespace TextRPG_Team_Project.Item.Potions
 
         public void BuyThis(Character character)
         {
-            // 최대치보다 적을 때
-            if (itemCount < itemCountMax)
+            
+            if (character.Gold > itemPrice)
             {
-                Console.WriteLine($"{this.name} 구입완료");
-                this.itemCount++;
-                character.Gold -= this.itemPrice;
+                // 최대치보다 적을 때
+                if (itemCount < itemCountMax)
+                {
+                    Console.WriteLine($"{this.name} 구입완료");
+                    this.itemCount++;
+                    character.Gold -= this.itemPrice;
+                }
+                else
+                {
+                    Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
+                }
             }
             else
             {
-                Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
+                Console.WriteLine("소지 골드가 부족합니다.");
             }
         }
     }
