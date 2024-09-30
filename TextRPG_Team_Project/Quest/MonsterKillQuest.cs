@@ -76,6 +76,10 @@ namespace TextRPG_Team_Project
 		{
 			base.Load(data);
 			_killCount = data.ProgressCount;
+			if(_status == Defines.QuestStatus.InProgress)
+			{
+				GameManager.Instance.PlayerRecored.TrackMonsterKills += increaseKillCount;
+			}
 		}
 	}
 }

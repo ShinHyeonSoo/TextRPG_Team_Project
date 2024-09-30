@@ -57,5 +57,13 @@ namespace TextRPG_Team_Project
 			data.ProgressCount = 0;
 			return data;
 		}
+		public override void Load(QuestSaveData data)
+		{
+			base.Load(data);
+			if (_status == Defines.QuestStatus.InProgress)
+			{
+				GameManager.Instance.PlayerRecored.TrackLevel += CheckUserLevel;
+			}
+		}
 	}
 }
