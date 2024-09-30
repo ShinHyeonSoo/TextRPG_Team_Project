@@ -144,7 +144,7 @@ namespace TextRPG_Team_Project.Item
         {
             string indexNumber = $"{indexNum}";
             string isEquipped;
-            if (character.Weapon[indexNum].IsEquipped)
+            if (character.armor[indexNum].IsEquipped)
             {
                 isEquipped = "[E]";
             }
