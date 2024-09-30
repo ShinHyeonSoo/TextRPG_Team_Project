@@ -157,7 +157,7 @@ namespace TextRPG_Team_Project
 
         public string GetUserInfoShort()
         {
-            return $"LV.{Level} {Name}  ({Job})\nHP {Health}/{MaxHealth}\nMP {Mp}/{MaxMp}";
+            return $"LV.{Level} {Name}  ({Job})\nHP {Health} / {MaxHealth}\nMP {Mp} / {MaxMp}\n";
 
         }
 

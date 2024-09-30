@@ -29,9 +29,9 @@ namespace TextRPG_Team_Project
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 10, 1, 1, 100));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 20, 5, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 30, 3, 0, 100));
+                _minions.Enqueue(new Minion("미니언", 2, 1, 300, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 300, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 500, 0, 100));
             }
         }
 
@@ -135,6 +135,9 @@ namespace TextRPG_Team_Project
                 if (monster.IsDead)
                     continue;
 
+                if (player.IsDead)
+                    break;
+
                 Console.Clear();
                 Console.WriteLine("[name]\n");
 
@@ -143,7 +146,7 @@ namespace TextRPG_Team_Project
                 monster.OnAttack += player.TakeDamage;
 
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
-                Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]");
+                //Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]");
 
                 monster.BasicAttack(monster.Attack);
                 monster.OnAttack -= player.TakeDamage;
@@ -173,6 +176,24 @@ namespace TextRPG_Team_Project
                 return true;
             else
                 return false;
+        }
+
+        public void GetReward()
+        {
+            int gold = 0;
+
+            foreach (var monster in _monsters)
+            {
+                gold += monster.Gold;
+            }
+
+            Character player = GameManager.Instance.Data.GetPlayer();
+            player.Gold += gold;
+
+            Console.WriteLine("\n[획득 아이템]");
+            Console.WriteLine($"{gold} Gold");
+            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
+            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
         }
     }
 }
