@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Threading;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project
 {
@@ -107,7 +108,7 @@ namespace TextRPG_Team_Project
 
         public void AttacktoMonster(int targetNum)
         {
-            Character player = DataManager.Instance().GetPlayer();
+            Character player = GameManager.Instance.Data.GetPlayer();
             Monster monster = _monsters[targetNum - 1];
             int prevHp = monster.Health;
             player.AttackEnemy(monster);
@@ -127,7 +128,7 @@ namespace TextRPG_Team_Project
 
         public void AttacktoPlayer(int targetNum)
         {
-            Character player = DataManager.Instance().GetPlayer();
+            Character player = GameManager.Instance.Data.GetPlayer();
 
             foreach (var monster in _monsters)
             {
@@ -142,7 +143,7 @@ namespace TextRPG_Team_Project
                 monster.OnAttack += player.TakeDamage;
 
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
-                Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]");
+                //Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]");
 
                 monster.BasicAttack(monster.Attack);
                 monster.OnAttack -= player.TakeDamage;
@@ -172,6 +173,24 @@ namespace TextRPG_Team_Project
                 return true;
             else
                 return false;
+        }
+
+        public void GetReward()
+        {
+            int gold = 0;
+
+            foreach (var monster in _monsters)
+            {
+                gold += monster.Gold;
+            }
+
+            Character player = GameManager.Instance.Data.GetPlayer();
+            player.Gold += gold;
+
+            Console.WriteLine("\n[획득 아이템]");
+            Console.WriteLine($"{gold} Gold");
+            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
+            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
         }
     }
 }

@@ -46,20 +46,16 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void DisplayInitScene()
 		{
-            //Character player = GameManager.Instance.Data.GetPlayer();
-            //UserInfo += player.GetUserInfoShort;
+            Character player = GameManager.Instance.Data.GetPlayer();
+            UserInfo += player.GetUserInfoShort;
             DisplayIntro("Battle");
 			Console.WriteLine();
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            //Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
+            Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
-            #region 플레이어 정보 임시
-            Character player = DataManager.Instance().GetPlayer();
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
             _prevPlayerHealth = player.Health;
             _monstersCount = _battleManager.Monsters.Count;
-            #endregion
 
             DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
 			DisplayGetInputNumber();
@@ -73,12 +69,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			Console.WriteLine("적들의 정보 출력");
 			Console.WriteLine();
-			//Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
-
-            #region 플레이어 정보 임시
-            Character temp = DataManager.Instance().GetPlayer();
-            Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
-            #endregion
+			Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
             Console.WriteLine("캐릭터의 스킬 출력");
 			Console.WriteLine("0. 취소\n");
@@ -92,12 +83,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine(); 
 			_battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            //Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
-
-            #region 플레이어 정보 임시
-            Character player = DataManager.Instance().GetPlayer();
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
-            #endregion
+            Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
 
             Console.WriteLine("\n기본 공격!\n");
 			DisplayGetInputString("대상");
@@ -173,11 +159,13 @@ namespace TextRPG_Team_Project.Scene
 
             Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
 
-            //#region 플레이어 정보 임시
-            //Character player = DataManager.Instance().GetPlayer();
-            //Console.WriteLine($"\nLv.{player.Level} {player.Name}");
-            //Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
-            //#endregion
+            Character player = GameManager.Instance.Data.GetPlayer();
+            Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
+
+            _battleManager.GetReward();
+
+            Console.WriteLine("\n0. 다음");
 
             Utils.GetNumberInput(0, 1);
 
