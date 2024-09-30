@@ -403,7 +403,6 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|\t{potionPrice}G|{potionCount}|");
         }
 
-
         void SellItems()
         {
             Console.WriteLine("어떤 물건 판매?");
@@ -558,38 +557,49 @@ namespace TextRPG_Team_Project.Item
             // weapon check
             for (int i = 0; i < weaponArr.Length; i++)
             {
-                if (weaponArr[i].ItemCount > 0)
+                if (!character.Weapon.Contains(weaponArr[i]))
                 {
-                    character.Weapon.Add(weaponArr[i]);
+                    if (weaponArr[i].ItemCount > 0)
+                    {
+                        character.Weapon.Add(weaponArr[i]);
+                    }
+                    else
+                    {
+                        character.Weapon.Remove(weaponArr[i]);
+                    }
                 }
-                else
-                {
-                    character.Weapon.Remove(weaponArr[i]);
-                }
+                
             }
             // armor check
             for (int i = 0; i < armorArr.Length; i++)
             {
-                if (armorArr[i].ItemCount > 0)
+                if (!character.armor.Contains(armorArr[i]))
                 {
-                    character.armor.Add(armorArr[i]);
-                }
-                else
-                {
-                    character.armor.Remove(armorArr[i]);
+                    if (armorArr[i].ItemCount > 0)
+                    {
+                        character.armor.Add(armorArr[i]);
+                    }
+                    else
+                    {
+                        character.armor.Remove(armorArr[i]);
+                    }
                 }
             }
             // potion check
             for (int i = 1; i < potionArr.Length; i++)
             {
-                if (potionArr[i].ItemCount > 0)
+                if(!character.potion.Contains(potionArr[i]))
                 {
-                    character.potion.Add(potionArr[i]);
+                    if (potionArr[i].ItemCount > 0)
+                    {
+                        character.potion.Add(potionArr[i]);
+                    }
+                    else
+                    {
+                        character.potion.Remove(potionArr[i]);
+                    }
                 }
-                else
-                {
-                    character.potion.Remove(potionArr[i]);
-                }
+                
             }
         }
     }
