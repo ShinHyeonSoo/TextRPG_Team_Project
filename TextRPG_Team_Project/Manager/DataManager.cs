@@ -10,6 +10,7 @@ namespace TextRPG_Team_Project
 {
     public class DataManager
     {
+        
         private static DataManager _instance;
         private Random _random;
         private Character _player;
@@ -67,22 +68,19 @@ namespace TextRPG_Team_Project
 
         public void Save(string filename="default1")
         {
-			if (!Directory.Exists("save")) 
-				Directory.CreateDirectory("save");
-			string savePath = Path.Combine("save",$"{filename}.json");
+			if (!Directory.Exists(Defines.SAVE_FOLDER)) 
+				Directory.CreateDirectory(Defines.SAVE_FOLDER);
+			string savePath = Path.Combine(Defines.SAVE_FOLDER, $"{filename}.json");
             
             SaveData savedata = new SaveData();
             savedata.PlayerSaveData = _player.Save();
             savedata.QuestSaves = GameManager.Instance.Quest.Save();
-			Console.Write(savedata.ToString());
 			string jsonString = JsonSerializer.Serialize<SaveData>(savedata, new JsonSerializerOptions { WriteIndented = true });
-            Console.WriteLine(jsonString);
             File.WriteAllText(savePath, jsonString);
 		}
         public void Load(string filename)
         {
-			string savePath = Path.Combine("save", filename);
-            string jsonString = File.ReadAllText(savePath);
+            string jsonString = File.ReadAllText(filename);
             SaveData savedata = JsonSerializer.Deserialize<SaveData>(jsonString);
             PlayerSaveData playerData = savedata.PlayerSaveData;
             if(playerData.Job == "전사")

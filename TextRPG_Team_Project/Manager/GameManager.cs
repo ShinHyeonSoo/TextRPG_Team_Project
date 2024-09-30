@@ -35,6 +35,7 @@ namespace TextRPG_Team_Project.Scene
 		private InventoryScene _inventoryScene = new InventoryScene();
 		private QuestScene _questScene = new QuestScene();
 		private SaveScene _saveScene = new SaveScene();
+		private LoadScene _loadScene = new LoadScene();
 		#endregion
 
 		public GameManager()
@@ -81,6 +82,9 @@ namespace TextRPG_Team_Project.Scene
 					case Defines.GameStatus.Save:     // 5
 						_saveScene.PlayScene();
 						break;
+					case Defines.GameStatus.Load:
+						_loadScene.PlayScene();
+						break;	
 				}
 			}
 		}

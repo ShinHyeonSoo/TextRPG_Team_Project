@@ -50,7 +50,6 @@ namespace TextRPG_Team_Project.Scene
 			DisplayInputScneName();
 			string filePath = Console.ReadLine();
 			GameManager.Instance.Data.Save(filePath);
-			input = Utils.GetNumberInput(0, 2);
 			DisplaySaveDone();
 			input = Utils.GetNumberInput(0, 1);
 			if (input == 0) {GameManager.Instance.GoHomeScene();}

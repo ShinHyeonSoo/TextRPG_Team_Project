@@ -15,11 +15,6 @@ namespace TextRPG_Team_Project
 		public PlayerSaveData PlayerSaveData { get; set; }
 
 		public List<QuestSaveData> QuestSaves { get; set; }
-		public override string ToString()
-		{
-			string info = $"Job : {PlayerSaveData.Job}, Name: {PlayerSaveData.Name}, Gold : {PlayerSaveData.Gold}";
-			return info;
-		}
 	}
 	public struct PlayerSaveData
 	{

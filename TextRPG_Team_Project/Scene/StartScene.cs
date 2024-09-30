@@ -16,10 +16,11 @@ namespace TextRPG_Team_Project.Scene
 		}
 		public override void DisplayInitScene()
 		{
-			DisplayIntro("게임 이름"); // 게임 이름 뭐로할까용
-			Console.WriteLine("어서오세요");
+			DisplayIntro();
+			Console.WriteLine();
+			Console.WriteLine("어서오세요!");
 			Console.WriteLine("");
-			DisplayOption(new List<string>() { "1. 시작하기" });
+			DisplayOption(new List<string>() { "1. 새게임", "2. 불러오기" });
 		}
 		public void DisplaySetCharacterName()
 		{
@@ -37,7 +38,11 @@ namespace TextRPG_Team_Project.Scene
 		public override void PlayScene()
 		{
 			DisplayInitScene();
-			Utils.GetNumberInput(1, 2);
+			if(Utils.GetNumberInput(1, 3) == 2)
+			{
+				GameManager.Instance.GoAnySScene(Defines.GameStatus.Load);
+				return;
+			}
 
 			DisplaySetCharacterName();
 			string characterName = Console.ReadLine();
