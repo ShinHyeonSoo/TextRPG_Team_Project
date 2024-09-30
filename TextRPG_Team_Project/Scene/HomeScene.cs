@@ -25,8 +25,6 @@ namespace TextRPG_Team_Project.Scene
 		{
 			DisplayInitScene();
 			GameManager.Instance.GoAnySScene((Defines.GameStatus)Utils.GetNumberInput(1, 6));
-
-
 		}
 	}
 }

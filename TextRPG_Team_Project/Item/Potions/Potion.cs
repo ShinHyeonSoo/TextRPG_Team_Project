@@ -114,7 +114,7 @@ namespace TextRPG_Team_Project.Item.Potions
                 itemCount--;
 
                 // 포션퀘스트 체크용
-                GameManager.Instance.PlayerRecored.incresePotionUseCount(this.name);
+                GameManager.Instance.PlayerRecored.IncresePotionUseCount(this.name);
             }
             // 보유량 부족하면 포션 부족 메세지
             else

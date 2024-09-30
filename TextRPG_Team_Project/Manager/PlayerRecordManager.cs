@@ -17,13 +17,13 @@ namespace TextRPG_Team_Project
 		public event Action<string> TrackEquip = (string name) => { };
 		public event Action TrackLevel =() => { };
 
-		public void increseMonsterKillCount(string name)
+		public void IncreseMonsterKillCount(string name)
 		{
 			monsterKillCount += 1;
 			TrackMonsterKills.Invoke(name);
 		}
 
-		public void incresePotionUseCount(string name)
+		public void IncresePotionUseCount(string name)
 		{
 			potionUseCount += 1;
 			TrackPotionUse.Invoke(name);

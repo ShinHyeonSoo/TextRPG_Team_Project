@@ -76,7 +76,8 @@ namespace TextRPG_Team_Project
 		}
 		public void GiveQuestReward(int index)
 		{
-			Quests[index].GiveReward();
+			Reward reward = Quests[index].GiveReward();
+			GameManager.Instance.Data.GetPlayer().Gold += reward.Gold;
 		}
 		public bool IsAcceptedQuest(int index)
 		{
