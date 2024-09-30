@@ -5,6 +5,7 @@ using TextRPG_Team_Project.Scene;
 using System.Text.Json;
 using System;
 using TextRPG_Team_Project.Data;
+using TextRPG_Team_Project.Database;
 
 namespace TextRPG_Team_Project
 {
@@ -14,6 +15,9 @@ namespace TextRPG_Team_Project
         private static DataManager _instance;
         private Random _random;
         private Character _player;
+        private ItemDatabase _itemDatabase;
+
+        public ItemDatabase ItemDatabase { get { return _itemDatabase; } }
 
         public PotionDataBase PotionDB { get; private init; }
 
@@ -21,6 +25,7 @@ namespace TextRPG_Team_Project
         {
             _random = new Random();
 			PotionDB = new PotionDataBase();
+            _itemDatabase = new ItemDatabase();
         }
 
         public static DataManager Instance()
@@ -55,7 +60,7 @@ namespace TextRPG_Team_Project
 
             if(_jobNum == 1)
             {
-                _player = new Warrior(name, 1, 100, 10, 1, 50);
+                _player = new Warrior(name, 1, 50, 10, 1, 50);
             }
 
                 

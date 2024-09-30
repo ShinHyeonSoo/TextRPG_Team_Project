@@ -29,9 +29,9 @@ namespace TextRPG_Team_Project
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 300, 1, 100));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 300, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 500, 0, 100));
+                _minions.Enqueue(new Minion("미니언", 2, 30, 1, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 30, 1, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 30, 5, 0, 100));
             }
         }
 
@@ -41,11 +41,11 @@ namespace TextRPG_Team_Project
 
             int randValue = rand.Next(1, _MAX + 1);
 
-            for(int i = 0; i < randValue; ++i)
+            for (int i = 0; i < randValue; ++i)
             {
                 int randType = rand.Next(0, _MAX - 1);
 
-                switch((MonsterType)randType)
+                switch ((MonsterType)randType)
                 {
                     case MonsterType.MINION:
                         _monsters.Add(_minions.Dequeue());
@@ -62,12 +62,12 @@ namespace TextRPG_Team_Project
 
         public void CollectMonster()
         {
-            foreach(var monster in _monsters)
+            foreach (var monster in _monsters)
             {
                 monster.Recovery();
 
                 switch (monster.Type)
-                {  
+                {
                     case MonsterType.MINION:
                         _minions.Enqueue(monster);
                         break;
@@ -84,7 +84,7 @@ namespace TextRPG_Team_Project
 
         public void MonsterInfo(Func<string> callback)
         {
-            if(_monsters.Count == 0)
+            if (_monsters.Count == 0)
                 ShuffleMonster();
 
             int count = 0;
@@ -109,18 +109,68 @@ namespace TextRPG_Team_Project
         public void AttacktoMonster(int targetNum)
         {
             Character player = GameManager.Instance.Data.GetPlayer();
-            Monster monster = _monsters[targetNum - 1];
-            int prevHp = monster.Health;
-            player.AttackEnemy(monster);
+            Random random = GameManager.Instance.Data.GetRandom();
+            HashSet<int> attackedTargets = new HashSet<int>(); // 이미 공격한 몬스터를 저장
 
-            Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+            if (player.CurrentSkill == -1) // 기본 공격 처리
+            {
+                Monster monster = _monsters[targetNum - 1];
+                int prevHp = monster.Health; // 이전 HP 기록
+                player.AttackEnemy(monster);
+                Console.WriteLine($"{player.Name} 의 기본 공격!");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+                Console.WriteLine($"\nLv.{monster.Level} {monster.Name}")
+                    ;
+                if (monster.IsDead)
+                    Console.WriteLine($"HP {prevHp} -> Dead");
+                else
+                    Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+            }
+            else // 스킬 공격 처리
+            {
+                int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
 
-            Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
-            if (monster.IsDead)
-                Console.WriteLine($"HP {prevHp} -> Dead");
-            else
-                Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                for (int i = 0; i < targetCount; i++)
+                {
+
+                    if (IsAlliveCount(_monsters) <= 0) // 배열을 순회하며 살아남은 몬스터의 수를 받아옴 (무한루프 방지)
+                    {
+                        break;
+                    }
+
+                    Monster monster = null;
+                    int randomTarget = -1;
+
+                    // 유효한 타겟을 찾을 때까지 반복              
+                    while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
+                    {
+                        randomTarget = random.Next(0, _monsters.Count);
+                        monster = _monsters[randomTarget];
+                    }
+
+
+                    attackedTargets.Add(randomTarget); // 타겟 중복 방지
+                    int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
+                    player.AttackEnemy(monster);
+                    Console.WriteLine($"{player.Name} 의 스킬 공격!");
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
+
+                    if (monster.IsDead)
+                        Console.WriteLine($"HP {prevHp} -> Dead");
+                    else
+                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+
+
+
+                    Thread.Sleep(1000);
+                }
+                player.ManaReduced();
+                player.ResetCurrentSkill();
+            }
+
+
+
 
             Console.WriteLine("\n0. 다음");
             Utils.GetNumberInput(0, 1);
@@ -194,6 +244,21 @@ namespace TextRPG_Team_Project
             Console.WriteLine($"{gold} Gold");
             //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
             //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
+        }
+
+        public int IsAlliveCount(List<Monster> monsters)
+        {
+            int isAlliveCount = 0;
+            foreach (var i in monsters)
+            {
+                if (!i.IsDead)
+                {
+                    isAlliveCount += 1;
+                }
+
+
+            }
+            return isAlliveCount;
         }
     }
 }

@@ -18,12 +18,21 @@ namespace TextRPG_Team_Project
 
         public int ManaCost { get; private set; }  
 
-        public Skill(string name, float damageMulti, string description,int manaCost)
+        public int SkillType { get; private set; }
+
+        public Skill(string name, float damageMulti, string description,int manaCost, int skillType)
         {
             Name = name;
             DamageMulti = damageMulti;
             Description = description;
             ManaCost = manaCost;
+            SkillType = skillType; 
+        }
+
+        public int GetSkillType()
+        {
+
+            return SkillType;
         }
 
 

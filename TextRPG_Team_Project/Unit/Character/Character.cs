@@ -107,6 +107,7 @@ namespace TextRPG_Team_Project
 
         public string AddExp(int _exp) // 경험치 추가 매서드
         {
+            int prevExp = exp;
             exp += _exp;
             int _prevLevel = Level;
             int requireExp = GetRequireExp(Level);
@@ -122,7 +123,7 @@ namespace TextRPG_Team_Project
             }
 
 
-            return "";
+            return $"Exp.{prevExp} -> {exp}";
         }
 
         public string ManaRegen(int value)
@@ -202,13 +203,22 @@ namespace TextRPG_Team_Project
             {
                 damage = Attack * Skill[CurrentSkill].DamageMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
-                Mp -= Skill[CurrentSkill].ManaCost;
-                CurrentSkill = -1;
+                           
             }
+                   
+               
 
             _target.TakeDamage(damage);
 
 
+        }
+
+        public void ManaReduced()
+        {
+            if(CurrentSkill >=0)
+            {
+                Mp -= Skill[CurrentSkill].ManaCost;
+            }
         }
 
         public string GetSkillInfo()
@@ -291,6 +301,14 @@ namespace TextRPG_Team_Project
 
 
         }
+
+        public void ResetCurrentSkill()
+        {
+            CurrentSkill = -1;
+
+        }
+
+      
 
 
         public PlayerSaveData Save()
