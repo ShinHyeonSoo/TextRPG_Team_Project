@@ -69,5 +69,14 @@ namespace TextRPG_Team_Project
 			data.ProgressCount = _useCount;
 			return data;
 		}
+		public override void Load(QuestSaveData data)
+		{
+			base.Load(data);
+			_useCount = data.ProgressCount;
+			if (_status == Defines.QuestStatus.InProgress)
+			{
+				GameManager.Instance.PlayerRecored.TrackPotionUse += increaseUseCount;
+			}
+		}
 	}
 }

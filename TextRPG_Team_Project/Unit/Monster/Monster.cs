@@ -78,7 +78,7 @@ namespace TextRPG_Team_Project
             if (_health < 1)
             {
                 _health = 0;
-                GameManager.Instance.PlayerRecored.increseMonsterKillCount(_name);
+                GameManager.Instance.PlayerRecored.IncreseMonsterKillCount(_name);
                 _isDead = true;
             }
         }

@@ -21,19 +21,16 @@ namespace TextRPG_Team_Project
 	}
 	public abstract class Quest
 	{
-		[JsonInclude]
 		protected Defines.QuestStatus _status;
 		private string _id;
 		public string ID { get {  return _id; } }
 		public string Name { get; init; }
 		public string Description { get; init; }
-		[JsonIgnore]
 		public string ShortDescriptoin { get { return ""; } }
-		public Reward? Reward {  get; init; }
+		public Reward Reward {  get; init; }
 		public Defines.QuestStatus Status { get { return _status; } }
 
 		#region Constructor
-		[JsonConstructor]
 		public Quest(string id,string name, string description, Defines.QuestStatus status, Reward reward)
 		{
 			_id = id;
@@ -68,14 +65,14 @@ namespace TextRPG_Team_Project
 				_status = Defines.QuestStatus.Completed;
 		}
 
-		public Reward? GiveReward() 
+		public Reward GiveReward() 
 		{
 			if(_status == Defines.QuestStatus.Completed)
 			{
 				_status = Defines.QuestStatus.RewardClaimed;
 				return Reward;
 			}
-			else { return null; }
+			else { return new Reward(0); }
 		}
 
 		public virtual string Tostring()
