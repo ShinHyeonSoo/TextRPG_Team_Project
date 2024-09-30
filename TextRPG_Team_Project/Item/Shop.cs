@@ -268,7 +268,8 @@ namespace TextRPG_Team_Project.Item
                 case 6:
                 case 7:
                 case 8:
-                    weaponArr[tempInput].BuyThis(character);
+                    KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(tempInput);
+                    itemDB.weaponDict[weapon.Key].BuyThis(character);
                     break;
             }
         }
@@ -280,28 +281,29 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"=====================================================");
             Console.WriteLine(" |이름\t\t|\t공격력|\t   가격|    소지수");
             Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < weaponArr.Length; i++)
+            for (int i = 1; i < itemDB.weaponDict.Count; i++)
             {
-                DisplayWeapon(i);
+                KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(i);
+                DisplayWeapon(weapon.Key);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayWeapon(int indexNum)
+        void DisplayWeapon(string weaponKey)
         {
-            string indexNumber = $"{indexNum}";
-            string weaponName = $"{weaponArr[indexNum].Name}";
-            string weaponPrice = weaponArr[indexNum].ItemPrice.ToString("D4");
+            string indexNumber = $"{weaponKey}";
+            string weaponName = $"{itemDB.weaponDict[weaponKey].Name}";
+            string weaponPrice = itemDB.weaponDict[weaponKey].ItemPrice.ToString("D4");
             string weaponCount;
-            if (weaponArr[indexNum].ItemCount < weaponArr[indexNum].ItemCountMax)
+            if (itemDB.weaponDict[weaponKey].ItemCount < itemDB.weaponDict[weaponKey].ItemCountMax)
             {
-                weaponCount = $"{weaponArr[indexNum].ItemCount}개 보유";
+                weaponCount = $"{itemDB.weaponDict[weaponKey].ItemCount}개 보유";
             }
             else
             {
                 weaponCount = "[최대보유]";
             }
-            string WeaponAttack = ((int)(weaponArr[indexNum].WeaponAttack)).ToString("D2");
+            string WeaponAttack = ((int)(itemDB.weaponDict[weaponKey].WeaponAttack)).ToString("D2");
 
             Console.WriteLine($"{indexNumber}|{weaponName}\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
@@ -325,7 +327,8 @@ namespace TextRPG_Team_Project.Item
                 case 6:
                 case 7:
                 case 8:
-                    armorArr[tempInput].BuyThis(character);
+                    KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(tempInput);
+                    itemDB.armorDict[armor.Key].BuyThis(character);
                     break;
             }
         }
@@ -337,28 +340,29 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"=====================================================");
             Console.WriteLine(" |이름\t\t|\t방어력|\t   가격|    소지수");
             Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < armorArr.Length; i++)
+            for (int i = 1; i < itemDB.armorDict.Count; i++)
             {
-                DisplayArmor(i);
+                KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(i);
+                DisplayWeapon(armor.Key);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayArmor(int indexNum)
+        void DisplayArmor(string armorKey)
         {
-            string indexNumber = $"{indexNum}";
-            string armorName = $"{armorArr[indexNum].Name}";
-            string armorPrice = armorArr[indexNum].ItemPrice.ToString("D4");
+            string indexNumber = $"{0}";
+            string armorName = $"{itemDB.armorDict[armorKey].Name}";
+            string armorPrice = itemDB.armorDict[armorKey].ItemPrice.ToString("D4");
             string armorCount;
-            if (armorArr[indexNum].ItemCount < armorArr[indexNum].ItemCountMax)
+            if (itemDB.armorDict[armorKey].ItemCount < itemDB.armorDict[armorKey].ItemCountMax)
             {
-                armorCount = $"{armorArr[indexNum].ItemCount}개 보유";
+                armorCount = $"{itemDB.armorDict[armorKey].ItemCount}개 보유";
             }
             else
             {
                 armorCount = "[최대보유]";
             }
-            string armorDefence = armorArr[indexNum].ArmorDefence.ToString("D2");
+            string armorDefence = itemDB.armorDict[armorKey].ArmorDefence.ToString("D2");
 
             Console.WriteLine($"{indexNumber}|{armorName}\t|\t  + {armorDefence}|\t {armorPrice} G|  {armorCount}|");
         }
@@ -375,7 +379,8 @@ namespace TextRPG_Team_Project.Item
                 case 0:
                     break;
                 case 1:
-                    potionArr[tempInput].BuyThis(character);
+                    KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(tempInput);
+                    itemDB.potionDict[potion.Key].BuyThis(character);
                     break;
             }
         }
@@ -387,28 +392,29 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"=====================================================");
             Console.WriteLine(" |이름\t\t|\t효과|\t   가격|    소지수");
             Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < potionArr.Length; i++)
+            for (int i = 1; i < itemDB.potionDict.Count; i++)
             {
-                DisplayPotion(i);
+                KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(i);
+                DisplayWeapon(potion.Key);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayPotion(int indexNum)
+        void DisplayPotion(string potionKey)
         {
-            string indexNumber = $"{indexNum}";
-            string potionName = $"{potionArr[indexNum].Name}";
-            string potionPrice = $"{potionArr[indexNum].ItemPrice}";
+            string indexNumber = $"{0}";
+            string potionName = $"{itemDB.potionDict[potionKey].Name}";
+            string potionPrice = $"{itemDB.potionDict[potionKey].ItemPrice}";
             string potionCount;
-            if (potionArr[indexNum].ItemCount < potionArr[indexNum].ItemCountMax)
+            if (itemDB.potionDict[potionKey].ItemCount < itemDB.potionDict[potionKey].ItemCountMax)
             {
-                potionCount = $"{potionArr[indexNum].ItemCount}개 보유";
+                potionCount = $"{itemDB.potionDict[potionKey].ItemCount}개 보유";
             }
             else
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = $"{potionArr[indexNum].PotionEffect}";
+            string potionEffect = $"{itemDB.potionDict[potionKey].PotionEffect}";
 
             Console.WriteLine($"{indexNumber}|{potionName}\t|\t+ {potionEffect}|\t   {potionPrice} G|  {potionCount}|");
         }
@@ -464,7 +470,8 @@ namespace TextRPG_Team_Project.Item
                 case 6:
                 case 7:
                 case 8:
-                    weaponArr[tempInput].SellThis(character);
+                    KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(tempInput);
+                    itemDB.weaponDict[weapon.Key].SellThis(character);
                     break;
             }
         }
@@ -488,7 +495,8 @@ namespace TextRPG_Team_Project.Item
                 case 6:
                 case 7:
                 case 8:
-                    armorArr[tempInput].SellThis(character);
+                    KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(tempInput);
+                    itemDB.armorDict[armor.Key].SellThis(character);
                     break;
             }
         }
@@ -505,7 +513,8 @@ namespace TextRPG_Team_Project.Item
                 case 0:
                     break;
                 case 1:
-                    potionArr[tempInput].SellThis(character);
+                    KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(tempInput);
+                    itemDB.potionDict[potion.Key].SellThis(character);
                     break;
             }
         }
