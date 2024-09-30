@@ -1,4 +1,5 @@
-﻿using TextRPG_Team_Project.Scene;
+﻿using System.Linq;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.Potions
 {
@@ -32,18 +33,26 @@ namespace TextRPG_Team_Project.Item.Potions
             }
         }
 
-        public void GetItem(int addItemCount)
+        public void GetItem(Character character, string itemName, int addItemCount)
         {
-            // 획득
-            Console.WriteLine($"{name}을(를) {addItemCount}개 얻었다.");
-            itemCount += addItemCount;
-
-            // 최대치 초과량 제어
             int overItemCount = itemCount - itemCountMax;
 
-            if (overItemCount > 0)
+            if (overItemCount < 0)
             {
-                Console.WriteLine($"{name}을(를) 더 많이 들 수 없어 {overItemCount}개 버렸다.");
+                Console.WriteLine($"{name}을(를) 얻었다.");
+                if (character.potion.Contains(this))
+                {
+                    itemCount += addItemCount;
+                }
+                else
+                {
+                    this.itemCount += addItemCount;
+                    character.potion.Add(this);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{name}은(는) 이미 최대로 가지고 있다.");
                 itemCount = itemCountMax;
             }
         }
