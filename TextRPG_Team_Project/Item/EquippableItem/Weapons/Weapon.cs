@@ -1,7 +1,11 @@
-﻿namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
+﻿using TextRPG_Team_Project.Database;
+using TextRPG_Team_Project.Scene;
+
+namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 {
     public class Weapon : EquippableItem
     {
+        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         float weaponAttack;
         // 치명타가 추가될 수도 있음
 
@@ -15,6 +19,30 @@
         }
 
         public float WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
+
+        public override void GetItem(Character character, string itemName, int addItemCount )
+        {
+            int overItemCount = itemCount - itemCountMax;
+
+            if (overItemCount < 0)
+            {
+                Console.WriteLine($"{name}을(를) 얻었다.");
+                if (character.Weapon.Contains(this))
+                {
+                    itemCount += addItemCount;
+                }
+                else
+                {
+                    this.itemCount += addItemCount;
+                    character.Weapon.Add(this);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{name}은(는) 이미 가지고 있다.");
+                itemCount = itemCountMax;
+            }
+        }
 
         public override void EquipThis(Character character)
         {
@@ -46,7 +74,7 @@
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
-                // character.currentWeapon = shop.WeaponList[0];
+                character.currentWeapon = itemDB.weaponDict["맨 주먹"];
             }
             // 아닐 때
             else

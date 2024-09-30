@@ -1,4 +1,6 @@
-﻿using TextRPG_Team_Project.Item.EquippableItem.Armors;
+﻿using System.Linq;
+using TextRPG_Team_Project.Database;
+using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
 using TextRPG_Team_Project.Scene;
@@ -8,7 +10,8 @@ namespace TextRPG_Team_Project.Item
     public class Shop
     {
         Character character = DataManager.Instance().GetPlayer();
-
+        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
+        /*
         public Weapon[] weaponArr = {
             new Weapon("맨 주먹",  0, 1, true, 0),
             new Weapon("나무 검",  800, 0, false, 5),
@@ -36,7 +39,7 @@ namespace TextRPG_Team_Project.Item
             new Potion("빈 물약", 0, 0, 0),
             new HealthPotion("체력 포션", 50, 3, 30)
         };
-
+        */
 
         void DisplayCharacterInventory()
         {
@@ -564,51 +567,49 @@ namespace TextRPG_Team_Project.Item
         void CharacterInventoryCheck()
         {
             // weapon check
-            for (int i = 0; i < weaponArr.Length; i++)
+            foreach ( var weapon in itemDB.weaponDict.Values)
             {
-                if (!character.Weapon.Contains(weaponArr[i]))
+                if(character.Weapon.Contains(weapon))
                 {
-                    if (weaponArr[i].ItemCount > 0)
+                    if (weapon.ItemCount > 0)
                     {
-                        character.Weapon.Add(weaponArr[i]);
+                        character.Weapon.Add(weapon);
                     }
                     else
                     {
-                        character.Weapon.Remove(weaponArr[i]);
+                        character.Weapon.Remove(weapon);
                     }
                 }
-                
             }
             // armor check
-            for (int i = 0; i < armorArr.Length; i++)
+            foreach (var armor in itemDB.armorDict.Values)
             {
-                if (!character.armor.Contains(armorArr[i]))
+                if (character.armor.Contains(armor))
                 {
-                    if (armorArr[i].ItemCount > 0)
+                    if (armor.ItemCount > 0)
                     {
-                        character.armor.Add(armorArr[i]);
+                        character.armor.Add(armor);
                     }
                     else
                     {
-                        character.armor.Remove(armorArr[i]);
+                        character.armor.Remove(armor);
                     }
                 }
             }
             // potion check
-            for (int i = 1; i < potionArr.Length; i++)
+            foreach (var potion in itemDB.potionDict.Values)
             {
-                if(!character.potion.Contains(potionArr[i]))
+                if (character.potion.Contains(potion))
                 {
-                    if (potionArr[i].ItemCount > 0)
+                    if (potion.ItemCount > 0)
                     {
-                        character.potion.Add(potionArr[i]);
+                        character.potion.Add(potion);
                     }
                     else
                     {
-                        character.potion.Remove(potionArr[i]);
+                        character.potion.Remove(potion);
                     }
                 }
-                
             }
         }
     }

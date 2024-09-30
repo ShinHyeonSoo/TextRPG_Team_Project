@@ -1,7 +1,12 @@
-﻿namespace TextRPG_Team_Project.Item.EquippableItem.Armors
+﻿using System.Linq;
+using TextRPG_Team_Project.Database;
+using TextRPG_Team_Project.Scene;
+
+namespace TextRPG_Team_Project.Item.EquippableItem.Armors
 {
     public class Armor : EquippableItem
     {
+        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         int armorDefence;
         // 회피율이 추가될 수도 있음
 
@@ -15,6 +20,30 @@
         }
 
         public int ArmorDefence { get { return armorDefence; } private set { armorDefence = value; } }
+
+        public override void GetItem(Character character, string itemName, int addItemCount)
+        {
+            int overItemCount = itemCount - itemCountMax;
+
+            if (overItemCount < 0)
+            {
+                Console.WriteLine($"{name}을(를) 얻었다.");
+                if (character.armor.Contains(this))
+                {
+                    itemCount += addItemCount;
+                }
+                else
+                {
+                    this.itemCount += addItemCount;
+                    character.armor.Add(this);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"{name}은(는) 이미 가지고 있다.");
+                itemCount = itemCountMax;
+            }
+        }
 
         public override void EquipThis(Character character)
         {
@@ -46,7 +75,7 @@
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
-                // character.currentArmor = shop.ArmorList[0];
+                character.currentArmor = itemDB.armorDict["일반 옷"];
             }
             // 아닐 때
             else

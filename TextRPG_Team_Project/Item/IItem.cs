@@ -7,7 +7,7 @@
         int ItemCount { get; }
         int ItemCountMax { get; }
 
-        void GetItem(int addItemCount);
+        void GetItem(Character character, string itemName, int addItemCount);
 
         void SellThis(Character character);
 
