@@ -90,9 +90,11 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 {
                     this.UnEquipThis(character);
                 }
-                Console.WriteLine($"{this.name} 판매완료");
+                
+                float sellPrice = itemPrice / 0.75f;
                 this.itemCount--;
-                character.Gold += this.itemPrice;
+                character.Gold += (int)sellPrice;
+                Console.WriteLine($"{this.name} 판매완료 (+ {sellPrice} G)");
             }
             // 없을 때
             else
