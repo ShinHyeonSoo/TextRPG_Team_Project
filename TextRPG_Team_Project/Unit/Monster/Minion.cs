@@ -21,5 +21,15 @@
 
             return info;
         }
+
+        public override void LevelUp(int level)
+        {
+            _level = 2 + (level - 1);
+            _maxHealth = 1 + (level - 1) * 10;
+            _health = _maxHealth;
+            _attack = 5 + (level - 1) * 1;
+            _defense = 1 + (level - 1) * 1;
+            _gold = 50 + (level - 1) * 10;
+        }
     }
 }

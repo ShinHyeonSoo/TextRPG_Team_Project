@@ -9,7 +9,6 @@ using TextRPG_Team_Project.Data;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
-using TextRPG_Team_Project.Quest;
 using TextRPG_Team_Project.Scene;
 using static System.Net.Mime.MediaTypeNames;
 namespace TextRPG_Team_Project

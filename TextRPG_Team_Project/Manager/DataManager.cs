@@ -16,16 +16,20 @@ namespace TextRPG_Team_Project
         private Random _random;
         private Character _player;
         private ItemDatabase _itemDatabase;
+        private int _stageIndex;
 
         public ItemDatabase ItemDatabase { get { return _itemDatabase; } }
 
         public PotionDataBase PotionDB { get; private init; }
+
+        public int StageIndex { get { return _stageIndex; } set { _stageIndex = value; } }
 
         public DataManager()
         {
             _random = new Random();
 			PotionDB = new PotionDataBase();
             _itemDatabase = new ItemDatabase();
+            _stageIndex = 1;
         }
 
         public static DataManager Instance()
