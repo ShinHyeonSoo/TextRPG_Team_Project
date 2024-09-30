@@ -245,6 +245,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     weaponArr[tempInput].BuyThis(character);
                     break;
             }
@@ -295,6 +299,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     armorArr[tempInput].BuyThis(character);
                     break;
             }
@@ -422,6 +430,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     weaponArr[tempInput].SellThis(character);
                     break;
             }
@@ -442,6 +454,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     armorArr[tempInput].SellThis(character);
                     break;
             }
