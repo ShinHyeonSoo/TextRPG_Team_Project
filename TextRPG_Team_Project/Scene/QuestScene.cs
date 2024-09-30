@@ -94,6 +94,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine($"보상");
 			StyleConsole.WriteLine($"{_questManager.Quests[_selectedQuest].Reward.ToString()}",ConsoleColor.DarkGreen);
 			Console.WriteLine("획득 완료");
+			_questManager.GiveQuestReward(_selectedQuest);
 			Console.WriteLine();
 			Console.WriteLine("2.돌아가기");
 			Console.WriteLine();

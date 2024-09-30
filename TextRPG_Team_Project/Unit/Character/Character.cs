@@ -7,6 +7,7 @@ using TextRPG_Team_Project;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
+using TextRPG_Team_Project.Quest;
 using TextRPG_Team_Project.Scene;
 using static System.Net.Mime.MediaTypeNames;
 namespace TextRPG_Team_Project
@@ -24,13 +25,15 @@ namespace TextRPG_Team_Project
         public float Attack { get; private set; }
         public int Defense { get; private set; }     
         public bool IsDead { get; private set; }
-        public int CurrentSkill { get; private set; } = 0;
+        public int CurrentSkill { get; private set; } = -1;
         public int Mp { get; private set;}
         public int MaxMp { get; private set; }
         public int CurrentAttack { get; private set; }     
         public string Job { get; protected set; }
 
         private int exp = 0;
+
+        private int[] expTable = { 10, 35, 65, 100 };
 
         public List<Weapon> Weapon;
         public List<Armor> armor;
@@ -85,29 +88,49 @@ namespace TextRPG_Team_Project
             }
         }
 
-
-        public void AddExp(int _exp) // 경험치 추가 매서드
+        public int GetRequireExp(int level)
         {
-            exp += _exp;
 
-            if(exp > 100) // 경험치가 100초과시 레벨업 매서드 호출
+            if (level < expTable[level - 1])
             {
-                LevelUp();
-                exp -= 100; // 100의 경험치 제거
+
+                return expTable[level - 1];
 
             }
-            
+            else
+            {
+                return expTable[expTable.Length - 1] + (level - expTable.Length) * 100;
+            }
+        }
 
+        public string AddExp(int _exp) // 경험치 추가 매서드
+        {
+            exp += _exp;
+            int _prevLevel = Level;
+            int requireExp = GetRequireExp(Level);
+            int _prevRequireExp = requireExp;
+
+            while(exp >= requireExp)
+            {
+                LevelUp();
+                exp -= requireExp;
+                requireExp = GetRequireExp(Level);
+
+                return $"LV.{_prevLevel} {Name} -> LV.{Level} {Name}\nExp {_prevRequireExp} -> {requireExp}";
+            }
+
+
+            return "";
         }
 
 
         public void LevelUp() // 경험치 100초과시 레벨업 
         {
-            MaxHealth += 10;
-            Attack += 10;
+            Defense += 1;
+            Attack += 1;
             Level += 1;
             GameManager.Instance.PlayerRecored.NotifyUserLevelUp();
-            Console.WriteLine($"Level Up !! / 최대 체력 : +10 증가하여 {MaxHealth} , 공격력 : + 10 증가하여 {Attack} , 레벨 : +1 증가하여 {Level}");
+            
             
         }
 
@@ -227,7 +250,15 @@ namespace TextRPG_Team_Project
         }
 
         
+        public void GetReward(Reward? reward)
+        {
+            if(reward != null)
+            Gold += reward.Value.Gold;
+            else { }
 
+        }
+
+      
 
 
 

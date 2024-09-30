@@ -54,12 +54,13 @@ namespace TextRPG_Team_Project.Scene
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
             Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
+            _prevPlayerHealth = player.Health;
+            _monstersCount = _battleManager.Monsters.Count;
 
             //#region 플레이어 정보 임시
             //Character player = DataManager.Instance().GetPlayer();
             //Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
-            //_prevPlayerHealth = player.Health;
-            //_monstersCount = _battleManager.Monsters.Count;
+
             //#endregion
 
             DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
@@ -214,13 +215,10 @@ namespace TextRPG_Team_Project.Scene
             Console.ResetColor();
 
             Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
-
-            //#region 플레이어 정보 임시
-            //Character player = DataManager.Instance().GetPlayer();
-            //Console.WriteLine($"\nLv.{player.Level} {player.Name}");
-            //Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
-            //#endregion
-
+            Console.WriteLine(player.AddExp(_monstersCount));
+            Console.WriteLine($"\nlv.{player.Level} {player.Name}");
+            Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
+            
             Utils.GetNumberInput(0, 1);
 
             _battleManager.CollectMonster();

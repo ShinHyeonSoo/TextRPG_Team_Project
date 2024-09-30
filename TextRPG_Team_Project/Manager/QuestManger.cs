@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Quest
 {
@@ -77,7 +78,14 @@ namespace TextRPG_Team_Project.Quest
 		}
 		public void GiveQuestReward(int index)
 		{
-			Quests[index].GiveReward();
+			Reward? reward = Quests[index].GiveReward();
+
+			if(reward != null)
+			{
+				GameManager.Instance.Data.GetPlayer().GetReward(reward.Value);
+			}
+			else { return; }
+			
 		}
 		public bool IsAcceptedQuest(int index)
 		{
