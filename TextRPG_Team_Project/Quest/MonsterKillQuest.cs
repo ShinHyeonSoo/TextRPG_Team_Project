@@ -6,25 +6,28 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
 	public class MonsterKillQuest : Quest
 	{
 		private string _monsterName;
 		private int _killCount;
+		
+		public string GetTargetMonsterName() {  return _monsterName; }
+		public int GetNowKillCount() { return _killCount; }
 
 		public int GoalKillCount { get; init; }
 		[JsonIgnore]
 		public string ShortDescription { get { return $"{_monsterName}을(를) {GoalKillCount} 마리 처치 | {_killCount}/{GoalKillCount}"; } }
 
 		#region Constructor
-		public MonsterKillQuest(string name, string description, string monsterName, int killCount, int goalKillCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public MonsterKillQuest(string id, string name, string description, string monsterName, int killCount, int goalKillCount, Defines.QuestStatus status, Reward reward) : base(id, name, description, status, reward)
 		{
 			_monsterName = monsterName;
 			_killCount = killCount;
 			GoalKillCount = goalKillCount;
 		}
-		public MonsterKillQuest(string name, string description, string monsterName, int goalKillCount, Reward reward) : base(name, description, reward)
+		public MonsterKillQuest(string id, string name, string description, string monsterName, int goalKillCount, Reward reward) : base(id, name, description, reward)
 		{
 			_monsterName = monsterName;
 			_killCount = 0;
@@ -60,6 +63,19 @@ namespace TextRPG_Team_Project.Quest
 					CompleteQuest();
 				}
 			}
+		}
+
+		public override QuestSaveData Save()
+		{
+			QuestSaveData data = base.Save();
+			data.ProgressCount = _killCount;
+			return data;
+		}
+
+		public override void Load(QuestSaveData data)
+		{
+			base.Load(data);
+			_killCount = data.ProgressCount;
 		}
 	}
 }

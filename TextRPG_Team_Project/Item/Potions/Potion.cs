@@ -4,8 +4,6 @@ namespace TextRPG_Team_Project.Item.Potions
 {
     public class Potion : IItem, IConsumable
     {
-        Character character = DataManager.Instance().GetPlayer();
-
         protected string name = "보이면 안되는 물약이름";
         protected int itemPrice;
         protected int itemCount;

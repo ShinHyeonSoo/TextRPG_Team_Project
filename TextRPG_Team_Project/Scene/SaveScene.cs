@@ -12,14 +12,48 @@ namespace TextRPG_Team_Project.Scene
 		{
 			DisplayIntro("저장하기");
 			Console.WriteLine();
-			Console.WriteLine("0. 나가기");
+			StyleConsole.Write("1. ", ConsoleColor.Cyan);
+			Console.WriteLine("저장하기.");
+			DisplayBack();
+			Console.WriteLine();
+			DisplayGetInputNumber();
+		}
+
+		public void DisplayInputScneName()
+		{
+			DisplayIntro("저장하기");
+			Console.WriteLine();
+			Console.WriteLine("세이브 파일 이름을 설정하세요.");
+			Console.WriteLine();
+			DisplayGetInputString("세이브 파일 이름");
+		}
+		
+		public void DisplaySaveDone()
+		{
+			DisplayIntro("저장하기");
+			Console.WriteLine();
+			Console.WriteLine("세이브 파일이 저장되었습니다");
+			Console.WriteLine();
+			DisplayBack();
+			Console.WriteLine();
+			DisplayGetInputNumber();
 		}
 
 		public override void PlayScene()
 		{
 			DisplayInitScene();
-			int input = Utils.GetNumberInput(0, 1);
-			GameManager.Instance.GoHomeScene();
+			int input = Utils.GetNumberInput(0, 2);
+			if (input == 0) { 
+				GameManager.Instance.GoHomeScene();
+				return;
+			}
+			DisplayInputScneName();
+			string filePath = Console.ReadLine();
+			GameManager.Instance.Data.Save(filePath);
+			input = Utils.GetNumberInput(0, 2);
+			DisplaySaveDone();
+			input = Utils.GetNumberInput(0, 1);
+			if (input == 0) {GameManager.Instance.GoHomeScene();}
 		}
 	}
 }

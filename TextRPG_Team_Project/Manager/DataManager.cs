@@ -1,18 +1,25 @@
 ﻿using System.ComponentModel.Design;
 using System.Xml.Linq;
+using TextRPG_Team_Project;
+using TextRPG_Team_Project.Scene;
+using System.Text.Json;
+using System;
+using TextRPG_Team_Project.Data;
 
 namespace TextRPG_Team_Project
 {
     public class DataManager
     {
         private static DataManager _instance;
-
         private Random _random;
         private Character _player;
+
+        public PotionDataBase PotionDB { get; private init; }
 
         public DataManager()
         {
             _random = new Random();
+			PotionDB = new PotionDataBase();
         }
 
         public static DataManager Instance()
@@ -57,5 +64,39 @@ namespace TextRPG_Team_Project
             }
         }
         #endregion
+
+        public void Save(string filename="default1")
+        {
+			if (!Directory.Exists("save")) 
+				Directory.CreateDirectory("save");
+			string savePath = Path.Combine("save",$"{filename}.json");
+            
+            SaveData savedata = new SaveData();
+            savedata.PlayerSaveData = _player.Save();
+            savedata.QuestSaves = GameManager.Instance.Quest.Save();
+			Console.Write(savedata.ToString());
+			string jsonString = JsonSerializer.Serialize<SaveData>(savedata, new JsonSerializerOptions { WriteIndented = true });
+            Console.WriteLine(jsonString);
+            File.WriteAllText(savePath, jsonString);
+		}
+        public void Load(string filename)
+        {
+			string savePath = Path.Combine("save", filename);
+            string jsonString = File.ReadAllText(savePath);
+            SaveData savedata = JsonSerializer.Deserialize<SaveData>(jsonString);
+            PlayerSaveData playerData = savedata.PlayerSaveData;
+            if(playerData.Job == "전사")
+            {
+                CreatePlayer(playerData.Name, 1);
+                _player.Load(playerData);
+            }
+            else if(playerData.Job == "마법사")
+            {
+				CreatePlayer(playerData.Name, 2);
+				_player.Load(playerData);
+			}
+            List<QuestSaveData> questData = savedata.QuestSaves;
+            GameManager.Instance.Quest.Load(questData);
+		}
     }
 }

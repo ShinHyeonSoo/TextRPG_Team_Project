@@ -61,6 +61,11 @@ namespace TextRPG_Team_Project.Scene
 				Console.WriteLine($"{parsedOptionText[1]}");
 			}
 		}
+		public void DisplayBack()
+		{
+			StyleConsole.Write("0. ",ConsoleColor.Red);
+			StyleConsole.WriteLine("나가기",ConsoleColor.Yellow);
+		}
 		public static void WrongInput()
 		{
 			(int left, int top) = Console.GetCursorPosition();
