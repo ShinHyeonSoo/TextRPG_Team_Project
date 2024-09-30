@@ -390,7 +390,7 @@ namespace TextRPG_Team_Project.Item
             }
             string potionEffect = $"{potionArr[indexNum].PotionEffect}";
 
-            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
+            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|\t{potionPrice}G|{potionCount}|");
         }
 
 
