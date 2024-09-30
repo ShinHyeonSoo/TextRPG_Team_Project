@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using TextRPG_Team_Project;
+using TextRPG_Team_Project.Data;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
@@ -291,8 +293,70 @@ namespace TextRPG_Team_Project
         }
 
 
+        public PlayerSaveData Save()
+        {
+            PlayerSaveData save = new PlayerSaveData();
+            save.Job = Job;
+            save.Name = Name;   
+            save.Level = Level;
+            save.exp = exp;
+            save.MaxHealth=MaxHealth;
+            save.Health=Health;
+            save.Attack = Attack;
+            save.Defense = Defense;
+            save.Gold = Gold;
+            save.Weapon = Weapon;
+            save.armor = armor;
+            save.PostionSaves = SavePotions();
+            save.currentWeapon = currentWeapon;
+            save.currentArmor = currentArmor;
+            Console.WriteLine(save.ToString());
+            return save;
+        }
+        public List<PotionSaveData> SavePotions()
+        {
+            List<PotionSaveData> save = new List<PotionSaveData>();
+            for (int i = 0; i < potion.Count; i++) 
+            {
+                save.Add(new PotionSaveData(potion[i].Name, potion[i].ItemCount));
+            }
+            return save;
+        }
 
-
+        public void Load(PlayerSaveData data)
+        {
+            Job= data.Job;
+            Name = data.Name;
+            Level = data.Level;
+            exp = data.exp;
+            MaxHealth = data.MaxHealth;
+            Health = data.Health;
+            Attack = data.Attack;
+            Defense = data.Defense;
+            Gold = data.Gold;
+            Weapon = data.Weapon;
+            armor = data.armor;
+            LoadPotions(data.PostionSaves);
+            currentArmor = data.currentArmor;
+            currentWeapon = data.currentWeapon;
+        }
+        public void LoadPotions(List<PotionSaveData> data)
+        {
+            potion = new List<Potion>();
+            PotionDataBase potionDB = GameManager.Instance.Data.PotionDB;
+            for(int i = 0;i< data.Count; i++)
+            {
+                if (data[i].Name.Split(" ")[1] == "회복")
+                {
+                    HealthPotion hpPotion = new HealthPotion(
+                        data[i].Name,
+                        potionDB.PotionDict[data[i].Name].ItemPrice,
+                        data[i].Count,
+                        potionDB.PotionDict[data[i].Name].PotionEffect);
+                    potion.Add(hpPotion);
+                }
+            }
+		}
     }
 
 

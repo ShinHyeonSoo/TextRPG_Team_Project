@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
 	public class PotionUseQuest : Quest
 	{
@@ -19,13 +19,13 @@ namespace TextRPG_Team_Project.Quest
 		public string ShortDescription { get { return $"{_potionName}을(를) {_useCount}개 사용 | {_potionName}/{_useCount}"; } }
 
 		#region Constructor
-		public PotionUseQuest(string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public PotionUseQuest(string id, string name, string description, string shortDiscription, string potionName, int useCount, int goalUseCount, Defines.QuestStatus status, Reward reward) : base(id, name, description, status, reward)
 		{
 			_potionName = potionName;
 			_useCount = useCount;
 			GoalUseCount = goalUseCount;
 		}
-		public PotionUseQuest(string name, string description, string potionName, int goalUseCount, Reward reward) : base(name, description, reward)
+		public PotionUseQuest(string id, string name, string description, string potionName, int goalUseCount, Reward reward) : base(id, name, description, reward)
 		{
 			_potionName = potionName;
 			_useCount = 0;
@@ -60,6 +60,14 @@ namespace TextRPG_Team_Project.Quest
 					CompleteQuest();
 				}
 			}
+		}
+		public override QuestSaveData Save()
+		{
+			QuestSaveData data = new QuestSaveData();
+			data.ID = ID;
+			data.QuestStatus = Status;
+			data.ProgressCount = _useCount;
+			return data;
 		}
 	}
 }
