@@ -8,6 +8,7 @@ namespace TextRPG_Team_Project
 {
 	public class Defines
 	{
+		public const string SAVE_FOLDER = "save";
 		public enum GameStatus
 		{
 			Start = -1,
@@ -17,6 +18,7 @@ namespace TextRPG_Team_Project
 			Inventory,
 			Quest,
 			Save,
+			Load,
 		}
 		public enum QuestSceneState
 		{
