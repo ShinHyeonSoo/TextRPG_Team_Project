@@ -114,7 +114,7 @@ namespace TextRPG_Team_Project
             player.AttackEnemy(monster);
 
             Console.WriteLine($"{player.Name} 의 공격!");
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.Attack}]");
+            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
             Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
             if (monster.IsDead)

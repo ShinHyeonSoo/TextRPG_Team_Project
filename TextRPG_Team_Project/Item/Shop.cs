@@ -7,23 +7,29 @@ namespace TextRPG_Team_Project.Item
 {
     public class Shop
     {
-        // 테스트용
         Character character = DataManager.Instance().GetPlayer();
-        // 테스트용 끝
 
         public Weapon[] weaponArr = {
-            new Weapon("맨주먹", 0, 1, true, 0),
-            new Weapon("무기1", 100, 0, false, 5),
-            new Weapon("무기2", 200, 0, false, 10),
-            new Weapon("무기3", 500, 0, false, 15),
-            new Weapon("무기4", 1000, 0, false, 20)
+            new Weapon("맨 주먹",  0, 1, true, 0),
+            new Weapon("낡은 검",  800, 0, false, 5),
+            new Weapon("무쇠 검",  800, 0, false, 10),
+            new Weapon("강철 검", 2200, 0, false, 15),
+            new Weapon("미스릴 검",  6500, 0, false, 25),
+            new Weapon("나무 지팡이",  800, 0, false, 5),
+            new Weapon("마법 지팡이",  800, 0, false, 10),
+            new Weapon("전투마법사 지팡이", 2200, 0, false, 15),
+            new Weapon("대마법사의 지팡이",  6500, 0, false, 25)
         };
         public Armor[] armorArr = {
-            new Armor("기본옷", 0, 1, true, 0),
-            new Armor("아머1", 100, 0, false, 5),
-            new Armor("아머2", 200, 0, false, 10),
-            new Armor("아머3", 500, 0, false, 15),
-            new Armor("아머4", 1000, 0, false, 20)
+            new Armor("일반 옷",  0, 1, true, 0),
+            new Armor("가죽 갑옷", 500, 0, false, 5),
+            new Armor("사슬 갑옷", 1200, 0, false, 10),
+            new Armor("판금 갑옷",  2000, 0, false, 15),
+            new Armor("용 비늘 갑옷",  5000, 0, false, 25),
+            new Armor("천 로브",  500, 0, false, 5),
+            new Armor("견습 마법사 로브", 1200, 0, false, 10),
+            new Armor("마법사 로브",  2000, 0, false, 15),
+            new Armor("대마법사 로브",  5000, 0, false, 25)
         };
 
         public Potion[] potionArr = {
@@ -39,7 +45,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("2. 방어구 가방");
             Console.WriteLine("3. 물약 가방");
             Console.WriteLine("==========");
-
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.Write("디버그 선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
@@ -62,6 +68,7 @@ namespace TextRPG_Team_Project.Item
                     DisplayCharacterPotionInventory();
                     break;
             }
+
         }
 
         // 인벤토리 메서드
@@ -105,7 +112,7 @@ namespace TextRPG_Team_Project.Item
             int tempInput = int.Parse(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput > character.Weapon.Count)
+                if (tempInput < character.Weapon.Count)
                 {
                     if (!character.Weapon[tempInput].IsEquipped)
                     {
@@ -166,7 +173,7 @@ namespace TextRPG_Team_Project.Item
             int tempInput = int.Parse(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput > character.armor.Count)
+                if (tempInput < character.armor.Count)
                 {
                     if (!character.armor[tempInput].IsEquipped)
                     {
@@ -197,7 +204,12 @@ namespace TextRPG_Team_Project.Item
             {
                 DisplayPotionInventory(i);
             }
-
+            // 디버그용 코드
+            if(character.potion.Count > 0)
+                character.potion[0].ConsumeThis(character);
+            else 
+                Console.WriteLine("물약이 없습니다.");
+            // 코드 끝
             Console.WriteLine("==========");
             Console.WriteLine();
         }
@@ -238,6 +250,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     weaponArr[tempInput].BuyThis(character);
                     break;
             }
@@ -246,6 +262,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayWeaponShopArr()
         {
             Console.WriteLine("==무기상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
             for (int i = 1; i < weaponArr.Length; i++)
             {
@@ -288,6 +305,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     armorArr[tempInput].BuyThis(character);
                     break;
             }
@@ -296,6 +317,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayArmorShopArr()
         {
             Console.WriteLine("==방어구상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |\t이름|\t방어력|\t가격|  소지수");
             for (int i = 1; i < armorArr.Length; i++)
             {
@@ -343,6 +365,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayPotionShopArr()
         {
             Console.WriteLine("==물약상점==");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine(" |\t이름| 효과|\t가격|  소지수");
             for (int i = 1; i < potionArr.Length; i++)
             {
@@ -367,7 +390,7 @@ namespace TextRPG_Team_Project.Item
             }
             string potionEffect = $"{potionArr[indexNum].PotionEffect}";
 
-            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|{potionPrice}G|{potionCount}|");
+            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|\t{potionPrice}G|{potionCount}|");
         }
 
 
@@ -415,6 +438,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     weaponArr[tempInput].SellThis(character);
                     break;
             }
@@ -435,6 +462,10 @@ namespace TextRPG_Team_Project.Item
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
                     armorArr[tempInput].SellThis(character);
                     break;
             }

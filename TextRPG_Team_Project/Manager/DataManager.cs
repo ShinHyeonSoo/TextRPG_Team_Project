@@ -37,7 +37,7 @@ namespace TextRPG_Team_Project
         public Character GetPlayer() 
         {
             if (_player == null)
-                return new Warrior("홍길동", 1,100,1,1);
+                return new Warrior("홍길동", 1,100,1,1, 1);
 
             return _player; 
         }
@@ -47,13 +47,13 @@ namespace TextRPG_Team_Project
 
             if(_jobNum == 1)
             {
-                _player = new Warrior(name, 1, 100, 10, 5);
+                _player = new Warrior(name, 1, 100, 10, 1, 50);
             }
 
                 
             else if(_jobNum == 2)
             {
-                _player = new Mage(name, 1, 100, 10, 5);
+                _player = new Mage(name, 1, 100, 10, 5, 100);
             }
         }
         #endregion
