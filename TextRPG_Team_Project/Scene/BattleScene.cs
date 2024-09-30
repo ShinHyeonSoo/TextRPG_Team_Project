@@ -57,7 +57,8 @@ namespace TextRPG_Team_Project.Scene
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
             Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
-            _prevPlayerHealth = player.Health;
+            if(_prevPlayerHealth == 0)
+                _prevPlayerHealth = player.Health;
             _monstersCount = _battleManager.Monsters.Count;
 
             DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
@@ -201,7 +202,9 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
             Console.WriteLine(player.ManaRegen(10));
 
+            _prevPlayerHealth = 0;
             _battleManager.GetReward();
+            GameManager.Instance.Data.StageIndex++;
 
             Console.WriteLine("\n0. 다음");
 
@@ -229,6 +232,7 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine($"\nlv.{player.Level} {player.Name}");
             Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
 
+            _prevPlayerHealth = 0;
             player.HealthRegen(30);
 
             Console.WriteLine("\n0. 다음");
@@ -279,6 +283,7 @@ namespace TextRPG_Team_Project.Scene
                     case 0:
                         _battleManager.CollectMonster();
                         GameManager.Instance.GoHomeScene();
+                        _prevPlayerHealth = 0;
                         break;
                     case 1:
                         _status = BattleStatus.TargetSelect;

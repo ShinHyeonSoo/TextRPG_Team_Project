@@ -14,7 +14,7 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("");
 			DisplayOption(new List<string>() { 
 				"1. 상태보기", 
-				"2. 전투하기",
+				$"2. 전투하기 (현재 진행 : {GameManager.Instance.Data.StageIndex} 층)",
 				"3. 인벤토리", 
 				"4. 퀘스트 목록", 
 				"5. 저장하기" });
@@ -25,8 +25,6 @@ namespace TextRPG_Team_Project.Scene
 		{
 			DisplayInitScene();
 			GameManager.Instance.GoAnySScene((Defines.GameStatus)Utils.GetNumberInput(1, 6));
-
-
 		}
 	}
 }

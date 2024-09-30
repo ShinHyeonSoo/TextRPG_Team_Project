@@ -9,20 +9,21 @@ namespace TextRPG_Team_Project
         MINION,
         CANNON_MINION,
         VOILDING,
+        GOLEM,
     }
 
     public class Monster : IUnit
     {
         public event MonsterAttackHandler? OnAttack;
 
-        private string? _name;
-        private int _level;
-        private int _health;
-        private int _maxHealth;
-        private float _attack;
-        private int _defense;
-        private int _gold;
-        private bool _isDead;
+        protected string? _name;
+        protected int _level;
+        protected int _health;
+        protected int _maxHealth;
+        protected float _attack;
+        protected int _defense;
+        protected int _gold;
+        protected bool _isDead;
 
         protected MonsterType _type;
 
@@ -58,6 +59,11 @@ namespace TextRPG_Team_Project
             return "Unknown Dead";
         }
 
+        public virtual void LevelUp(int level)
+        {
+            
+        }
+
         public void TakeDamage(float damage)
         {
             int error = (int)Math.Ceiling(damage * 0.1f); // 소수 첫번째 자리 올림
@@ -72,7 +78,7 @@ namespace TextRPG_Team_Project
             if (_health < 1)
             {
                 _health = 0;
-                GameManager.Instance.PlayerRecored.increseMonsterKillCount(_name);
+                GameManager.Instance.PlayerRecored.IncreseMonsterKillCount(_name);
                 _isDead = true;
             }
         }
