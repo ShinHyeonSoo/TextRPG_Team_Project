@@ -284,14 +284,14 @@ namespace TextRPG_Team_Project.Item
             for (int i = 1; i < itemDB.weaponDict.Count; i++)
             {
                 KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(i);
-                DisplayWeapon(weapon.Key);
+                DisplayWeapon(weapon.Key, i);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayWeapon(string weaponKey)
+        void DisplayWeapon(string weaponKey, int i)
         {
-            string indexNumber = $"{weaponKey}";
+            string indexNumber = $"{i}";
             string weaponName = $"{itemDB.weaponDict[weaponKey].Name}";
             string weaponPrice = itemDB.weaponDict[weaponKey].ItemPrice.ToString("D4");
             string weaponCount;
@@ -343,14 +343,14 @@ namespace TextRPG_Team_Project.Item
             for (int i = 1; i < itemDB.armorDict.Count; i++)
             {
                 KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(i);
-                DisplayWeapon(armor.Key);
+                DisplayArmor(armor.Key, i);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayArmor(string armorKey)
+        void DisplayArmor(string armorKey, int i)
         {
-            string indexNumber = $"{0}";
+            string indexNumber = $"{i}";
             string armorName = $"{itemDB.armorDict[armorKey].Name}";
             string armorPrice = itemDB.armorDict[armorKey].ItemPrice.ToString("D4");
             string armorCount;
@@ -395,14 +395,14 @@ namespace TextRPG_Team_Project.Item
             for (int i = 1; i < itemDB.potionDict.Count; i++)
             {
                 KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(i);
-                DisplayWeapon(potion.Key);
+                DisplayPotion(potion.Key, i);
             }
             Console.WriteLine("========");
         }
 
-        void DisplayPotion(string potionKey)
+        void DisplayPotion(string potionKey, int i)
         {
-            string indexNumber = $"{0}";
+            string indexNumber = $"{i}";
             string potionName = $"{itemDB.potionDict[potionKey].Name}";
             string potionPrice = $"{itemDB.potionDict[potionKey].ItemPrice}";
             string potionCount;
@@ -578,7 +578,7 @@ namespace TextRPG_Team_Project.Item
             // weapon check
             foreach ( var weapon in itemDB.weaponDict.Values)
             {
-                if(character.Weapon.Contains(weapon))
+                if(!character.Weapon.Contains(weapon))
                 {
                     if (weapon.ItemCount > 0)
                     {
@@ -593,7 +593,7 @@ namespace TextRPG_Team_Project.Item
             // armor check
             foreach (var armor in itemDB.armorDict.Values)
             {
-                if (character.armor.Contains(armor))
+                if (!character.armor.Contains(armor))
                 {
                     if (armor.ItemCount > 0)
                     {
@@ -608,7 +608,7 @@ namespace TextRPG_Team_Project.Item
             // potion check
             foreach (var potion in itemDB.potionDict.Values)
             {
-                if (character.potion.Contains(potion))
+                if (!character.potion.Contains(potion))
                 {
                     if (potion.ItemCount > 0)
                     {

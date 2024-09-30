@@ -5,7 +5,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 {
     public class Weapon : EquippableItem
     {
-        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         float weaponAttack;
         // 치명타가 추가될 수도 있음
 
@@ -74,7 +73,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
-                character.currentWeapon = itemDB.weaponDict["맨 주먹"];
             }
             // 아닐 때
             else

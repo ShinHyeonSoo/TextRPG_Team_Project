@@ -6,7 +6,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
 {
     public class Armor : EquippableItem
     {
-        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         int armorDefence;
         // 회피율이 추가될 수도 있음
 
@@ -75,7 +74,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
-                character.currentArmor = itemDB.armorDict["일반 옷"];
             }
             // 아닐 때
             else
