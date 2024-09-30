@@ -201,13 +201,22 @@ namespace TextRPG_Team_Project
             {
                 damage = Attack * Skill[CurrentSkill].DamageMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
-                Mp -= Skill[CurrentSkill].ManaCost;
-                CurrentSkill = -1;
+                           
             }
+                   
+               
 
             _target.TakeDamage(damage);
 
 
+        }
+
+        public void ManaReduced()
+        {
+            if(CurrentSkill >=0)
+            {
+                Mp -= Skill[CurrentSkill].ManaCost;
+            }
         }
 
         public string GetSkillInfo()
@@ -290,6 +299,14 @@ namespace TextRPG_Team_Project
 
 
         }
+
+        public void ResetCurrentSkill()
+        {
+            CurrentSkill = -1;
+
+        }
+
+      
 
 
 
