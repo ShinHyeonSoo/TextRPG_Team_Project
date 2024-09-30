@@ -76,32 +76,4 @@
         }
 
     }
-    /*
-    class TestWeapon : Weapon
-    {
-        string name = "테스트 무기";
-        int itemPrice = 10;
-        int itemCount = 1;
-        bool isEquipped = false;
-        float weaponAttack = 5f;
-    }
-
-    class IronSword : Weapon
-    {
-        string name = "철 검";
-        int itemPrice = 0;
-        int itemCount = 0;
-        bool isEquipped = false;
-        float weaponAttack = 10f;
-    }
-
-    class WoodenStaff : Weapon
-    {
-        string name = "나무 지팡이";
-        int itemPrice = 0;
-        int itemCount = 0;
-        bool isEquipped = false;
-        float weaponAttack = 10f;
-    }
-    */
 }

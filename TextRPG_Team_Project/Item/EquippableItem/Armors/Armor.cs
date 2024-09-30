@@ -75,32 +75,4 @@
             }
         }
     }
-    /*
-    class TestArmor : Armor
-    {
-        string name = "테스트 방어구";
-        int itemPrice = 10;
-        int itemCount = 1;
-        bool isEquipped = false;
-        int armorDefence = 5;
-    }
-
-    class LeatherArmor : Armor
-    {
-        string name = "가죽 갑옷";
-        int itemPrice = 0;
-        int itemCount = 0;
-        bool isEquipped = false;
-        int armorDefence = 5;
-    }
-
-    class LinenRobe : Armor
-    {
-        string name = "리넨 로브";
-        int itemPrice = 0;
-        int itemCount = 0;
-        bool isEquipped = false;
-        int armorDefence = 5;
-    }
-    */
 }

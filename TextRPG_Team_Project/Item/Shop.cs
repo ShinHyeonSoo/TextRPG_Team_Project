@@ -10,18 +10,26 @@ namespace TextRPG_Team_Project.Item
         Character character = DataManager.Instance().GetPlayer();
 
         public Weapon[] weaponArr = {
-            new Weapon("맨주먹", 0, 1, true, 0),
-            new Weapon("무기1", 100, 0, false, 5),
-            new Weapon("무기2", 200, 0, false, 10),
-            new Weapon("무기3", 500, 0, false, 15),
-            new Weapon("무기4", 1000, 0, false, 20)
+            new Weapon("맨 주먹",  0, 1, true, 0),
+            new Weapon("낡은 검",  800, 0, false, 5),
+            new Weapon("무쇠 검",  800, 0, false, 10),
+            new Weapon("강철 검", 2200, 0, false, 15),
+            new Weapon("미스릴 검",  6500, 0, false, 25),
+            new Weapon("나무 지팡이",  800, 0, false, 5),
+            new Weapon("마법 지팡이",  800, 0, false, 10),
+            new Weapon("전투마법사 지팡이", 2200, 0, false, 15),
+            new Weapon("대마법사의 지팡이",  6500, 0, false, 25)
         };
         public Armor[] armorArr = {
-            new Armor("기본옷", 0, 1, true, 0),
-            new Armor("아머1", 100, 0, false, 5),
-            new Armor("아머2", 200, 0, false, 10),
-            new Armor("아머3", 500, 0, false, 15),
-            new Armor("아머4", 1000, 0, false, 20)
+            new Armor("일반 옷",  0, 1, true, 0),
+            new Armor("가죽 갑옷", 500, 0, false, 5),
+            new Armor("사슬 갑옷", 1200, 0, false, 10),
+            new Armor("판금 갑옷",  2000, 0, false, 15),
+            new Armor("용 비늘 갑옷",  5000, 0, false, 25),
+            new Armor("천 로브",  500, 0, false, 5),
+            new Armor("견습 마법사 로브", 1200, 0, false, 10),
+            new Armor("마법사 로브",  2000, 0, false, 15),
+            new Armor("대마법사 로브",  5000, 0, false, 25)
         };
 
         public Potion[] potionArr = {
@@ -31,7 +39,7 @@ namespace TextRPG_Team_Project.Item
 
 
         void DisplayCharacterInventory()
-        {   
+        {
             Console.WriteLine("=====가방=====");
             Console.WriteLine("1. 무기 가방");
             Console.WriteLine("2. 방어구 가방");
@@ -196,7 +204,7 @@ namespace TextRPG_Team_Project.Item
             {
                 DisplayPotionInventory(i);
             }
-
+            
             Console.WriteLine("==========");
             Console.WriteLine();
         }

@@ -112,6 +112,7 @@ namespace TextRPG_Team_Project.Item.Potions
                 if(character.Health > character.MaxHealth)
                 {
                     character.Health = character.MaxHealth;
+                    Console.WriteLine($"최대 체력에 도달했다!");
                 }
                 itemCount--;
 
