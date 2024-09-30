@@ -28,7 +28,8 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 Console.WriteLine($"{name}을(를) 얻었다.");
                 if (character.Weapon.Contains(this))
                 {
-                    itemCount += addItemCount;
+                    int index = character.Weapon.IndexOf(this);
+                    character.Weapon[index].itemCount += addItemCount;
                 }
                 else
                 {

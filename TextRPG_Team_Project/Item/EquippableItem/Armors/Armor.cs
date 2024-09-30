@@ -29,7 +29,8 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 Console.WriteLine($"{name}을(를) 얻었다.");
                 if (character.armor.Contains(this))
                 {
-                    itemCount += addItemCount;
+                    int index = character.armor.IndexOf(this);
+                    character.armor[index].itemCount += addItemCount;
                 }
                 else
                 {
