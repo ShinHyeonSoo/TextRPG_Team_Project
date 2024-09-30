@@ -46,7 +46,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("3. 물약 가방");
             Console.WriteLine("==========");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -75,7 +75,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayCharacterWeaponInventory()
         {
-            CharacterInventoryReset();
+            CharacterInventoryCheck();
             Console.WriteLine("===무기 가방===");
             Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
 
@@ -146,7 +146,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayCharacterArmorInventory()
         {
-            CharacterInventoryReset();
+            CharacterInventoryCheck();
             Console.WriteLine("==방어구 가방==");
             Console.WriteLine(" |이름|\t방어력|\t가격|  소지수");
 
@@ -207,7 +207,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayCharacterPotionInventory()
         {
-            CharacterInventoryReset();
+            CharacterInventoryCheck();
             Console.WriteLine("===물약 가방===");
             Console.WriteLine(" |이름|\t효과|\t가격|  소지수");
             for (int i = 0; i < character.potion.Count; i++)
@@ -249,7 +249,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayWeaponShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -304,7 +304,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayArmorShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -359,7 +359,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayPotionShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -411,7 +411,8 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("2. 방어구");
             Console.WriteLine("3. 물약");
 
-            CharacterInventoryReset(); Console.Write("디버그 선택: ");
+            CharacterInventoryCheck();
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -437,7 +438,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayWeaponShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -461,7 +462,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayArmorShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -485,7 +486,7 @@ namespace TextRPG_Team_Project.Item
         {
             DisplayPotionShopArr();
 
-            Console.Write("디버그 선택: ");
+            Console.Write("선택: ");
             int tempInput = int.Parse(Console.ReadLine());
 
             switch (tempInput)
@@ -496,15 +497,6 @@ namespace TextRPG_Team_Project.Item
                     potionArr[tempInput].SellThis(character);
                     break;
             }
-        }
-
-        void CharacterInventoryReset()
-        {
-            character.Weapon.Clear();
-            character.armor.Clear();
-            character.potion.Clear();
-
-            CharacterInventoryCheck();
         }
 
         public void DebugInventory()
