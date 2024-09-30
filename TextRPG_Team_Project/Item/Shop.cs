@@ -16,9 +16,9 @@ namespace TextRPG_Team_Project.Item
             new Weapon("강철 검", 2200, 0, false, 15),
             new Weapon("미스릴 검",  6500, 0, false, 25),
             new Weapon("나무 지팡이",  800, 0, false, 5),
-            new Weapon("마법 지팡이",  800, 0, false, 10),
-            new Weapon("전투마법사 지팡이", 2200, 0, false, 15),
-            new Weapon("대마법사의 지팡이",  6500, 0, false, 25)
+            new Weapon("전투 지팡이",  800, 0, false, 10),
+            new Weapon("마법 지팡이", 2200, 0, false, 15),
+            new Weapon("대마법 지팡이",  6500, 0, false, 25)
         };
         public Armor[] armorArr = {
             new Armor("일반 옷",  0, 1, true, 0),
@@ -27,8 +27,8 @@ namespace TextRPG_Team_Project.Item
             new Armor("판금 갑옷",  2000, 0, false, 15),
             new Armor("용 비늘 갑옷",  5000, 0, false, 25),
             new Armor("천 로브",  500, 0, false, 5),
-            new Armor("견습 마법사 로브", 1200, 0, false, 10),
-            new Armor("마법사 로브",  2000, 0, false, 15),
+            new Armor("견습 로브", 1200, 0, false, 10),
+            new Armor("숙련 로브",  2000, 0, false, 15),
             new Armor("대마법사 로브",  5000, 0, false, 25)
         };
 
@@ -113,7 +113,8 @@ namespace TextRPG_Team_Project.Item
             }
             string WeaponAttack = $"{character.Weapon[indexNum].WeaponAttack}";
 
-            Console.WriteLine($"{indexNumber}|{isEquipped} {weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+            //Console.WriteLine($"{indexNumber}| {weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+            Console.WriteLine($"{indexNumber}|\t{isEquipped} {weaponName}|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
 
         void WeaponEquipment()
@@ -273,7 +274,9 @@ namespace TextRPG_Team_Project.Item
         {
             Console.WriteLine("==무기상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine(" |이름|\t공격력|\t가격|  소지수");
+            Console.WriteLine($"=====================================================");
+            Console.WriteLine(" |이름\t\t|\t공격력|\t   가격|    소지수");
+            Console.WriteLine("------------------------------------------------------");
             for (int i = 1; i < weaponArr.Length; i++)
             {
                 DisplayWeapon(i);
@@ -285,7 +288,7 @@ namespace TextRPG_Team_Project.Item
         {
             string indexNumber = $"{indexNum}";
             string weaponName = $"{weaponArr[indexNum].Name}";
-            string weaponPrice = $"{weaponArr[indexNum].ItemPrice}";
+            string weaponPrice = weaponArr[indexNum].ItemPrice.ToString("D4");
             string weaponCount;
             if (weaponArr[indexNum].ItemCount < weaponArr[indexNum].ItemCountMax)
             {
@@ -295,9 +298,9 @@ namespace TextRPG_Team_Project.Item
             {
                 weaponCount = "[최대보유]";
             }
-            string WeaponAttack = $"{weaponArr[indexNum].WeaponAttack}";
+            string WeaponAttack = ((int)(weaponArr[indexNum].WeaponAttack)).ToString("D2");
 
-            Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+            Console.WriteLine($"{indexNumber}|{weaponName}\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
 
         void ArmorShop()
@@ -328,7 +331,9 @@ namespace TextRPG_Team_Project.Item
         {
             Console.WriteLine("==방어구상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine(" |\t이름|\t방어력|\t가격|  소지수");
+            Console.WriteLine($"=====================================================");
+            Console.WriteLine(" |이름\t\t|\t방어력|\t   가격|    소지수");
+            Console.WriteLine("------------------------------------------------------");
             for (int i = 1; i < armorArr.Length; i++)
             {
                 DisplayArmor(i);
@@ -340,7 +345,7 @@ namespace TextRPG_Team_Project.Item
         {
             string indexNumber = $"{indexNum}";
             string armorName = $"{armorArr[indexNum].Name}";
-            string armorPrice = $"{armorArr[indexNum].ItemPrice}";
+            string armorPrice = armorArr[indexNum].ItemPrice.ToString("D4");
             string armorCount;
             if (armorArr[indexNum].ItemCount < armorArr[indexNum].ItemCountMax)
             {
@@ -350,9 +355,9 @@ namespace TextRPG_Team_Project.Item
             {
                 armorCount = "[최대보유]";
             }
-            string armorDefence = $"{armorArr[indexNum].ArmorDefence}";
+            string armorDefence = armorArr[indexNum].ArmorDefence.ToString("D2");
 
-            Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
+            Console.WriteLine($"{indexNumber}|{armorName}\t|\t  + {armorDefence}|\t {armorPrice} G|  {armorCount}|");
         }
 
         void PotionShop()
@@ -376,7 +381,9 @@ namespace TextRPG_Team_Project.Item
         {
             Console.WriteLine("==물약상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine(" |\t이름| 효과|\t가격|  소지수");
+            Console.WriteLine($"=====================================================");
+            Console.WriteLine(" |이름\t\t|\t효과|\t   가격|    소지수");
+            Console.WriteLine("------------------------------------------------------");
             for (int i = 1; i < potionArr.Length; i++)
             {
                 DisplayPotion(i);
@@ -400,7 +407,7 @@ namespace TextRPG_Team_Project.Item
             }
             string potionEffect = $"{potionArr[indexNum].PotionEffect}";
 
-            Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|\t{potionPrice}G|{potionCount}|");
+            Console.WriteLine($"{indexNumber}|{potionName}\t|\t+ {potionEffect}|\t   {potionPrice} G|  {potionCount}|");
         }
 
         // 판매 메서드
