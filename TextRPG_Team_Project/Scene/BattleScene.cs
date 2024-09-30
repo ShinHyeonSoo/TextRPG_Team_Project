@@ -48,7 +48,9 @@ namespace TextRPG_Team_Project.Scene
 
         public override void DisplayInitScene()
         {
+            
             player = GameManager.Instance.Data.GetPlayer();
+            player.ResetCurrentSkill();
             UserInfo += player.GetUserInfoShort;
             DisplayIntro("Battle");
             Console.WriteLine();
