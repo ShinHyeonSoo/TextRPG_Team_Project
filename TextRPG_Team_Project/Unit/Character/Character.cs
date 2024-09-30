@@ -21,14 +21,14 @@ namespace TextRPG_Team_Project
         public int Gold { get; set; }
         public int Level { get; private set; }
         public int MaxHealth { get; set; }
-        public int Health { get; set; }      
+        public int Health { get; set; }
         public float Attack { get; private set; }
-        public int Defense { get; private set; }     
+        public int Defense { get; private set; }
         public bool IsDead { get; private set; }
         public int CurrentSkill { get; private set; } = -1;
-        public int Mp { get; private set;}
+        public int Mp { get; private set; }
         public int MaxMp { get; private set; }
-        public int CurrentAttack { get; private set; }     
+        public int CurrentAttack { get; private set; }
         public string Job { get; protected set; }
 
         private int exp = 0;
@@ -43,7 +43,7 @@ namespace TextRPG_Team_Project
         public Weapon currentWeapon;
         public Armor currentArmor;
 
-        public Character(String _name , int _level, int _maxHealth , int _attack , int _defense , int _mp) // 캐릭터 생성시 초기값 설정
+        public Character(String _name, int _level, int _maxHealth, int _attack, int _defense, int _mp) // 캐릭터 생성시 초기값 설정
         {
             MaxMp = _mp;
             Mp = MaxMp;
@@ -56,27 +56,27 @@ namespace TextRPG_Team_Project
             IsDead = false;
 
             Weapon = new List<Weapon>();
-            armor = new List<Armor>();  
-            potion = new List<Potion>();    
-           
-            
+            armor = new List<Armor>();
+            potion = new List<Potion>();
+
+
         }
 
         public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음
         {
             Random random = GameManager.Instance.Data.GetRandom();
 
-            
+
             float errorMargin = (float)Math.Ceiling(damage * 0.1f);
 
 
-            int intDamage = random.Next((int)(damage - errorMargin), (int)(damage + errorMargin+1));
+            int intDamage = random.Next((int)(damage - errorMargin), (int)(damage + errorMargin + 1));
 
-            
+
             int reducedDamage = Math.Max(0, intDamage - Defense);
             Health -= reducedDamage;
 
-            if (Health <= 0) 
+            if (Health <= 0)
             {
                 Health = 0;
                 IsDead = true;
@@ -110,7 +110,7 @@ namespace TextRPG_Team_Project
             int requireExp = GetRequireExp(Level);
             int _prevRequireExp = requireExp;
 
-            while(exp >= requireExp)
+            while (exp >= requireExp)
             {
                 LevelUp();
                 exp -= requireExp;
@@ -139,8 +139,8 @@ namespace TextRPG_Team_Project
             Attack += 1;
             Level += 1;
             GameManager.Instance.PlayerRecored.NotifyUserLevelUp();
-            
-            
+
+
         }
 
         public string GetStatus() // 유저의 status의 정보를 알려주는 함수
@@ -160,7 +160,7 @@ namespace TextRPG_Team_Project
 
         }
 
-     
+
         public void EquipWeapon(Weapon _weapon)
         {
             if (currentWeapon != null)
@@ -173,15 +173,15 @@ namespace TextRPG_Team_Project
             Attack += _weapon.WeaponAttack;
 
         }
-    
+
         public void EquipArmor(Armor _armor)
         {
-            if(currentArmor != null)
+            if (currentArmor != null)
             {
                 Attack -= currentArmor.ArmorDefence;
             }
-			GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
-			currentArmor = _armor;
+            GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
+            currentArmor = _armor;
             Defense += _armor.ArmorDefence;
         }
 
@@ -205,20 +205,20 @@ namespace TextRPG_Team_Project
             }
 
             _target.TakeDamage(damage);
-            
+
 
         }
-        
+
         public string GetSkillInfo()
         {
-            StringBuilder skillList = new StringBuilder(); 
+            StringBuilder skillList = new StringBuilder();
 
             int index = 1; // 스킬 번호 초기화
             foreach (var skill in Skill)
             {
-                skillList.AppendLine($"{index}. {skill.Name} - MP {skill.ManaCost}"); 
-                skillList.AppendLine($"   {skill.Description}"); 
-                index++; 
+                skillList.AppendLine($"{index}. {skill.Name} - MP {skill.ManaCost}");
+                skillList.AppendLine($"   {skill.Description}");
+                index++;
             }
 
             return skillList.ToString();
@@ -227,7 +227,7 @@ namespace TextRPG_Team_Project
 
         public int ManaChecker(int select)
         {
-            if (Mp >= Skill[select-1].ManaCost)
+            if (Mp >= Skill[select - 1].ManaCost)
             {
                 return select;
 
@@ -235,19 +235,19 @@ namespace TextRPG_Team_Project
 
             else
             {
-                
+
                 return 0;
             }
-                
+
 
         }
 
         public int SetCurrentSkill(int input)
         {
-            CurrentSkill = input-1;
-            
+            CurrentSkill = input - 1;
+
             return CurrentSkill;
-            
+
 
         }
 
@@ -258,27 +258,49 @@ namespace TextRPG_Team_Project
 
         }
 
-        
+
         public void GetReward(Reward? reward)
         {
-            if(reward != null)
-            Gold += reward.Value.Gold;
+            if (reward != null)
+                Gold += reward.Value.Gold;
             else { }
 
         }
 
-      
+        public void HealthRegen(int value)
+        {
+            if (IsDead)
+            {
+                Health += value;
+
+                if(Health > MaxHealth)
+                {
+                    Health = MaxHealth;
+
+                }
+
+                if(Health > 0)
+                {
+
+                    IsDead = false;
+
+                }
+            }           
+
+
+        }
+
 
 
 
     }
 
 
-   
-  
 
-   
-    
+
+
+
+
 
 
 
