@@ -9,10 +9,14 @@ namespace TextRPG_Team_Project
 
         private Random _random;
         private Character _player;
+        private int _stageIndex;
+
+        public int StageIndex { get { return _stageIndex; } set { _stageIndex = value; } }
 
         public DataManager()
         {
             _random = new Random();
+            _stageIndex = 1;
         }
 
         public static DataManager Instance()
