@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
 	public struct Reward
 	{
@@ -17,32 +18,31 @@ namespace TextRPG_Team_Project.Quest
 		{
 			return $"Gold : {Gold}";
 		}
-
 	}
 	public abstract class Quest
 	{
-		[JsonInclude]
 		protected Defines.QuestStatus _status;
-
+		private string _id;
+		public string ID { get {  return _id; } }
 		public string Name { get; init; }
 		public string Description { get; init; }
-		[JsonIgnore]
 		public string ShortDescriptoin { get { return ""; } }
-		public Reward? Reward {  get; init; }
+		public Reward Reward {  get; init; }
 		public Defines.QuestStatus Status { get { return _status; } }
 
 		#region Constructor
-		[JsonConstructor]
-		public Quest(string name, string description, Defines.QuestStatus status, Reward reward)
+		public Quest(string id,string name, string description, Defines.QuestStatus status, Reward reward)
 		{
+			_id = id;
 			Name = name;
 			Description = description;
 			_status = status;
 			Reward = reward;
 		}
 
-		public Quest(string name, string description, Reward reward)
+		public Quest(string id, string name, string description, Reward reward)
 		{
+			_id = id;
 			Name = name;
 			Description = description;
 			_status = Defines.QuestStatus.NotStarted;
@@ -65,14 +65,14 @@ namespace TextRPG_Team_Project.Quest
 				_status = Defines.QuestStatus.Completed;
 		}
 
-		public Reward? GiveReward() 
+		public Reward GiveReward() 
 		{
 			if(_status == Defines.QuestStatus.Completed)
 			{
 				_status = Defines.QuestStatus.RewardClaimed;
 				return Reward;
 			}
-			else { return null; }
+			else { return new Reward(0); }
 		}
 
 		public virtual string Tostring()
@@ -98,6 +98,19 @@ namespace TextRPG_Team_Project.Quest
 					break;
 			}
 			return thisString;
+		}
+		public virtual QuestSaveData Save()
+		{
+			QuestSaveData data = new QuestSaveData();
+			data.ID = ID;
+			data.QuestStatus = Status;
+			return data;
+		}
+		public virtual void Load(QuestSaveData data)
+		{
+			if (_id == data.ID) {
+				_status = data.QuestStatus;
+			}
 		}
 	}
 }

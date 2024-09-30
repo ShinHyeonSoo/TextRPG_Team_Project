@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TextRPG_Team_Project.Scene;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
 	public class LevelQuest : Quest
 	{
@@ -16,12 +16,12 @@ namespace TextRPG_Team_Project.Quest
 		public string ShortDescription { get { return $"{_targetLevel} 달성 | {GameManager.Instance.Data.GetPlayer().Level}/{_targetLevel}"; } }
 
 		#region [Conductor]
-		public LevelQuest(string name, string description, int targetLevel, Reward reward) : base(name, description, reward)
+		public LevelQuest(string id,string name, string description, int targetLevel, Reward reward) : base(id, name, description, reward)
 		{
 			_targetLevel = targetLevel;
 		}
 
-		public LevelQuest(string name, string description, int targetLevel, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public LevelQuest(string id, string name, string description, int targetLevel, Defines.QuestStatus status, Reward reward) : base(id, name, description, status, reward)
 		{
 			_targetLevel = targetLevel;
 		}
@@ -49,6 +49,21 @@ namespace TextRPG_Team_Project.Quest
 				CompleteQuest();
 			}
 		}
-
+		public override QuestSaveData Save()
+		{
+			QuestSaveData data = new QuestSaveData();
+			data.ID = ID;
+			data.QuestStatus = Status;
+			data.ProgressCount = 0;
+			return data;
+		}
+		public override void Load(QuestSaveData data)
+		{
+			base.Load(data);
+			if (_status == Defines.QuestStatus.InProgress)
+			{
+				GameManager.Instance.PlayerRecored.TrackLevel += CheckUserLevel;
+			}
+		}
 	}
 }

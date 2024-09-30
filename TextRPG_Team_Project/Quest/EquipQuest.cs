@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using TextRPG_Team_Project.Quest;
 using TextRPG_Team_Project.Scene;
 
-namespace TextRPG_Team_Project.Quest
+namespace TextRPG_Team_Project
 {
 	public class EquipQuest : Quest
 	{
@@ -17,12 +16,12 @@ namespace TextRPG_Team_Project.Quest
 		public string ShortDescription { get { return $"{_equipmentItem}을(를) 착용하기."; } }
 
 		#region [Conductor]
-		public EquipQuest(string name, string description, string equipment, Reward reward) : base(name, description, reward)
+		public EquipQuest(string id, string name, string description, string equipment, Reward reward) : base(id, name, description, reward)
 		{
 			_equipmentItem = equipment;
 		}
 
-		public EquipQuest(string name, string description, string equipment, Defines.QuestStatus status, Reward reward) : base(name, description, status, reward)
+		public EquipQuest(string id, string name, string description, string equipment, Defines.QuestStatus status, Reward reward) : base(id, name, description, status, reward)
 		{
 			_equipmentItem = equipment;
 		}
@@ -47,6 +46,22 @@ namespace TextRPG_Team_Project.Quest
 			if (equipment == _equipmentItem) 
 			{
 				CompleteQuest();
+			}
+		}
+		public override QuestSaveData Save()
+		{
+			QuestSaveData data = new QuestSaveData();
+			data.ID = ID;
+			data.QuestStatus = Status;
+			data.ProgressCount = 0;
+			return data;
+		}
+		public override void Load(QuestSaveData data)
+		{
+			base.Load(data);
+			if (_status == Defines.QuestStatus.InProgress)
+			{
+				GameManager.Instance.PlayerRecored.TrackEquip += CheckUserEquipTargetItem;
 			}
 		}
 
