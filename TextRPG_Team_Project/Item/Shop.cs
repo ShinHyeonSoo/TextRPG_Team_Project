@@ -403,6 +403,8 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}|\t{potionEffect}|\t{potionPrice}G|{potionCount}|");
         }
 
+        // 판매 메서드
+
         void SellItems()
         {
             Console.WriteLine("어떤 물건 판매?");
