@@ -16,7 +16,7 @@ namespace TextRPG_Team_Project
             Skill = new List<Skill>
             {
                 new Skill("파이어볼", 2 , "공격력 * 2 로 하나의 적을 공격합니다." , 20),
-                new Skill("아이스 볼트", 2 , "공격력 * 1.5 로 하나의 적을 공격합니다." , 20)
+                new Skill("아이스 볼트", 1.5f , "공격력 * 1.5 로 하나의 적을 공격합니다." , 10)
             };
 
         }

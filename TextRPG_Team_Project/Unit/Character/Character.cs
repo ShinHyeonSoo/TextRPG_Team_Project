@@ -123,6 +123,15 @@ namespace TextRPG_Team_Project
             return "";
         }
 
+        public string ManaRegen(int value)
+        {
+            int prevMana = Mp;
+            Mp += value;
+            if (Mp > MaxMp)
+                Mp = MaxMp;
+            return $"Mp {prevMana} -> {Mp}";
+        }
+
 
         public void LevelUp() // 경험치 100초과시 레벨업 
         {

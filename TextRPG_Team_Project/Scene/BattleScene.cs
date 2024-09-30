@@ -218,6 +218,7 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine(player.AddExp(_monstersCount));
             Console.WriteLine($"\nlv.{player.Level} {player.Name}");
             Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
+            Console.WriteLine(player.ManaRegen(10));
             
             Utils.GetNumberInput(0, 1);
 
