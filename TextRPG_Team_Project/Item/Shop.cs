@@ -90,6 +90,16 @@ namespace TextRPG_Team_Project.Item
         void DisplayWeaponInventory(int indexNum)
         {
             string indexNumber = $"{indexNum}";
+            string isEquipped;
+            if (character.Weapon[indexNum].IsEquipped)
+            {
+                isEquipped = "[E]";
+            } 
+            else
+            {
+                isEquipped = "";
+            }
+                
             string weaponName = $"{character.Weapon[indexNum].Name}";
             string weaponPrice = $"{character.Weapon[indexNum].ItemPrice}";
             string weaponCount;
@@ -103,7 +113,7 @@ namespace TextRPG_Team_Project.Item
             }
             string WeaponAttack = $"{character.Weapon[indexNum].WeaponAttack}";
 
-            Console.WriteLine($"{indexNumber}|{weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
+            Console.WriteLine($"{indexNumber}|{isEquipped} {weaponName}|\t{WeaponAttack}|{weaponPrice}G|{weaponCount}|");
         }
 
         void WeaponEquipment()
@@ -509,6 +519,7 @@ namespace TextRPG_Team_Project.Item
                 Console.WriteLine("3. 방어구 상점 테스트");
                 Console.WriteLine("4. 물약 상점 테스트");
                 Console.WriteLine("5. 판매 테스트");
+                Console.WriteLine("6. 1만 골드 추가");
                 Console.Write("디버그 선택: ");
                 int tempInput = int.Parse(Console.ReadLine());
 
@@ -535,6 +546,10 @@ namespace TextRPG_Team_Project.Item
                     case 5:
                         Console.WriteLine("아이템 판매");
                         SellItems();
+                        break;
+                    case 6:
+                        Console.WriteLine("1만 골드 획득");
+                        character.Gold += 10000;
                         break;
 
                 }
