@@ -10,23 +10,24 @@ using System.Threading.Tasks;
 
 namespace TextRPG_Team_Project.Scene
 {
-    public class BattleScene : Scene
-    {
-        // 논의 필요 
-        private BattleManager _battleManager;
+	public class BattleScene : Scene
+	{
+		// 논의 필요 
+		private BattleManager _battleManager;
         Character player;
         enum BattleStatus
-        {
-            Start,
-            TargetSelect,
-            SkillSelect,
-            PlayerTurn,
-            EnermyTurn,
-            Victory,
-        }
-        private BattleStatus _status;
-        private int _depth;
-        private int _targetNum;
+		{
+			Start,
+			TargetSelect,
+			SkillSelect,
+			PlayerTurn,
+			EnermyTurn,
+			Victory,
+            Lose,
+		}
+		private BattleStatus _status;
+		private int _depth;
+		private int _targetNum;
         private int _prevPlayerHealth;
         private int _monstersCount;
 
@@ -57,12 +58,6 @@ namespace TextRPG_Team_Project.Scene
             _prevPlayerHealth = player.Health;
             _monstersCount = _battleManager.Monsters.Count;
 
-            //#region 플레이어 정보 임시
-            //Character player = DataManager.Instance().GetPlayer();
-            //Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
-
-            //#endregion
-
             DisplayOption(new List<string>() { "1. 공격", "2. 스킬\n" });
             DisplayGetInputNumber();
         }
@@ -72,15 +67,10 @@ namespace TextRPG_Team_Project.Scene
             ++_depth;
 
             DisplayIntro("Battle");
+			Console.WriteLine();
+            _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
-            Console.WriteLine("적들의 정보 출력");
-            Console.WriteLine();
-            Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
-
-            //#region 플레이어 정보 임시
-            //Character temp = DataManager.Instance().GetPlayer();
-            //Console.WriteLine($"Lv.{temp.Level} {temp.Name} ({temp.Job})\nHP {temp.Health} / {temp.MaxHealth}");
-            //#endregion
+			Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
             Console.WriteLine(player.GetSkillInfo());
             Console.WriteLine("0. 취소\n");
@@ -127,21 +117,6 @@ namespace TextRPG_Team_Project.Scene
             _battleManager.MonsterInfo(StageEnemyInfo);
             Console.WriteLine();
             Console.WriteLine(UserInfo?.Invoke()); // 캐릭터의 간단한 정보 출력
-
-            //#region 플레이어 정보 임시
-            //Character player = DataManager.Instance().GetPlayer();
-            //Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.Job})\nHP {player.Health} / {player.MaxHealth}");
-            //#endregion
-            if (player.CurrentSkill < 0)
-            {
-                Console.WriteLine("\n기본 공격!\n");
-            }
-            else
-            {
-                Console.WriteLine(player.GetCurrentSkillInfo());
-
-            }
-
 
             DisplayGetInputString("대상");
 
@@ -194,8 +169,11 @@ namespace TextRPG_Team_Project.Scene
 
             _battleManager.AttacktoPlayer(_targetNum);
 
-            // TODO : 플레이어 사망처리
-
+            if (GameManager.Instance.Data.GetPlayer().IsDead)
+            {
+                _status = BattleStatus.Lose;
+                return;
+            }
 
             _status = BattleStatus.Start;
 
@@ -215,11 +193,44 @@ namespace TextRPG_Team_Project.Scene
             Console.ResetColor();
 
             Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
+
             Console.WriteLine(player.AddExp(_monstersCount));
             Console.WriteLine($"\nlv.{player.Level} {player.Name}");
             Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
             Console.WriteLine(player.ManaRegen(10));
-            
+
+            _battleManager.GetReward();
+
+            Console.WriteLine("\n0. 다음");
+
+            Utils.GetNumberInput(0, 1);
+
+            _battleManager.CollectMonster();
+            GameManager.Instance.GoHomeScene();
+            _status = BattleStatus.Start;
+
+            --_depth;
+        }
+
+        public void DisplayLoseLog()
+        {
+            ++_depth;
+
+            DisplayIntro("Battle");
+
+            Console.WriteLine("[Result]\n");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You Lose\n");
+            Console.ResetColor();
+
+            Console.WriteLine($"\nlv.{player.Level} {player.Name}");
+            Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
+
+            player.HealthRegen(30);
+
+            Console.WriteLine("\n0. 다음");
+
             Utils.GetNumberInput(0, 1);
 
             _battleManager.CollectMonster();
@@ -253,6 +264,9 @@ namespace TextRPG_Team_Project.Scene
                     break;
                 case BattleStatus.Victory:
                     DisplayVictoryLog();
+                    break;
+                case BattleStatus.Lose:
+                    DisplayLoseLog();
                     break;
             }
 
