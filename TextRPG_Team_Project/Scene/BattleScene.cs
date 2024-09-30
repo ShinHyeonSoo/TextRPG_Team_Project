@@ -23,6 +23,7 @@ namespace TextRPG_Team_Project.Scene
 			PlayerTurn,
 			EnermyTurn,
 			Victory,
+            Lose,
 		}
 		private BattleStatus _status;
 		private int _depth;
@@ -137,8 +138,11 @@ namespace TextRPG_Team_Project.Scene
 
             _battleManager.AttacktoPlayer(_targetNum);
 
-            // TODO : 플레이어 사망처리
-            
+            if (GameManager.Instance.Data.GetPlayer().IsDead)
+            {
+                _status = BattleStatus.Lose;
+                return;
+            }
 
             _status = BattleStatus.Start;
 
@@ -176,6 +180,35 @@ namespace TextRPG_Team_Project.Scene
             --_depth;
         }
 
+        public void DisplayLoseLog()
+        {
+            ++_depth;
+
+            DisplayIntro("Battle");
+
+            Console.WriteLine("[Result]\n");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You Lose\n");
+            Console.ResetColor();
+
+            Character player = GameManager.Instance.Data.GetPlayer();
+            Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {_prevPlayerHealth} -> {player.Health}");
+
+            // TODO : 플레이어 체력 소량 회복
+
+            Console.WriteLine("\n0. 다음");
+
+            Utils.GetNumberInput(0, 1);
+
+            _battleManager.CollectMonster();
+            GameManager.Instance.GoHomeScene();
+            _status = BattleStatus.Start;
+
+            --_depth;
+        }
+
         public override void PlayScene()
 		{
 			int input = -1;
@@ -200,6 +233,9 @@ namespace TextRPG_Team_Project.Scene
 					break;
                 case BattleStatus.Victory:
                     DisplayVictoryLog();
+                    break;
+                case BattleStatus.Lose:
+                    DisplayLoseLog();
                     break;
             }
 

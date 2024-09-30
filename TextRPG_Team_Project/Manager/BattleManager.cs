@@ -29,9 +29,9 @@ namespace TextRPG_Team_Project
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 3, 1, 100));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 2, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 5, 0, 100));
+                _minions.Enqueue(new Minion("미니언", 2, 1, 300, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 300, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 500, 0, 100));
             }
         }
 
@@ -134,6 +134,9 @@ namespace TextRPG_Team_Project
             {
                 if (monster.IsDead)
                     continue;
+
+                if (player.IsDead)
+                    break;
 
                 Console.Clear();
                 Console.WriteLine("[name]\n");
