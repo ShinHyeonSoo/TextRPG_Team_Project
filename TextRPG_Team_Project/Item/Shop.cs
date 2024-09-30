@@ -11,7 +11,7 @@ namespace TextRPG_Team_Project.Item
 
         public Weapon[] weaponArr = {
             new Weapon("맨 주먹",  0, 1, true, 0),
-            new Weapon("낡은 검",  800, 0, false, 5),
+            new Weapon("나무 검",  800, 0, false, 5),
             new Weapon("무쇠 검",  800, 0, false, 10),
             new Weapon("강철 검", 2200, 0, false, 15),
             new Weapon("미스릴 검",  6500, 0, false, 25),
