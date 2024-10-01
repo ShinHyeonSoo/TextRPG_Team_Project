@@ -88,18 +88,20 @@ namespace TextRPG_Team_Project
 
 
             int reducedDamage = Math.Max(0, intDamage - Defense);
-            Health -= reducedDamage;
-
+            
+            int dodge = random.Next(0, 10);
+            if(dodge < 9)
+            {
+                Health -= reducedDamage;
+            }
+                
             if (Health <= 0)
             {
                 Health = 0;
                 IsDead = true;
                 Console.WriteLine($"{Name} 이(가) 사망하였습니다.");
             }
-            else
-            {
-                Console.WriteLine($"{reducedDamage} 의 피해를 입었습니다! {Name}의 남은 체력: {Health}");
-            }
+         
         }
 
         public int GetRequireExp(int level)

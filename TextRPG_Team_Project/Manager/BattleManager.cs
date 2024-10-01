@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using TextRPG_Team_Project.Scene;
 using TextRPG_Team_Project.Item;
+using System.ComponentModel.Design;
 
 namespace TextRPG_Team_Project
 {
@@ -247,13 +248,21 @@ namespace TextRPG_Team_Project
                 //Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]");
 
                 monster.BasicAttack(monster.Attack);
-                monster.OnAttack -= player.TakeDamage;
-
-                Console.WriteLine($"\nLv.{player.Level} {player.Name}");
-                if (player.IsDead)
-                    Console.WriteLine($"HP {prevHp} -> Dead");
+                if (prevHp != player.Health)
+                {
+                    Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+                    if (player.IsDead)
+                        Console.WriteLine($"HP {prevHp} -> Dead");
+                    else
+                        Console.WriteLine($"HP {prevHp} -> {player.Health}");
+                }
                 else
-                    Console.WriteLine($"HP {prevHp} -> {player.Health}");
+                {
+                    Console.WriteLine("플레이어의 회피 성공!");
+                }
+                monster.OnAttack -= player.TakeDamage;
+          
+                
 
                 Console.WriteLine("\n0. 다음");
                 Utils.GetNumberInput(0, 1);
