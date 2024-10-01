@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -219,20 +220,30 @@ namespace TextRPG_Team_Project
         }
        
 
-        public virtual void AttackEnemy(Monster _target)
+        public bool AttackEnemy(Monster _target)
         {
+            Random random = GameManager.Instance.Data.GetRandom();
+            int critChance = random.Next(0, 10);
+            bool isCrit = false;
+
+            int critMulti = 1;
+            if(critChance > 8)
+            {
+                isCrit = true;
+                critMulti = 2;
+            }
 
             float damage;
 
             if (CurrentSkill < 0)
             {
-                damage = Attack;
+                damage = Attack * critMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
             }
 
             else
             {
-                damage = Attack * Skill[CurrentSkill].DamageMulti;
+                damage = (Attack * Skill[CurrentSkill].DamageMulti) * critMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
                            
             }
@@ -240,7 +251,7 @@ namespace TextRPG_Team_Project
                
 
             _target.TakeDamage(damage);
-
+            return isCrit;
 
         }
 
@@ -406,6 +417,7 @@ namespace TextRPG_Team_Project
                 }
             }
 		}
+
     }
 
 

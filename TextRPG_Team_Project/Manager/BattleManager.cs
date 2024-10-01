@@ -154,11 +154,13 @@ namespace TextRPG_Team_Project
             {
                 Monster monster = _monsters[targetNum - 1];
                 int prevHp = monster.Health; // 이전 HP 기록
-                player.AttackEnemy(monster);
+                bool isCrit = player.AttackEnemy(monster);
                 Console.WriteLine($"{player.Name} 의 기본 공격!");
 
                 if (prevHp != monster.Health)
                 {
+                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
+
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
                     Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
 
@@ -181,27 +183,28 @@ namespace TextRPG_Team_Project
 
                     if ((IsAlliveCount(_monsters) <= 0))
                         break;
-              
+
                     if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
                         monster = null;
 
                     int randomTarget = -1;
 
                     // 유효한 타겟을 찾을 때까지 반복
-                    if(targetCount > 1)
+                    if (targetCount > 1)
                     {
                         while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
-                        {  
-                                
+                        {
+
                             randomTarget = random.Next(0, _monsters.Count);
                             monster = _monsters[randomTarget];
                         }
-                    }                
+                    }
 
                     attackedTargets.Add(randomTarget); // 타겟 중복 방지
                     int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
-                    player.AttackEnemy(monster);
+                    bool isCrit = player.AttackEnemy(monster);
                     Console.WriteLine($"{player.Name} 의 스킬 공격!");
+                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
                     Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
 
@@ -261,8 +264,8 @@ namespace TextRPG_Team_Project
                     Console.WriteLine("플레이어의 회피 성공!");
                 }
                 monster.OnAttack -= player.TakeDamage;
-          
-                
+
+
 
                 Console.WriteLine("\n0. 다음");
                 Utils.GetNumberInput(0, 1);
@@ -325,7 +328,7 @@ namespace TextRPG_Team_Project
 
             rewardWeapon?.GetItem(player, rewardStr[(int)RewardType.WEAPON], 1);
             rewardArmor?.GetItem(player, rewardStr[(int)RewardType.ARMOR], 1);
-            rewardPotion?.GetItem(player, rewardStr[(int)RewardType.POTION], GameManager.Instance.Data.StageIndex++); 
+            rewardPotion?.GetItem(player, rewardStr[(int)RewardType.POTION], GameManager.Instance.Data.StageIndex++);
         }
 
         public void RandomEquipReward(string[] itemName)
@@ -335,7 +338,7 @@ namespace TextRPG_Team_Project
 
             if (job == "전사")
             {
-                if(1 <= stageIdx && stageIdx < 3)
+                if (1 <= stageIdx && stageIdx < 3)
                 {
                     itemName[(int)RewardType.WEAPON] = "나무 검";
                     itemName[(int)RewardType.ARMOR] = "가죽 갑옷";
@@ -350,7 +353,7 @@ namespace TextRPG_Team_Project
                     itemName[(int)RewardType.WEAPON] = "강철 검";
                     itemName[(int)RewardType.ARMOR] = "판금 갑옷";
                 }
-            }   
+            }
             else if (job == "마법사")
             {
                 if (1 <= stageIdx && stageIdx < 3)
