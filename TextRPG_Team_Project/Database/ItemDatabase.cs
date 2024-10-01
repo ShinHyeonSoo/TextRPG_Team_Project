@@ -49,11 +49,11 @@ namespace TextRPG_Team_Project.Database
         {
             WeaponDict.Add("맨 주먹", new Weapon("맨 주먹", 0, 1, false, 0));
             WeaponDict.Add("나무 검", new Weapon("나무 검", 800, 0, false, 5));
-            WeaponDict.Add("무쇠 검", new Weapon("무쇠 검", 800, 0, false, 10));
+            WeaponDict.Add("무쇠 검", new Weapon("무쇠 검", 1500, 0, false, 10));
             WeaponDict.Add("강철 검", new Weapon("강철 검", 2200, 0, false, 15));
             WeaponDict.Add("미스릴 검", new Weapon("미스릴 검", 6500, 0, false, 25));
             WeaponDict.Add("나무 지팡이", new Weapon("나무 지팡이", 800, 0, false, 5));
-            WeaponDict.Add("전투 지팡이", new Weapon("전투 지팡이", 800, 0, false, 10));
+            WeaponDict.Add("전투 지팡이", new Weapon("전투 지팡이", 1500, 0, false, 10));
             WeaponDict.Add("마법 지팡이", new Weapon("마법 지팡이", 2200, 0, false, 15));
 			WeaponDict.Add("대마법 지팡이", new Weapon("대마법 지팡이", 6500, 0, false, 25));
 
