@@ -107,7 +107,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
-            Console.ReadLine();
         }
 
     }

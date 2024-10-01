@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
 using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
@@ -583,17 +584,26 @@ namespace TextRPG_Team_Project.Item
                 if (shopType == "무기")
                 {
                     KeyValuePair<string, Weapon> weaponBought = itemDB.weaponDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.weaponDict[weaponBought.Key].BuyThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine() ;
                 }
                 else if (shopType == "방어구")
                 {
                     KeyValuePair<string, Armor> armorBought = itemDB.armorDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.armorDict[armorBought.Key].BuyThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine();
                 }
                 else if (shopType == "물약")
                 {
                     KeyValuePair<string, Potion> potionBought = itemDB.potionDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.potionDict[potionBought.Key].BuyThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -637,17 +647,26 @@ namespace TextRPG_Team_Project.Item
                 if (shopType == "무기")
                 {
                     KeyValuePair<string, Weapon> weaponBought = itemDB.weaponDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.weaponDict[weaponBought.Key].SellThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {
                     KeyValuePair<string, Armor> armorBought = itemDB.armorDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.armorDict[armorBought.Key].SellThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine();
                 }
                 else if (shopType == "물약")
                 {
                     KeyValuePair<string, Potion> potionBought = itemDB.potionDict.ElementAt(tempInput);
+                    Console.Clear();
                     itemDB.potionDict[potionBought.Key].SellThis(character);
+                    DisplayShopItems(shopType);
+                    Console.ReadLine();
                 }
                 else
                 {

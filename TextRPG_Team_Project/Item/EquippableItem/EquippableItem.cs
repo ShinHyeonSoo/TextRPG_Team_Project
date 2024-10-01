@@ -84,7 +84,7 @@
                     this.UnEquipThis(character);
                 }
                 Console.WriteLine($"{this.name} 판매완료");
-                float sellPrice = itemPrice / 0.75f;
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
             }
@@ -97,7 +97,7 @@
 
         public void BuyThis(Character character)
         {
-            if (character.Gold > itemPrice)
+            if (character.Gold >= itemPrice)
             {
                 // 최대치보다 적을 때
                 if (itemCount < itemCountMax)
@@ -116,7 +116,6 @@
                 Console.WriteLine("소지 골드가 부족합니다.");
                 
             }
-            Console.ReadLine();
         }
     }
 }
