@@ -68,11 +68,9 @@ namespace TextRPG_Team_Project.Database
             armorDict.Add("대마법사 로브", new Armor("대마법사 로브", 5000, 0, false, 25));
 
             potionDict.Add("빈 물약", new Potion("빈 물약", 0, 1, 0));
-            //potionDict.Add("체력 포션", new HealthPotion("체력 포션", 50, 3, 30));
             potionDict.Add("작은 회복 포션", new HealthPotion("작은 회복 포션", 100, 3, 30));
             potionDict.Add("중간 회복 포션", new HealthPotion("중간 회복 포션", 500, 0, 70));
             potionDict.Add("큰 회복 포션", new HealthPotion("큰 회복 포션", 1000, 0, 140));
-
         }
     }
 }
