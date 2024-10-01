@@ -330,16 +330,19 @@ namespace TextRPG_Team_Project
                 {
                     itemName[(int)RewardType.WEAPON] = "나무 검";
                     itemName[(int)RewardType.ARMOR] = "가죽 갑옷";
+                    itemName[(int)RewardType.POTION] = "작은 회복 포션";
                 }
                 else if (3 <= stageIdx && stageIdx < 5)
                 {
                     itemName[(int)RewardType.WEAPON] = "무쇠 검";
                     itemName[(int)RewardType.ARMOR] = "사슬 갑옷";
+                    itemName[(int)RewardType.POTION] = "중간 회복 포션";
                 }
                 else
                 {
                     itemName[(int)RewardType.WEAPON] = "강철 검";
                     itemName[(int)RewardType.ARMOR] = "판금 갑옷";
+                    itemName[(int)RewardType.POTION] = "큰 회복 포션";
                 }
             }   
             else if (job == "마법사")
