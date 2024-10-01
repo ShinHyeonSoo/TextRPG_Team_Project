@@ -43,6 +43,8 @@ namespace TextRPG_Team_Project.Item.Potions
                 if (character.potion.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.potion.IndexOf(this);
+                    character.potion[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
@@ -68,15 +70,17 @@ namespace TextRPG_Team_Project.Item.Potions
             // 있을 때
             if (itemCount > 0)
             {
-                Console.WriteLine($"{this.name} 판매완료");
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
-                character.Gold += this.itemPrice;
+                character.Gold += (int)sellPrice;
+                Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
             }
             // 없을 때
             else
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
+            Console.ReadLine();
         }
 
         public void BuyThis(Character character)
@@ -100,6 +104,7 @@ namespace TextRPG_Team_Project.Item.Potions
             {
                 Console.WriteLine("소지 골드가 부족합니다.");
             }
+            Console.ReadLine();
         }
     }
 
@@ -139,6 +144,7 @@ namespace TextRPG_Team_Project.Item.Potions
             {
                 Console.WriteLine($"{this.Name}이(가) 없습니다.");
             }
+            Console.ReadLine();
         }
     }
 }

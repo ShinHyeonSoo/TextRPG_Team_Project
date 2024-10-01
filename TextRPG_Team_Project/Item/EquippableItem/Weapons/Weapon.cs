@@ -1,4 +1,5 @@
-﻿using TextRPG_Team_Project.Database;
+﻿using System.Linq;
+using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
@@ -29,6 +30,8 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 if (character.Weapon.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.Weapon.IndexOf(this);
+                    character.Weapon[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
@@ -64,6 +67,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
             }
+            Console.ReadLine();
         }
 
         public override void UnEquipThis(Character character)
@@ -79,6 +83,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
+            Console.ReadLine();
         }
 
         public override void SellThis(Character character)
@@ -91,16 +96,17 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                     this.UnEquipThis(character);
                 }
                 
-                float sellPrice = itemPrice / 0.75f;
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
-                Console.WriteLine($"{this.name} 판매완료 (+ {sellPrice} G)");
+                Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
             }
             // 없을 때
             else
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
+            Console.ReadLine();
         }
 
     }

@@ -114,7 +114,9 @@
             else
             {
                 Console.WriteLine("소지 골드가 부족합니다.");
+                
             }
+            Console.ReadLine();
         }
     }
 }

@@ -30,6 +30,8 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 if (character.armor.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.armor.IndexOf(this);
+                    character.armor[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
@@ -65,6 +67,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
             }
+            Console.ReadLine();
         }
 
         public override void UnEquipThis(Character character)
@@ -80,6 +83,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
+            Console.ReadLine();
         }
 
         public override void SellThis(Character character)
@@ -92,16 +96,17 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                     this.UnEquipThis(character);
                 }
                 
-                float sellPrice = itemPrice / 0.75f;
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
-                Console.WriteLine($"{this.name} 판매완료 (+ {sellPrice} G)");
+                Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
             }
             // 없을 때
             else
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
+            Console.ReadLine();
         }
     }
 }
