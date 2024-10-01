@@ -47,7 +47,7 @@ namespace TextRPG_Team_Project.Database
 
         public ItemDatabase()
         {
-            weaponDict.Add("맨 주먹", new Weapon("맨 주먹", 0, 0, false, 0));
+            weaponDict.Add("맨 주먹", new Weapon("맨 주먹", 0, 1, true, 0));
             weaponDict.Add("나무 검", new Weapon("나무 검", 800, 0, false, 5));
             weaponDict.Add("무쇠 검", new Weapon("무쇠 검", 800, 0, false, 10));
             weaponDict.Add("강철 검", new Weapon("강철 검", 2200, 0, false, 15));
@@ -57,7 +57,7 @@ namespace TextRPG_Team_Project.Database
             weaponDict.Add("마법 지팡이", new Weapon("마법 지팡이", 2200, 0, false, 15));
             weaponDict.Add("대마법 지팡이", new Weapon("대마법 지팡이", 6500, 0, false, 25));
 
-            armorDict.Add("일반 옷", new Armor("일반 옷", 0, 0, false, 0));
+            armorDict.Add("일반 옷", new Armor("일반 옷", 0, 1, true, 0));
             armorDict.Add("가죽 갑옷", new Armor("가죽 갑옷", 500, 0, false, 5));
             armorDict.Add("사슬 갑옷", new Armor("사슬 갑옷", 1200, 0, false, 10));
             armorDict.Add("판금 갑옷", new Armor("판금 갑옷",  2000, 0, false, 15));
