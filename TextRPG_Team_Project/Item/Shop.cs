@@ -465,9 +465,9 @@ namespace TextRPG_Team_Project.Item
 
             Console.WriteLine($"=={shopTitle} 상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"=====================================================");
+            Console.WriteLine($"============================================================");
             Console.WriteLine($"  |\t 이름 \t\t\t| {itemStat}|   가격|    소지수|");
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine("------------------------------------------------------------");
             for (int i = 1; i < shopCount; i++)
             {
                 if (shopType == "무기")
@@ -488,7 +488,7 @@ namespace TextRPG_Team_Project.Item
                 else Console.WriteLine("뭔가 잘못됨");
 
             }
-            Console.WriteLine("========");
+            Console.WriteLine($"============================================================");
         }
 
         void DisplayWeaponShop(string weaponKey, int i)
