@@ -75,7 +75,7 @@ namespace TextRPG_Team_Project
 
             int dodge = rand.Next(0, 10);
             
-            if(dodge > 0)
+            if(dodge > 5)
                 _health -= totalDamage;
 
             if (_health < 1)

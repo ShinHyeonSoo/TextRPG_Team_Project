@@ -64,16 +64,35 @@ namespace TextRPG_Team_Project
 
         public void DisplayAttack(Character player, int prevHp, Monster monster, bool isCrit) // 로그처리
         {
-            if (isCrit)
-                Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n");
+            if (monster.Health != prevHp)
+            {
+                if (isCrit) 
+                {
+                    Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); 
+                }
+                    
 
-            Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
-            if (monster.IsDead)
-                Console.WriteLine($"HP {prevHp} -> Dead");
+                if (monster.IsDead)
+                { 
+                    Console.WriteLine($"HP {prevHp} -> Dead"); 
+                }
 
+
+
+                else
+                {
+                    Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                }
+                    
+                    
+            }
             else
-                Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+            {
+                Console.WriteLine("몬스터가 열씸히 피했습니다");
+
+            }
         }
 
         public int IsAlliveCount(List<Monster> monsters)
