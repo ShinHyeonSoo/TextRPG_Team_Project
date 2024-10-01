@@ -58,7 +58,7 @@ namespace TextRPG_Team_Project
 
             if(_jobNum == 1)
             {
-                _player = new Warrior(name, 1, 100, 10, 1, 100);
+                _player = new Warrior(name, 1, 1000, 10, 1, 100);
             }
 
                 
