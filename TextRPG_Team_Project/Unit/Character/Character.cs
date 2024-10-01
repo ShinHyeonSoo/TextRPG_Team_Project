@@ -7,7 +7,6 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Transactions;
 using TextRPG_Team_Project;
-using TextRPG_Team_Project.Data;
 using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
@@ -53,8 +52,8 @@ namespace TextRPG_Team_Project
         public Character(String _name, int _level, int _maxHealth, int _attack, int _defense, int _mp) // 캐릭터 생성시 초기값 설정
         {
 
-            KeyValuePair<string, Weapon> defaultWeapon = itemDB.weaponDict.ElementAt(0);
-            KeyValuePair<string, Armor> defaultArmor = itemDB.armorDict.ElementAt(0);
+            KeyValuePair<string, Weapon> defaultWeapon = itemDB.WeaponDict.ElementAt(0);
+            KeyValuePair<string, Armor> defaultArmor = itemDB.ArmorDict.ElementAt(0);
 
             MaxMp = _mp;
             Mp = MaxMp;
@@ -72,8 +71,8 @@ namespace TextRPG_Team_Project
             currentWeapon = defaultWeapon.Value;
             currentArmor = defaultArmor.Value;
 
-            Weapon.Add(defaultWeapon.Value);
-            Armor.Add(defaultArmor.Value);
+            Weapons.Add(defaultWeapon.Value);
+            Armors.Add(defaultArmor.Value);
 
         }
 
@@ -193,7 +192,7 @@ namespace TextRPG_Team_Project
         public void UnEquipWeapon()
         {
             Attack -= currentWeapon.WeaponAttack;
-            currentWeapon = Weapon[0];
+            currentWeapon = Weapons[0];
 
         }
 
@@ -213,7 +212,7 @@ namespace TextRPG_Team_Project
         {
 
             Defense -= currentArmor.ArmorDefence;
-            currentArmor = Armor[0];
+            currentArmor = Armors[0];
 
 
 
