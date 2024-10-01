@@ -75,10 +75,10 @@ namespace TextRPG_Team_Project.Item
 
             if (inventoryType == "무기")
             {
-                DisplayWeaponInventory(i);
                 inventoryTitle = "무기";
                 itemStat = "공격력";
                 inventoryCount = character.Weapons.Count;
+            }
             else if (inventoryType == "방어구")
             {
                 inventoryTitle = "방어구";
@@ -349,18 +349,6 @@ namespace TextRPG_Team_Project.Item
                         character.Potions.Remove(potion);
                     }
                 }
-                else
-                {
-                    if (potion.ItemCount > 0)
-                    {
-                        int itemIndex = character.potion.IndexOf(potion);
-                        character.potion[itemIndex].ItemCount = potion.ItemCount;
-                    }
-                    else
-                    {
-                        character.potion.Remove(potion);
-                    }
-                }
             }
         }
 
@@ -589,6 +577,7 @@ namespace TextRPG_Team_Project.Item
             else if (shopType == "물약")
             {
                 shopCount = itemDB.PotionDict.Count;
+            }
             else
             {
                 shopCount = 1;
