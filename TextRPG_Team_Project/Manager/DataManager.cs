@@ -4,7 +4,6 @@ using TextRPG_Team_Project;
 using TextRPG_Team_Project.Scene;
 using System.Text.Json;
 using System;
-using TextRPG_Team_Project.Data;
 using TextRPG_Team_Project.Database;
 
 namespace TextRPG_Team_Project
@@ -19,15 +18,11 @@ namespace TextRPG_Team_Project
         private int _stageIndex;
 
         public ItemDatabase ItemDatabase { get { return _itemDatabase; } }
-
-        public PotionDataBase PotionDB { get; private init; }
-
         public int StageIndex { get { return _stageIndex; } set { _stageIndex = value; } }
 
         public DataManager()
         {
             _random = new Random();
-			PotionDB = new PotionDataBase();
             _itemDatabase = new ItemDatabase();
             _stageIndex = 1;
         }
@@ -84,6 +79,7 @@ namespace TextRPG_Team_Project
             SaveData savedata = new SaveData();
             savedata.PlayerSaveData = _player.Save();
             savedata.QuestSaves = GameManager.Instance.Quest.Save();
+            savedata.StageSave = _stageIndex;
 			string jsonString = JsonSerializer.Serialize<SaveData>(savedata, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(savePath, jsonString);
 		}
@@ -92,6 +88,7 @@ namespace TextRPG_Team_Project
             string jsonString = File.ReadAllText(filename);
             SaveData savedata = JsonSerializer.Deserialize<SaveData>(jsonString);
             PlayerSaveData playerData = savedata.PlayerSaveData;
+            _stageIndex = savedata.StageSave;
             if(playerData.Job == "전사")
             {
                 CreatePlayer(playerData.Name, 1);

@@ -40,14 +40,19 @@ namespace TextRPG_Team_Project.Item.Potions
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.potion.Contains(this))
+                if (character.Potions.Contains(this))
                 {
                     itemCount += addItemCount;
+<<<<<<< Updated upstream
+=======
+                    int itemIndex = character.Potions.IndexOf(this);
+                    character.Potions[itemIndex].ItemCount = this.ItemCount;
+>>>>>>> Stashed changes
                 }
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.potion.Add(this);
+                    character.Potions.Add(this);
                 }
             }
             else

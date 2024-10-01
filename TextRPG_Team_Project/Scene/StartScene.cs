@@ -21,19 +21,24 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine("어서오세요!");
 			Console.WriteLine("");
 			DisplayOption(new List<string>() { "1. 새게임", "2. 불러오기" });
+			Console.WriteLine();
+			DisplayGetInputNumber();
 		}
 		public void DisplaySetCharacterName()
 		{
-			DisplayIntro("게임 이름"); // 게임 이름 뭐로할까용
+			DisplayIntro("Text RPG"); // 게임 이름 뭐로할까용
 			Console.WriteLine("케릭터 이름을 설정해주세요,");
 			Console.WriteLine("");
+			DisplayGetInputString("이름");
 		}
 		public void DisplaySetCharacterJob()
 		{
-			DisplayIntro("게임 이름"); // 게임 이름 뭐로할까용
+			DisplayIntro("Text RPG"); // 게임 이름 뭐로할까용
 			Console.WriteLine("케릭터 이름을 설정해주세요,");
 			Console.WriteLine("");
-			DisplayOption(new List<string>() { "1. 직업1", "2. 직업2", "3. 직업3" });
+			DisplayOption(new List<string>() { "1. 전사", "2. 마법사" });
+			Console.WriteLine();
+			DisplayGetInputNumber();
 		}
 		public override void PlayScene()
 		{

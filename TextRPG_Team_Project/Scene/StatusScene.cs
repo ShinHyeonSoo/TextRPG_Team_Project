@@ -8,18 +8,15 @@ namespace TextRPG_Team_Project.Scene
 {
 	public class StatusScene : Scene
 	{
-		event Func<string> UserStatusInfo; // 유저 Status를 보여주는 string을 반환하는 함수를 할당해주세요
-                                        
         public override void DisplayInitScene()
 		{
 			Character player = GameManager.Instance.Data.GetPlayer();
-			UserStatusInfo += player.GetStatus;
+
             DisplayIntro("상태보기");
 			Console.WriteLine();
-			Console.WriteLine(UserStatusInfo?.Invoke());
+			Console.WriteLine(player.GetStatus());
 			Console.WriteLine();
-
-			Console.WriteLine("0. 나가기");
+			DisplayBack();
 			DisplayGetInputNumber();
 		}
 

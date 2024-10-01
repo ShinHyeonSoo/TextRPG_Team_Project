@@ -18,6 +18,8 @@ namespace TextRPG_Team_Project.Scene
 			Console.WriteLine();
 			DisplayOption(_fileoOptions);
 			Console.WriteLine();
+			DisplayBack();
+			Console.WriteLine();
 			DisplayGetInputNumber();
 		}
 		public void DisplayLoadDataSuccess()
@@ -66,7 +68,7 @@ namespace TextRPG_Team_Project.Scene
 			if (Directory.Exists(Defines.SAVE_FOLDER))
 			{
 				_files = Directory.GetFiles(Defines.SAVE_FOLDER);
-				if (_files != null)
+				if (_files.Length>0)
 				{
 					for (int i = 0; i < _files.Length; i++)
 					{
@@ -80,7 +82,8 @@ namespace TextRPG_Team_Project.Scene
 
 		public void ProcessDataLoad()
 		{
-			int userInput = Utils.GetNumberInput(1, _files.Length+1);
+			int userInput = Utils.GetNumberInput(0, _files.Length+1);
+			if(userInput == 0) { GameManager.Instance.GoAnySScene(Defines.GameStatus.Start); }
 			_selectedFileIndex = userInput-1;
 			GameManager.Instance.Data.Load(_files[_selectedFileIndex]);
 

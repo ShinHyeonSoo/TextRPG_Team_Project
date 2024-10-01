@@ -1,4 +1,6 @@
-﻿namespace TextRPG_Team_Project.Item.EquippableItem
+﻿using System.Text.Json.Serialization;
+
+namespace TextRPG_Team_Project.Item.EquippableItem
 {
     public class EquippableItem : IItem, IEquippable
     {
@@ -14,6 +16,18 @@
         public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
         public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
 
+        [JsonConstructor]
+        public EquippableItem(string name, int itemPrice, int itemCount, int itemCountMax, bool isEquipped) 
+        {
+            this.name = name;
+            this.itemPrice = itemPrice;
+            this.itemCount = itemCount;
+            this.itemCountMax = itemCountMax;
+            this.isEquipped = isEquipped;
+        }
+        public EquippableItem() { }
+
+
         public virtual void GetItem(Character character, string itemName, int addItemCount)
         {
             int overItemCount = itemCount - itemCountMax;
@@ -21,7 +35,7 @@
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.armor.Contains(this) || character.Weapon.Contains(this))
+                if (character.Armors.Contains(this) || character.Weapons.Contains(this))
                 {
                     itemCount += addItemCount;
                 }

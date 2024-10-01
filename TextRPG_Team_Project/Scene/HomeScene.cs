@@ -18,6 +18,7 @@ namespace TextRPG_Team_Project.Scene
 				"3. 인벤토리", 
 				"4. 퀘스트 목록", 
 				"5. 저장하기" });
+			Console.WriteLine();
 			DisplayGetInputNumber();
 		}
 

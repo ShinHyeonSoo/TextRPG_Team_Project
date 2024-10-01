@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using System.Text.Json.Serialization;
 using TextRPG_Team_Project.Database;
+using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Armors
@@ -7,9 +9,16 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
     public class Armor : EquippableItem
     {
         int armorDefence;
-        // 회피율이 추가될 수도 있음
+		public int ArmorDefence { get { return armorDefence; } private set { armorDefence = value; } }
+		// 회피율이 추가될 수도 있음
 
-        public Armor(string _name, int _itemPrice, int _itemCount, bool _isEquipped, int _armorDefence)
+		[JsonConstructor]
+		public Armor(int ArmorDefence, string Name, int ItemPrice, int ItemCount, int ItemCountMax, bool IsEquipped) : base(Name, ItemPrice, ItemCount, ItemCountMax, IsEquipped)
+		{
+            this.ArmorDefence = ArmorDefence;
+		}
+
+		public Armor(string _name, int _itemPrice, int _itemCount, bool _isEquipped, int _armorDefence) : base()
         {
             name = _name;
             itemPrice = _itemPrice;
@@ -18,8 +27,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             armorDefence = _armorDefence;
         }
 
-        public int ArmorDefence { get { return armorDefence; } private set { armorDefence = value; } }
-
         public override void GetItem(Character character, string itemName, int addItemCount)
         {
             int overItemCount = itemCount - itemCountMax;
@@ -27,14 +34,19 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.armor.Contains(this))
+                if (character.Armors.Contains(this))
                 {
                     itemCount += addItemCount;
+<<<<<<< Updated upstream
+=======
+                    int itemIndex = character.Armors.IndexOf(this);
+                    character.Armors[itemIndex].ItemCount = this.ItemCount;
+>>>>>>> Stashed changes
                 }
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.armor.Add(this);
+                    character.Armors.Add(this);
                 }
             }
             else
@@ -103,5 +115,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
         }
-    }
+
+	}
 }

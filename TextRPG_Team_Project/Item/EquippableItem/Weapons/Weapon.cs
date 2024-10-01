@@ -1,4 +1,10 @@
+<<<<<<< Updated upstream
 ﻿using TextRPG_Team_Project.Database;
+=======
+﻿using System.Linq;
+using System.Text.Json.Serialization;
+using TextRPG_Team_Project.Database;
+>>>>>>> Stashed changes
 using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
@@ -6,9 +12,16 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
     public class Weapon : EquippableItem
     {
         float weaponAttack;
-        // 치명타가 추가될 수도 있음
+		public float WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
+		// 치명타가 추가될 수도 있음
 
-        public Weapon(string _name, int _itemPrice, int _itemCount, bool _isEquipped, float _weponAttack)
+		[JsonConstructor]
+		public Weapon(float WeaponAttack, string Name, int ItemPrice, int ItemCount, int ItemCountMax, bool IsEquipped) : base(Name, ItemPrice, ItemCount, ItemCountMax, IsEquipped)
+		{
+			this.WeaponAttack = WeaponAttack;
+		}
+
+		public Weapon(string _name, int _itemPrice, int _itemCount, bool _isEquipped, float _weponAttack)
         {
             name = _name;
             itemPrice = _itemPrice;
@@ -17,7 +30,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             weaponAttack = _weponAttack;
         }
 
-        public float WeaponAttack { get { return weaponAttack; } private set { weaponAttack = value; } }
+        
 
         public override void GetItem(Character character, string itemName, int addItemCount )
         {
@@ -26,14 +39,19 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.Weapon.Contains(this))
+                if (character.Weapons.Contains(this))
                 {
                     itemCount += addItemCount;
+<<<<<<< Updated upstream
+=======
+                    int itemIndex = character.Weapons.IndexOf(this);
+                    character.Weapons[itemIndex].ItemCount = this.ItemCount;
+>>>>>>> Stashed changes
                 }
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.Weapon.Add(this);
+                    character.Weapons.Add(this);
                 }
             }
             else
@@ -103,5 +121,5 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             }
         }
 
-    }
+	}
 }

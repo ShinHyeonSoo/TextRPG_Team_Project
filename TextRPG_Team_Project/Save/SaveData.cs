@@ -15,21 +15,23 @@ namespace TextRPG_Team_Project
 		public PlayerSaveData PlayerSaveData { get; set; }
 
 		public List<QuestSaveData> QuestSaves { get; set; }
+
+		public int StageSave { get; set; }
 	}
 	public struct PlayerSaveData
 	{
 		public string Job { get; set; }
 		public string Name { get; set; }
 		public int Level { get; set; }
-		public int exp { get; set; }
+		public int EXP { get; set; }
 		public int MaxHealth { get; set; }
 		public int Health { get; set; }
 		public float Attack { get; set; }
 		public int Defense { get; set; }
 
 		public int Gold { get; set; }
-		public List<Weapon> Weapon { get; set; }
-		public List<Armor> armor { get; set; }
+		public List<Weapon> WeaponSaves { get; set; }
+		public List<Armor> ArmorSaves { get; set; }
 		public List<PotionSaveData> PostionSaves { get; set; }
 
 		public Weapon currentWeapon { get; set; }
@@ -57,5 +59,20 @@ namespace TextRPG_Team_Project
 		public string Name { get; set; }
 		public int Count { get; set; }
 		public PotionSaveData(string name, int count) { Name = name; Count = count; }
+	}
+	public class ArmorSaveData   
+	{
+		public string Name { get; set; }
+		public int Count { get; set; }
+		public bool IsEquiped { get; set; }
+		public ArmorSaveData(string name, int count, bool isEquipped) { Name = name; Count = count; IsEquiped = isEquipped; }
+	}
+	public class WeaponSaveData
+	{
+		public string Name { get; set; }
+		public int Count { get; set; }
+		public bool IsEquiped { get; set; }
+
+		public WeaponSaveData(string name, int count, bool isEquipped) { Name = name; Count = count; IsEquiped = isEquipped; }
 	}
 }
