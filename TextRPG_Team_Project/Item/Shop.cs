@@ -32,13 +32,13 @@ namespace TextRPG_Team_Project.Item
         {
             CharacterInventoryCheck();
 
-            Console.WriteLine("=====가방=====");
+            Console.WriteLine($"  ==============인 벤 토 리==============");
 
             DisplayCharacterInventory("무기");
             DisplayCharacterInventory("방어구");
             DisplayCharacterInventory("물약");
 
-            Console.WriteLine("==========");
+            Console.WriteLine("=============================================");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine($"1. 무기 장착 관리");
             Console.WriteLine($"2. 방어구 장착 관리");
@@ -98,9 +98,9 @@ namespace TextRPG_Team_Project.Item
                 inventoryCount = 1;
             }
 
-            Console.WriteLine($"==={inventoryTitle} 가방===");
-            Console.WriteLine($"    | 이름\t\t |  {itemStat}|    소지수|");
-
+            Console.WriteLine($"  ==============={inventoryTitle} 가방===============");
+            Console.WriteLine($"    | 이름\t\t |\t {itemStat}|    소지수|");
+            Console.WriteLine("---------------------------------------------");
             for (int i = 1; i < inventoryCount; i++)
             {
                 if (inventoryType == "무기")
@@ -117,7 +117,7 @@ namespace TextRPG_Team_Project.Item
                 }
                 else Console.WriteLine("뭔가 잘못됨");
             }
-            Console.WriteLine("==========");
+            Console.WriteLine("---------------------------------------------");
             Console.WriteLine();
         }
 
@@ -147,7 +147,7 @@ namespace TextRPG_Team_Project.Item
             }
             string WeaponAttack = ((int)(character.Weapon[indexNum].WeaponAttack)).ToString("D2");
 
-            Console.WriteLine($"{indexNumber}{isEquipped}| {weaponName}\t |    + {WeaponAttack}|  {weaponCount}|");
+            Console.WriteLine($"{indexNumber}{isEquipped}| {weaponName}   \t |\t   + {WeaponAttack}|  {weaponCount}|");
         }
 
         void WeaponEquipment()
@@ -212,7 +212,7 @@ namespace TextRPG_Team_Project.Item
             string armorDefence = character.Armor[indexNum].ArmorDefence.ToString("D2");
 
             //Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
-            Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}   \t |  + {armorDefence}|  {armorCount}|");
+            Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}   \t | \t   + {armorDefence}|  {armorCount}|");
         }
 
         void ArmorEquipment()
@@ -265,9 +265,9 @@ namespace TextRPG_Team_Project.Item
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = $"{character.Potion[indexNum].PotionEffect}";
+            string potionEffect = character.Potion[indexNum].PotionEffect.ToString("D3");
 
-            Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
+            Console.WriteLine($"{indexNumber}   | {potionName}   \t |\t+ {potionEffect}|  {potionCount}|");
         }
 
         void CharacterInventoryCheck()
@@ -453,7 +453,7 @@ namespace TextRPG_Team_Project.Item
             else if (shopType == "물약")
             {
                 shopTitle = "물약";
-                itemStat = "효과";
+                itemStat = "치료량";
                 shopCount = itemDB.potionDict.Count;
             }
             else    // 잘못된 입력시
@@ -465,9 +465,9 @@ namespace TextRPG_Team_Project.Item
 
             Console.WriteLine($"=={shopTitle} 상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"=====================================================");
-            Console.WriteLine($" | 이름 \t\t| {itemStat}|   가격|    소지수|");
-            Console.WriteLine("-----------------------------------------------------");
+            Console.WriteLine($"============================================================");
+            Console.WriteLine($"  |\t 이름 \t\t\t|  {itemStat}|   가격|    소지수|");
+            Console.WriteLine("------------------------------------------------------------");
             for (int i = 1; i < shopCount; i++)
             {
                 if (shopType == "무기")
@@ -488,7 +488,7 @@ namespace TextRPG_Team_Project.Item
                 else Console.WriteLine("뭔가 잘못됨");
 
             }
-            Console.WriteLine("========");
+            Console.WriteLine($"============================================================");
         }
 
         void DisplayWeaponShop(string weaponKey, int i)
@@ -507,7 +507,7 @@ namespace TextRPG_Team_Project.Item
             }
             string WeaponAttack = ((int)(itemDB.weaponDict[weaponKey].WeaponAttack)).ToString("D2");
 
-            Console.WriteLine($"{indexNumber}| {weaponName} \t|   + {WeaponAttack}| {weaponPrice} G|  {weaponCount}|");
+            Console.WriteLine($" {indexNumber}| {weaponName}      \t\t|    + {WeaponAttack}| {weaponPrice} G|  {weaponCount}|");
         }
 
         void DisplayArmorShop(string armorKey, int i)
@@ -526,14 +526,14 @@ namespace TextRPG_Team_Project.Item
             }
             string armorDefence = itemDB.armorDict[armorKey].ArmorDefence.ToString("D2");
 
-            Console.WriteLine($"{indexNumber}| {armorName} \t|   + {armorDefence}| {armorPrice} G|  {armorCount}|");
+            Console.WriteLine($" {indexNumber}| {armorName}      \t\t|    + {armorDefence}| {armorPrice} G|  {armorCount}|");
         }
 
         void DisplayPotionShop(string potionKey, int i)
         {
             string indexNumber = $"{i}";
             string potionName = $"{itemDB.potionDict[potionKey].Name}";
-            string potionPrice = $"{itemDB.potionDict[potionKey].ItemPrice}";
+            string potionPrice = itemDB.potionDict[potionKey].ItemPrice.ToString("D4");
             string potionCount;
             if (itemDB.potionDict[potionKey].ItemCount < itemDB.potionDict[potionKey].ItemCountMax)
             {
@@ -543,9 +543,9 @@ namespace TextRPG_Team_Project.Item
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = $"{itemDB.potionDict[potionKey].PotionEffect}";
+            string potionEffect = itemDB.potionDict[potionKey].PotionEffect.ToString("D3");
 
-            Console.WriteLine($"{indexNumber}| {potionName}\t| + {potionEffect}|   {potionPrice} G|  {potionCount}|");
+            Console.WriteLine($" {indexNumber}| {potionName}         \t|   + {potionEffect}|   {potionPrice} G|  {potionCount}|");
         }
 
         void BuyItems(string shopType)

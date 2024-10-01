@@ -55,7 +55,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 {
                     Console.WriteLine($"{Name} 장착.");
                     isEquipped = true;
-                    
+                    character.EquipArmor(this);
                 }
                 else
                 {
@@ -77,6 +77,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
+                character.UnEquipArmor();
             }
             // 아닐 때
             else

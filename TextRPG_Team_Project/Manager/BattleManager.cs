@@ -360,19 +360,21 @@ namespace TextRPG_Team_Project
                 {
                     itemName[(int)RewardType.WEAPON] = "나무 지팡이";
                     itemName[(int)RewardType.ARMOR] = "천 로브";
+                    itemName[(int)RewardType.POTION] = "작은 회복 포션";
                 }
                 else if (3 <= stageIdx && stageIdx < 5)
                 {
                     itemName[(int)RewardType.WEAPON] = "전투 지팡이";
                     itemName[(int)RewardType.ARMOR] = "견습 로브";
+                    itemName[(int)RewardType.POTION] = "중간 회복 포션";
                 }
                 else
                 {
                     itemName[(int)RewardType.WEAPON] = "마법 지팡이";
                     itemName[(int)RewardType.ARMOR] = "숙련 로브";
+                    itemName[(int)RewardType.POTION] = "큰 회복 포션";
                 }
             }
-            itemName[(int)RewardType.POTION] = "체력 포션";
         }
 
         public int IsAlliveCount(List<Monster> monsters)
