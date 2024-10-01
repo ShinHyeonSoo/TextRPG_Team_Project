@@ -46,6 +46,7 @@ namespace TextRPG_Team_Project
 			if (equipment == _equipmentItem) 
 			{
 				CompleteQuest();
+				GameManager.Instance.PlayerRecored.TrackEquip -= CheckUserEquipTargetItem;
 			}
 		}
 		public override QuestSaveData Save()
