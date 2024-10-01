@@ -192,7 +192,7 @@ namespace TextRPG_Team_Project
         public void UnEquipWeapon()
         {
             Attack -= currentWeapon.WeaponAttack;
-            currentWeapon = Weapons[0];
+            currentWeapon = itemDB.WeaponDict["맨 주먹"];
 
         }
 
@@ -212,7 +212,7 @@ namespace TextRPG_Team_Project
         {
 
             Defense -= currentArmor.ArmorDefence;
-            currentArmor = Armors[0];
+            currentArmor = itemDB.ArmorDict["일반 옷"];
 
 
 

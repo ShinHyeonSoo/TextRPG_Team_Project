@@ -14,6 +14,8 @@ namespace TextRPG_Team_Project.Item
         Character character = GameManager.Instance.Data.GetPlayer();
         ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
 
+        public static bool isReset = false;
+
         int ShopInput(string input)
         {
             int result;
@@ -73,6 +75,8 @@ namespace TextRPG_Team_Project.Item
             string itemStat;
             int inventoryCount;
 
+            // ItemDatabaseCheck();
+
             CharacterInventoryCheck(inventoryType);
 
             if (inventoryType == "무기")
@@ -104,7 +108,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"  ==============={inventoryTitle} 가방===============");
             Console.WriteLine($"    | 이름\t\t |\t {itemStat}|    소지수|");
             Console.WriteLine("---------------------------------------------");
-            for (int i = 1; i < inventoryCount; i++)
+            for (int i = 0; i < inventoryCount; i++)
             {
                 if (inventoryType == "무기")
                 {
@@ -126,7 +130,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayWeaponInventory(int indexNum)
         {
-            string indexNumber = $"{indexNum}";
+            string indexNumber = $"{indexNum + 1}";
             string isEquipped;
             if (character.Weapons[indexNum].IsEquipped)
             {
@@ -161,9 +165,10 @@ namespace TextRPG_Team_Project.Item
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput < character.Weapons.Count)
+                if (tempInput < character.Weapons.Count+1)
                 {
-                    if (!character.Weapons[tempInput].IsEquipped)
+                    Console.Clear();
+                    if (!character.Weapons[tempInput - 1].IsEquipped)
                     {
                         for (int i = 0; i < character.Weapons.Count; i++)
                         {
@@ -172,12 +177,14 @@ namespace TextRPG_Team_Project.Item
                                 character.Weapons[i].UnEquipThis(character);
                             }
                         }
-                        character.Weapons[tempInput].EquipThis(character);
+                        character.Weapons[tempInput - 1].EquipThis(character);
                     }
                     else
                     {
-                        character.Weapons[tempInput].UnEquipThis(character);
+                        character.Weapons[tempInput - 1].UnEquipThis(character);
                     }
+                    DisplayCharacterInventory("무기");
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -192,7 +199,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayArmorInventory(int indexNum)
         {
-            string indexNumber = $"{indexNum}";
+            string indexNumber = $"{indexNum + 1}";
             string isEquipped;
             if (character.Armors[indexNum].IsEquipped)
             {
@@ -226,9 +233,10 @@ namespace TextRPG_Team_Project.Item
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput < character.Armors.Count)
+                if (tempInput < character.Armors.Count+1)
                 {
-                    if (!character.Armors[tempInput].IsEquipped)
+                    Console.Clear();
+                    if (!character.Armors[tempInput - 1].IsEquipped)
                     {
                         for (int i = 0; i < character.Armors.Count; i++)
                         {
@@ -237,12 +245,14 @@ namespace TextRPG_Team_Project.Item
                                 character.Armors[i].UnEquipThis(character);
                             }
                         }
-                        character.Armors[tempInput].EquipThis(character);
+                        character.Armors[tempInput - 1].EquipThis(character);
                     }
                     else
                     {
-                        character.Armors[tempInput].UnEquipThis(character);
+                        character.Armors[tempInput - 1].UnEquipThis(character);
                     }
+                    DisplayCharacterInventory("방어구");
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -257,7 +267,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayPotionInventory(int indexNum)
         {
-            string indexNumber = $"{indexNum}";
+            string indexNumber = $"{indexNum + 1}";
             string potionName = $"{character.Potions[indexNum].Name}";
             string potionPrice = character.Potions[indexNum].ItemPrice.ToString("D4");
             string potionCount;
@@ -268,7 +278,7 @@ namespace TextRPG_Team_Project.Item
             else
             {
                 potionCount = "[최대보유]";
-            }         
+            }
             string potionEffect = $"{character.Potions[indexNum].PotionEffect}";
             Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
         }
@@ -299,8 +309,8 @@ namespace TextRPG_Team_Project.Item
                         }
                     }
                 }
-            }   
-            else if(inventoryType == "방어구")
+            }
+            else if (inventoryType == "방어구")
             {
                 foreach (var armor in itemDB.ArmorDict.Values)
                 {
@@ -325,7 +335,7 @@ namespace TextRPG_Team_Project.Item
                     }
                 }
             }
-            else if(inventoryType == "물약")
+            else if (inventoryType == "물약")
             {
                 foreach (var potion in itemDB.PotionDict.Values)
                 {
@@ -349,10 +359,6 @@ namespace TextRPG_Team_Project.Item
                         }
                     }
                 }
-            }
-            else
-            {
-
             }
         }
 
@@ -532,8 +538,8 @@ namespace TextRPG_Team_Project.Item
             {
                 armorCount = "[최대보유]";
             }
-			string armorDefence = itemDB.ArmorDict[armorKey].ArmorDefence.ToString("D2");
-			Console.WriteLine($" {indexNumber}| {armorName}      \t\t|    + {armorDefence}| {armorPrice} G|  {armorCount}|");
+            string armorDefence = itemDB.ArmorDict[armorKey].ArmorDefence.ToString("D2");
+            Console.WriteLine($" {indexNumber}| {armorName}      \t\t|    + {armorDefence}| {armorPrice} G|  {armorCount}|");
         }
 
         void DisplayPotionShop(string potionKey, int i)
@@ -593,7 +599,7 @@ namespace TextRPG_Team_Project.Item
                     Console.Clear();
                     itemDB.WeaponDict[weaponBought.Key].BuyThis(character);
                     DisplayShopItems(shopType);
-                    Console.ReadLine() ;
+                    Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {
@@ -681,6 +687,51 @@ namespace TextRPG_Team_Project.Item
                     Console.WriteLine("잘못된 값");
                     Console.ReadLine();
                 }
+            }
+        }
+
+        public void ItemDatabaseCheck()
+        {
+            if (!isReset)
+            {
+                foreach (var weapon in itemDB.WeaponDict.Values)
+                {
+                    weapon.ItemCount = 0;
+                    weapon.IsEquipped = false;
+                }
+                for (int i = 0; i < character.Weapons.Count; i++)
+                {
+                    itemDB.WeaponDict[character.Weapons[i].Name].ItemCount = character.Weapons[i].ItemCount;
+                    itemDB.WeaponDict[character.Weapons[i].Name].IsEquipped = character.Weapons[i].IsEquipped;
+                }
+                character.Weapons.Clear();
+
+                //
+
+                foreach (var armor in itemDB.ArmorDict.Values)
+                {
+                    armor.ItemCount = 0;
+                }
+                for (int i = 0; i < character.Armors.Count; i++)
+                {
+                    itemDB.ArmorDict[character.Armors[i].Name].ItemCount = character.Armors[i].ItemCount;
+                    itemDB.ArmorDict[character.Armors[i].Name].IsEquipped = character.Armors[i].IsEquipped;
+                }
+                character.Armors.Clear();
+
+                //
+
+                foreach (var potion in itemDB.PotionDict.Values)
+                {
+                    potion.ItemCount = 0;
+                }
+                for (int i = 0; i < character.Potions.Count; i++)
+                {
+                    itemDB.PotionDict[character.Potions[i].Name].ItemCount = character.Potions[i].ItemCount;
+                }
+                character.Potions.Clear();
+
+                isReset = true;
             }
         }
 
