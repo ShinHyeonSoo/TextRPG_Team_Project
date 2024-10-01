@@ -28,12 +28,16 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayCharacterInventoryUI()
         {
+            Console.Clear();
             Console.WriteLine("=====가방=====");
-            Console.WriteLine("1. 무기 가방");
-            Console.WriteLine("2. 방어구 가방");
-            Console.WriteLine("3. 물약 가방");
+            DisplayCharacterInventory("무기");
+            DisplayCharacterInventory("방어구");
+            DisplayCharacterInventory("물약");
             Console.WriteLine("==========");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
+            Console.WriteLine($"1. 무기 장착 관리");
+            Console.WriteLine($"2. 방어구 장착 관리");
+
             Console.Write("선택: ");
             int tempInput = ShopSelect(Console.ReadLine());
 
@@ -42,15 +46,14 @@ namespace TextRPG_Team_Project.Item
                 case 0:
                     break;
                 case 1:
+                    Console.Clear();
                     DisplayCharacterInventory("무기");
                     WeaponEquipment();
                     break;
                 case 2:
+                    Console.Clear();
                     DisplayCharacterInventory("방어구");
                     ArmorEquipment();
-                    break;
-                case 3:
-                    DisplayCharacterInventory("물약");
                     break;
             }
 
@@ -262,42 +265,120 @@ namespace TextRPG_Team_Project.Item
 
         // 상점 메서드
 
-        void WeaponShop()
+        void DisplayShop(string shopType)
         {
-            DisplayWeaponShopArr();
+            int shopCount;
 
-            Console.Write("선택: ");
+            if (shopType == "무기")
+            {
+                shopCount = itemDB.weaponDict.Count;
+            }
+            else if (shopType == "방어구")
+            {
+                shopCount = itemDB.armorDict.Count;
+            }
+            else if (shopType == "물약")
+            {
+                shopCount = itemDB.potionDict.Count;
+            }
+            else
+            {
+                shopCount = 1;
+            }
+            DisplayShopItems(shopType);
+
+            Console.Write("구입할 물건 선택 (0 눌러 나가기)\n>> ");
             int tempInput = ShopSelect(Console.ReadLine());
 
-            switch (tempInput)
+            if(tempInput == 0)
             {
-                case 0:
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                    KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(tempInput);
-                    itemDB.weaponDict[weapon.Key].BuyThis(character);
-                    break;
+                Console.WriteLine("상점을 나갑니다.");
+            }
+            else if(tempInput < shopCount)
+            {
+                if (shopType == "무기")
+                {
+                    KeyValuePair<string, Weapon> weaponBought = itemDB.weaponDict.ElementAt(tempInput);
+                    itemDB.weaponDict[weaponBought.Key].BuyThis(character);
+                }
+                else if (shopType == "방어구")
+                {
+                    KeyValuePair<string, Armor> armorBought = itemDB.armorDict.ElementAt(tempInput);
+                    itemDB.weaponDict[armorBought.Key].BuyThis(character);
+                }
+                else if (shopType == "물약")
+                {
+                    KeyValuePair<string, Potion> potionBought = itemDB.potionDict.ElementAt(tempInput);
+                    itemDB.weaponDict[potionBought.Key].BuyThis(character);
+                }
+                else
+                {
+                    Console.WriteLine("잘못된 값");
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("잘못된 값");
+                Console.ReadLine();
             }
         }
 
-        void DisplayWeaponShopArr()
+        void DisplayShopItems(string shopType)
         {
-            Console.WriteLine("==무기상점==");
+            string shopTitle;
+            string itemStat;
+            int shopCount;
+
+            if (shopType == "무기")
+            {
+                shopTitle = "무기";
+                itemStat = "공격력";
+                shopCount = itemDB.weaponDict.Count;
+            }
+            else if (shopType == "방어구")
+            {
+                shopTitle = "방어구";
+                itemStat = "방어력";
+                shopCount = itemDB.armorDict.Count;
+            }
+            else if (shopType == "물약")
+            {
+                shopTitle = "물약";
+                itemStat = "효과";
+                shopCount = itemDB.potionDict.Count;
+            }
+            else    // 잘못된 입력시
+            {
+                shopTitle = "????";
+                itemStat = "????";
+                shopCount = 1;
+            }
+
+            Console.WriteLine($"=={shopTitle} 상점==");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine($"=====================================================");
-            Console.WriteLine(" |이름\t\t|\t공격력|\t   가격|    소지수");
+            Console.WriteLine($" |이름\t\t|\t{itemStat}|\t   가격|    소지수");
             Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < itemDB.weaponDict.Count; i++)
+            for (int i = 1; i < shopCount; i++)
             {
-                KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(i);
-                DisplayWeapon(weapon.Key, i);
+                if (shopType == "무기")
+                {
+                    KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(i);
+                    DisplayWeapon(weapon.Key, i);
+                }
+                else if (shopType == "방어구")
+                {
+                    KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(i);
+                    DisplayArmor(armor.Key, i);
+                }
+                else if (shopType == "물약")
+                {
+                    KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(i);
+                    DisplayPotion(potion.Key, i);
+                }
+                else Console.WriteLine("뭔가 잘못됨");
+                
             }
             Console.WriteLine("========");
         }
@@ -321,47 +402,6 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{weaponName}\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
 
-
-        void ArmorShop()
-        {
-            DisplayArmorShopArr();
-
-            Console.Write("선택: ");
-            int tempInput = ShopSelect(Console.ReadLine());
-
-            switch (tempInput)
-            {
-                case 0:
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                    KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(tempInput);
-                    itemDB.armorDict[armor.Key].BuyThis(character);
-                    break;
-            }
-        }
-
-        void DisplayArmorShopArr()
-        {
-            Console.WriteLine("==방어구상점==");
-            Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"=====================================================");
-            Console.WriteLine(" |이름\t\t|\t방어력|\t   가격|    소지수");
-            Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < itemDB.armorDict.Count; i++)
-            {
-                KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(i);
-                DisplayArmor(armor.Key, i);
-            }
-            Console.WriteLine("========");
-        }
-
         void DisplayArmor(string armorKey, int i)
         {
             string indexNumber = $"{i}";
@@ -379,40 +419,6 @@ namespace TextRPG_Team_Project.Item
             string armorDefence = itemDB.armorDict[armorKey].ArmorDefence.ToString("D2");
 
             Console.WriteLine($"{indexNumber}|{armorName}\t|\t  + {armorDefence}|\t {armorPrice} G|  {armorCount}|");
-        }
-
-
-        void PotionShop()
-        {
-            DisplayPotionShopArr();
-
-            Console.Write("선택: ");
-            int tempInput = ShopSelect(Console.ReadLine());
-
-            switch (tempInput)
-            {
-                case 0:
-                    break;
-                case 1:
-                    KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(tempInput);
-                    itemDB.potionDict[potion.Key].BuyThis(character);
-                    break;
-            }
-        }
-
-        void DisplayPotionShopArr()
-        {
-            Console.WriteLine("==물약상점==");
-            Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"=====================================================");
-            Console.WriteLine(" |이름\t\t|\t효과|\t   가격|    소지수");
-            Console.WriteLine("------------------------------------------------------");
-            for (int i = 1; i < itemDB.potionDict.Count; i++)
-            {
-                KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(i);
-                DisplayPotion(potion.Key, i);
-            }
-            Console.WriteLine("========");
         }
 
         void DisplayPotion(string potionKey, int i)
@@ -469,7 +475,7 @@ namespace TextRPG_Team_Project.Item
 
         void SellWeapons()
         {
-            DisplayWeaponShopArr();
+            DisplayShop("무기");
 
             Console.Write("선택: ");
             int tempInput = ShopSelect(Console.ReadLine());
@@ -494,7 +500,7 @@ namespace TextRPG_Team_Project.Item
 
         void SellArmors()
         {
-            DisplayArmorShopArr();
+            DisplayShop("방어구");
 
             Console.Write("선택: ");
             int tempInput = ShopSelect(Console.ReadLine());
@@ -519,7 +525,7 @@ namespace TextRPG_Team_Project.Item
 
         void SellPotions()
         {
-            DisplayPotionShopArr();
+            DisplayShop("포션");
 
             Console.Write("선택: ");
             int tempInput = ShopSelect(Console.ReadLine());
@@ -541,6 +547,7 @@ namespace TextRPG_Team_Project.Item
             // 추가 후 shop.DebugInventory(); 로 본 메서드 출력 가능
             while (true)
             {
+                Console.Clear();
                 Console.WriteLine("인벤토리 디버그 시작");
                 Console.WriteLine("1. 인벤토리 출력 테스트");
                 Console.WriteLine("2. 무기 상점 테스트");
@@ -561,15 +568,15 @@ namespace TextRPG_Team_Project.Item
                         break;
                     case 2:
                         Console.WriteLine("무기 상점");
-                        WeaponShop();
+                        DisplayShop("무기");
                         break;
                     case 3:
                         Console.WriteLine("방어구 상점");
-                        ArmorShop();
+                        DisplayShop("방어구");
                         break;
                     case 4:
                         Console.WriteLine("물약 상점");
-                        PotionShop();
+                        DisplayShop("물약");
                         break;
                     case 5:
                         Console.WriteLine("아이템 판매");
@@ -586,6 +593,7 @@ namespace TextRPG_Team_Project.Item
                     break;
                 }
             }
+            Console.Clear();
             Console.WriteLine("인벤토리 디버그 종료");
         }
 

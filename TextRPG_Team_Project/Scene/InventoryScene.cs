@@ -4,11 +4,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Item;
 
 namespace TextRPG_Team_Project.Scene
 {
 	public class InventoryScene : Scene
 	{
+		Shop shop;
 		// 인벤토리를 받거나
 		// 인벤토리의 함수들을 받기
 
@@ -18,6 +20,11 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void DisplayInitScene()
 		{
+			if (shop == null)
+			{
+				shop = new Shop();
+			}
+			shop.DebugInventory();
 			DisplayIntro("인벤토리");
 			Console.WriteLine();
 			Console.WriteLine("인벤토리 목록 출력");
