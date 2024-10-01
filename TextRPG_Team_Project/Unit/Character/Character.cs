@@ -54,6 +54,7 @@ namespace TextRPG_Team_Project
 
             KeyValuePair<string, Weapon> defaultWeapon = itemDB.WeaponDict.ElementAt(0);
             KeyValuePair<string, Armor> defaultArmor = itemDB.ArmorDict.ElementAt(0);
+            KeyValuePair<string, Potion> defaultPotion = itemDB.PotionDict.ElementAt(0);
 
             MaxMp = _mp;
             Mp = MaxMp;
@@ -73,7 +74,7 @@ namespace TextRPG_Team_Project
 
             Weapons.Add(defaultWeapon.Value);
             Armors.Add(defaultArmor.Value);
-
+            Potions.Add(defaultPotion.Value);
         }
 
         public void TakeDamage(float damage) // 피격받았을시 공격자의 공격력 - 자신의 방어력 만큼 피해를 입음
