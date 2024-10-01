@@ -43,10 +43,13 @@ namespace TextRPG_Team_Project.Item.Potions
                 if (character.potion.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.potion.IndexOf(this);
+                    character.potion[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
                     this.itemCount += addItemCount;
+                    character.potion.Add(this);
                 }
             }
             else

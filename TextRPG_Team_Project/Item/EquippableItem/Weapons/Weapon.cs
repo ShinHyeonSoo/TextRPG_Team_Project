@@ -30,10 +30,13 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 if (character.Weapon.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.Weapon.IndexOf(this);
+                    character.Weapon[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
                     this.itemCount += addItemCount;
+                    character.Weapon.Add(this);
                 }
             }
             else

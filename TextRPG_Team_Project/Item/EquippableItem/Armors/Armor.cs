@@ -30,10 +30,13 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 if (character.armor.Contains(this))
                 {
                     itemCount += addItemCount;
+                    int itemIndex = character.armor.IndexOf(this);
+                    character.armor[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
                     this.itemCount += addItemCount;
+                    character.armor.Add(this);
                 }
             }
             else
