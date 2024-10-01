@@ -17,6 +17,7 @@ namespace TextRPG_Team_Project
     public class BattleManager
     {
         private List<Monster> _monsters;
+        private List<Monster> _monsterDB;
 
         private Queue<Monster> _minions;
         private Queue<Monster> _cannonMinions;
@@ -31,22 +32,28 @@ namespace TextRPG_Team_Project
         public BattleManager()
         {
             _monsters = new();
+            _monsterDB = new();
             _minions = new();
             _cannonMinions = new();
             _voidlings = new();
             _golems = new();
 
-            for (int i = 0; i < _MONSTERS; ++i)
-            {
-                //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
-                //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
-                //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                //_golems.Enqueue(new Golem("골렘", 5, 30, 5, 5, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 5, 1, 50));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 7, 0, 75));
-                _golems.Enqueue(new Golem("골렘", 7, 1, 10, 5, 150));
-            }
+            //for (int i = 0; i < _MONSTERS; ++i)
+            //{
+            //    //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
+            //    //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
+            //    //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
+            //    //_golems.Enqueue(new Golem("골렘", 5, 30, 5, 5, 100));
+            //    _minions.Enqueue(new Minion("미니언", 2, 1, 5, 1, 50));
+            //    _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
+            //    _voidlings.Enqueue(new Voidling("공허충", 3, 1, 7, 0, 75));
+            //    _golems.Enqueue(new Golem("골렘", 7, 1, 10, 5, 150));
+            //}
+
+            _monsterDB.Add(new Minion("미니언", 2, 1, 5, 1, 50));
+            _monsterDB.Add(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
+            _monsterDB.Add(new Voidling("공허충", 3, 1, 7, 0, 75));
+            _monsterDB.Add(new Golem("골렘", 7, 1, 10, 5, 150));
         }
 
         public void ShuffleMonster()
@@ -66,22 +73,23 @@ namespace TextRPG_Team_Project
                 else
                     randType = rand.Next(0, (int)MonsterType.GOLEM + 1);
 
+                _monsters.Add(_monsterDB[randType].Clone());
 
-                switch ((MonsterType)randType)
-                {
-                    case MonsterType.MINION:
-                        _monsters.Add(_minions.Dequeue());
-                        break;
-                    case MonsterType.CANNON_MINION:
-                        _monsters.Add(_cannonMinions.Dequeue());
-                        break;
-                    case MonsterType.VOILDING:
-                        _monsters.Add(_voidlings.Dequeue());
-                        break;
-                    case MonsterType.GOLEM:
-                        _monsters.Add(_golems.Dequeue());
-                        break;
-                }
+                //switch ((MonsterType)randType)
+                //{
+                //    case MonsterType.MINION:
+                //        _monsters.Add(_minions.Dequeue());
+                //        break;
+                //    case MonsterType.CANNON_MINION:
+                //        _monsters.Add(_cannonMinions.Dequeue());
+                //        break;
+                //    case MonsterType.VOILDING:
+                //        _monsters.Add(_voidlings.Dequeue());
+                //        break;
+                //    case MonsterType.GOLEM:
+                //        _monsters.Add(_golems.Dequeue());
+                //        break;
+                //}
 
                 MonsterLevelManagement();
             }
@@ -97,26 +105,26 @@ namespace TextRPG_Team_Project
 
         public void CollectMonster()
         {
-            foreach (var monster in _monsters)
-            {
-                monster.Recovery();
+            //foreach (var monster in _monsters)
+            //{
+            //    monster.Recovery();
 
-                switch (monster.Type)
-                {
-                    case MonsterType.MINION:
-                        _minions.Enqueue(monster);
-                        break;
-                    case MonsterType.CANNON_MINION:
-                        _cannonMinions.Enqueue(monster);
-                        break;
-                    case MonsterType.VOILDING:
-                        _voidlings.Enqueue(monster);
-                        break;
-                    case MonsterType.GOLEM:
-                        _golems.Enqueue(monster);
-                        break;
-                }
-            }
+            //    switch (monster.Type)
+            //    {
+            //        case MonsterType.MINION:
+            //            _minions.Enqueue(monster);
+            //            break;
+            //        case MonsterType.CANNON_MINION:
+            //            _cannonMinions.Enqueue(monster);
+            //            break;
+            //        case MonsterType.VOILDING:
+            //            _voidlings.Enqueue(monster);
+            //            break;
+            //        case MonsterType.GOLEM:
+            //            _golems.Enqueue(monster);
+            //            break;
+            //    }
+            //}
             _monsters.Clear();
         }
 
