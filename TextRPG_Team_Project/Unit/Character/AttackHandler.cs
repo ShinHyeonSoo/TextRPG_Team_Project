@@ -69,9 +69,7 @@ namespace TextRPG_Team_Project
                 if (isCrit) 
                 {
                     Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); 
-                }
-                    
-
+                }                   
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
                 if (monster.IsDead)
@@ -79,14 +77,10 @@ namespace TextRPG_Team_Project
                     Console.WriteLine($"HP {prevHp} -> Dead"); 
                 }
 
-
-
                 else
                 {
                     Console.WriteLine($"HP {prevHp} -> {monster.Health}");
-                }
-                    
-                    
+                }            
             }
             else
             {
