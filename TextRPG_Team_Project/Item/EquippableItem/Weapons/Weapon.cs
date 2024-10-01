@@ -3,6 +3,8 @@ using System.Text.Json.Serialization;
 using TextRPG_Team_Project.Database;
 
 using TextRPG_Team_Project.Scene;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 {
@@ -125,20 +127,23 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
 
         public override void BuyThis(Character character)
         {
+            ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
             if (character.Gold >= itemPrice)
             {
                 // 최대치보다 적을 때
                 if (itemCount < itemCountMax)
                 {
-                    Console.WriteLine($"{this.name} 구입완료");
-                    if(!character.Weapons.Contains(this))
+                    Console.WriteLine($"{itemDB.WeaponDict[this.Name].name} 구입완료");
+                    if(!character.Weapons.Contains(itemDB.WeaponDict[this.Name]))
                     {
-                        this.itemCount++;
-                        character.Weapons.Add(this);
+                        Weapon A = new Weapon(itemDB.WeaponDict[this.Name].Name, itemDB.WeaponDict[this.Name].ItemPrice, itemDB.WeaponDict[this.Name].ItemCount, itemDB.WeaponDict[this.Name].IsEquipped, itemDB.WeaponDict[this.Name].WeaponAttack);
+                        A.itemCount++;
+                        character.Weapons.Add(A);
                     }
                     else
                     {
-                        this.itemCount++;
+                        int indexNum = character.Weapons.IndexOf(itemDB.WeaponDict[this.Name]);
+                        character.Weapons[indexNum].itemCount++;
                     }
                     character.Gold -= this.itemPrice;
                 }

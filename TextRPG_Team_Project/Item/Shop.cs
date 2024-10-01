@@ -273,6 +273,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
         }
 
+        /*
         void CharacterInventoryCheck(string inventoryType)
         {
             if (inventoryType == "무기")
@@ -355,6 +356,7 @@ namespace TextRPG_Team_Project.Item
 
             }
         }
+        */
 
         // 이하 상점 메서드
 
@@ -411,7 +413,6 @@ namespace TextRPG_Team_Project.Item
             {
                 ShopTitle = "????";
             }
-            ShopListCheck(shopType);
             DisplayShopItems(shopType);
 
             Console.WriteLine($"{ShopTitle} 상점에서 뭘 하나요?");
@@ -623,9 +624,9 @@ namespace TextRPG_Team_Project.Item
                 {
                     KeyValuePair<string, Weapon> weaponBought = itemDB.WeaponDict.ElementAt(tempInput);
                     Console.Clear();
-                    if(character.Weapons.Contains(weaponBought.Value))
+                    if (character.Weapons.Contains(itemDB.WeaponDict[weaponBought.Key]))
                     {
-                        int indexNum = character.Weapons.IndexOf(weaponBought.Value);
+                        int indexNum = character.Weapons.IndexOf(itemDB.WeaponDict[weaponBought.Key]);
                         character.Weapons[indexNum].BuyThis(character);
                     }
                     else
