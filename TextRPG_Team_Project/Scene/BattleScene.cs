@@ -204,7 +204,6 @@ namespace TextRPG_Team_Project.Scene
 
             _prevPlayerHealth = 0;
             _battleManager.GetReward();
-            GameManager.Instance.Data.StageIndex++;
 
             Console.WriteLine("\n0. 다음");
 

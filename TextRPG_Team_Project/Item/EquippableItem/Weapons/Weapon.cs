@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
-﻿using TextRPG_Team_Project.Database;
-=======
-﻿using System.Linq;
+using TextRPG_Team_Project.Database;
 using System.Text.Json.Serialization;
 using TextRPG_Team_Project.Database;
->>>>>>> Stashed changes
+
 using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
@@ -42,11 +39,9 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 if (character.Weapons.Contains(this))
                 {
                     itemCount += addItemCount;
-<<<<<<< Updated upstream
-=======
                     int itemIndex = character.Weapons.IndexOf(this);
                     character.Weapons[itemIndex].ItemCount = this.ItemCount;
->>>>>>> Stashed changes
+
                 }
                 else
                 {
@@ -82,6 +77,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
             }
+            Console.ReadLine();
         }
 
         public override void UnEquipThis(Character character)
@@ -97,6 +93,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
+            Console.ReadLine();
         }
 
         public override void SellThis(Character character)
@@ -109,16 +106,17 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                     this.UnEquipThis(character);
                 }
                 
-                float sellPrice = itemPrice / 0.75f;
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
-                Console.WriteLine($"{this.name} 판매완료 (+ {sellPrice} G)");
+                Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
             }
             // 없을 때
             else
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
+            Console.ReadLine();
         }
 
 	}

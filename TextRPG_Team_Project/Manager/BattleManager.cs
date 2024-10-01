@@ -2,9 +2,17 @@
 using System.Security.Cryptography;
 using System.Threading;
 using TextRPG_Team_Project.Scene;
+using TextRPG_Team_Project.Item;
 
 namespace TextRPG_Team_Project
 {
+    public enum RewardType
+    {
+        WEAPON,
+        ARMOR,
+        POTION,
+        NONE
+    }
     public class BattleManager
     {
         private List<Monster> _monsters;
@@ -43,6 +51,7 @@ namespace TextRPG_Team_Project
         public void ShuffleMonster()
         {
             Random rand = DataManager.Instance().GetRandom();
+
             int stageIdx = GameManager.Instance.Data.StageIndex;
 
             int randValue = rand.Next(stageIdx, _MAX + stageIdx);
@@ -55,7 +64,8 @@ namespace TextRPG_Team_Project
                     randType = rand.Next(0, (int)MonsterType.VOILDING + 1);
                 else
                     randType = rand.Next(0, (int)MonsterType.GOLEM + 1);
-                
+
+
                 switch ((MonsterType)randType)
                 {
                     case MonsterType.MINION:
@@ -71,9 +81,9 @@ namespace TextRPG_Team_Project
                         _monsters.Add(_golems.Dequeue());
                         break;
                 }
-            }
 
-            MonsterLevelManagement();
+                MonsterLevelManagement();
+            }
         }
 
         public void MonsterLevelManagement()
@@ -145,36 +155,47 @@ namespace TextRPG_Team_Project
                 int prevHp = monster.Health; // 이전 HP 기록
                 player.AttackEnemy(monster);
                 Console.WriteLine($"{player.Name} 의 기본 공격!");
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                Console.WriteLine($"\nLv.{monster.Level} {monster.Name}")
-                    ;
-                if (monster.IsDead)
-                    Console.WriteLine($"HP {prevHp} -> Dead");
+
+                if (prevHp != monster.Health)
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
+
+                    if (monster.IsDead)
+                        Console.WriteLine($"HP {prevHp} -> Dead");
+                    else
+                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                }
                 else
-                    Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다...");
+                }
             }
             else // 스킬 공격 처리
             {
                 int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
-
+                Monster monster = _monsters[targetNum - 1];
                 for (int i = 0; i < targetCount; i++)
                 {
 
-                    if (IsAlliveCount(_monsters) <= 0) // 배열을 순회하며 살아남은 몬스터의 수를 받아옴 (무한루프 방지)
-                    {
+                    if ((IsAlliveCount(_monsters) <= 0))
                         break;
-                    }
+              
+                    if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
+                        monster = null;
 
-                    Monster monster = null;
                     int randomTarget = -1;
 
-                    // 유효한 타겟을 찾을 때까지 반복              
-                    while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
+                    // 유효한 타겟을 찾을 때까지 반복
+                    if(targetCount > 1)
                     {
-                        randomTarget = random.Next(0, _monsters.Count);
-                        monster = _monsters[randomTarget];
-                    }
-
+                        while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
+                        {  
+                                
+                            randomTarget = random.Next(0, _monsters.Count);
+                            monster = _monsters[randomTarget];
+                        }
+                    }                
 
                     attackedTargets.Add(randomTarget); // 타겟 중복 방지
                     int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
@@ -269,11 +290,6 @@ namespace TextRPG_Team_Project
 
             Console.WriteLine("\n[획득 아이템]");
             Console.WriteLine($"{gold} Gold");
-<<<<<<< Updated upstream
-            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
-            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
-=======
-
             IItem rewardWeapon = null, rewardArmor = null, rewardPotion = null;
 
             int rand = GameManager.Instance.Data.GetRandom().Next(0, 3);
@@ -344,7 +360,6 @@ namespace TextRPG_Team_Project
                 }
             }
             itemName[(int)RewardType.POTION] = "체력 포션";
->>>>>>> Stashed changes
         }
 
         public int IsAlliveCount(List<Monster> monsters)

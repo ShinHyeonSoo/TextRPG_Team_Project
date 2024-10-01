@@ -67,13 +67,8 @@ namespace TextRPG_Team_Project.Database
             ArmorDict.Add("숙련 로브", new Armor("숙련 로브",  2000, 0, false, 15));
 			ArmorDict.Add("대마법사 로브", new Armor("대마법사 로브", 5000, 0, false, 25));
 
-<<<<<<< Updated upstream
-            potionDict.Add("빈 물약", new Potion("빈 물약", 0, 0, 0));
-            potionDict.Add("체력 포션", new HealthPotion("체력 포션", 50, 3, 30));
-=======
 			PotionDict.Add("빈 물약", new Potion("빈 물약", 0, 1, 0));
 			PotionDict.Add("체력 포션", new HealthPotion("체력 포션", 50, 3, 30));
->>>>>>> Stashed changes
 
         }
     }
