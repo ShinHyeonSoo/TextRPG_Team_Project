@@ -1,4 +1,5 @@
-﻿using TextRPG_Team_Project.Database;
+﻿using System.Linq;
+using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Scene;
 
 namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
@@ -28,13 +29,11 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 Console.WriteLine($"{name}을(를) 얻었다.");
                 if (character.Weapon.Contains(this))
                 {
-                    int index = character.Weapon.IndexOf(this);
-                    character.Weapon[index].itemCount += addItemCount;
+                    itemCount += addItemCount;
                 }
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.Weapon.Add(this);
                 }
             }
             else

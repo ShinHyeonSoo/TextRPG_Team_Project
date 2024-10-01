@@ -47,7 +47,6 @@ namespace TextRPG_Team_Project.Item.Potions
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.potion.Add(this);
                 }
             }
             else
