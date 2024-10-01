@@ -61,6 +61,7 @@ namespace TextRPG_Team_Project
 				if(_killCount == GoalKillCount)
 				{
 					CompleteQuest();
+					GameManager.Instance.PlayerRecored.TrackMonsterKills -= increaseKillCount;
 				}
 			}
 		}
