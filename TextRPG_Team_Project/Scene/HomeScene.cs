@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TextRPG_Team_Project.Item;
 
 namespace TextRPG_Team_Project.Scene
 {
 	public class HomeScene : Scene
 	{
-		public override void DisplayInitScene()
+		Shop shop;
+
+        public override void DisplayInitScene()
 		{
-			DisplayIntro("마을");
+			if (shop == null) 
+			{
+				shop = new Shop();
+            }
+
+            shop.ItemDatabaseCheck();
+            DisplayIntro("마을");
 			Console.WriteLine("");
 			DisplayOption(new List<string>() { 
 				"1. 상태보기", 
