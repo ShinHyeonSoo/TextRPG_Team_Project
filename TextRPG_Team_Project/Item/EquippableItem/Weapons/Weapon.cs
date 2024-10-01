@@ -65,7 +65,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 {
                     Console.WriteLine($"{Name} 장착.");
                     isEquipped = true;
-                    character.currentWeapon = this;
+                    character.EquipWeapon(this);
                 }
                 else
                 {
@@ -87,6 +87,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
+                character.UnEquipWeapon();
             }
             // 아닐 때
             else
@@ -116,7 +117,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
-            Console.ReadLine();
         }
 
 	}

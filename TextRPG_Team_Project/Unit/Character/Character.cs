@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Security;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Transactions;
 using TextRPG_Team_Project;
+using TextRPG_Team_Project.Data;
 using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
@@ -32,6 +35,8 @@ namespace TextRPG_Team_Project
         public int CurrentAttack { get; private set; }
         public string Job { get; protected set; }
 
+        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
+
         private int exp = 0;
 
         private int[] expTable = { 10, 35, 65, 100 };
@@ -40,12 +45,17 @@ namespace TextRPG_Team_Project
         public List<Armor> Armors;
         public List<Potion> Potions;
         public List<Skill> Skill;
+        
 
         public Weapon currentWeapon;
         public Armor currentArmor;
 
         public Character(String _name, int _level, int _maxHealth, int _attack, int _defense, int _mp) // 캐릭터 생성시 초기값 설정
         {
+
+            KeyValuePair<string, Weapon> defaultWeapon = itemDB.weaponDict.ElementAt(0);
+            KeyValuePair<string, Armor> defaultArmor = itemDB.armorDict.ElementAt(0);
+
             MaxMp = _mp;
             Mp = MaxMp;
             Name = _name;
@@ -59,7 +69,11 @@ namespace TextRPG_Team_Project
             Weapons = new List<Weapon>();
             Armors = new List<Armor>();
             Potions = new List<Potion>();
+            currentWeapon = defaultWeapon.Value;
+            currentArmor = defaultArmor.Value;
 
+            Weapon.Add(defaultWeapon.Value);
+            Armor.Add(defaultArmor.Value);
 
         }
 
@@ -75,18 +89,20 @@ namespace TextRPG_Team_Project
 
 
             int reducedDamage = Math.Max(0, intDamage - Defense);
-            Health -= reducedDamage;
-
+            
+            int dodge = random.Next(0, 10);
+            if(dodge < 9)
+            {
+                Health -= reducedDamage;
+            }
+                
             if (Health <= 0)
             {
                 Health = 0;
                 IsDead = true;
                 Console.WriteLine($"{Name} 이(가) 사망하였습니다.");
             }
-            else
-            {
-                Console.WriteLine($"{reducedDamage} 의 피해를 입었습니다! {Name}의 남은 체력: {Health}");
-            }
+         
         }
 
         public int GetRequireExp(int level)
@@ -150,7 +166,7 @@ namespace TextRPG_Team_Project
             string weaponName = currentWeapon != null ? currentWeapon.Name : "장착되지 않음";
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
-            return $"LV.{Level}\n{Name}  ({Job})\n공격력: {Attack}\n방어력: {Defense}\n체 력 : {Health}/{MaxHealth}\nGold : {Gold} G\n무기{weaponName}\n방어구{armorName}";
+            return $"LV.{Level}\n{Name}  ({Job})\n공격력: {Attack}\n방어력: {Defense}\n체 력 : {Health}/{MaxHealth}\nGold : {Gold} G\n무기 : {weaponName}\n방어구 : {armorName}";
 
         }
         // Lv. 01      
@@ -169,10 +185,15 @@ namespace TextRPG_Team_Project
             {
                 Attack -= currentWeapon.WeaponAttack;
             }
-
             GameManager.Instance.PlayerRecored.NotifyUserEuipment(_weapon.Name);
             currentWeapon = _weapon;
             Attack += _weapon.WeaponAttack;
+        }
+
+        public void UnEquipWeapon()
+        {
+            Attack -= currentWeapon.WeaponAttack;
+            currentWeapon = Weapon[0];
 
         }
 
@@ -182,25 +203,47 @@ namespace TextRPG_Team_Project
             {
                 Attack -= currentArmor.ArmorDefence;
             }
+
             GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
             currentArmor = _armor;
             Defense += _armor.ArmorDefence;
         }
 
-        public virtual void AttackEnemy(Monster _target)
+        public void UnEquipArmor()
         {
+
+            Defense -= currentArmor.ArmorDefence;
+            currentArmor = Armor[0];
+
+
+
+        }
+       
+
+        public bool AttackEnemy(Monster _target)
+        {
+            Random random = GameManager.Instance.Data.GetRandom();
+            int critChance = random.Next(0, 10);
+            bool isCrit = false;
+
+            int critMulti = 1;
+            if(critChance > 8)
+            {
+                isCrit = true;
+                critMulti = 2;
+            }
 
             float damage;
 
             if (CurrentSkill < 0)
             {
-                damage = Attack;
+                damage = Attack * critMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
             }
 
             else
             {
-                damage = Attack * Skill[CurrentSkill].DamageMulti;
+                damage = (Attack * Skill[CurrentSkill].DamageMulti) * critMulti;
                 CurrentAttack = (int)Math.Ceiling(damage);
                            
             }
@@ -208,7 +251,7 @@ namespace TextRPG_Team_Project
                
 
             _target.TakeDamage(damage);
-
+            return isCrit;
 
         }
 
