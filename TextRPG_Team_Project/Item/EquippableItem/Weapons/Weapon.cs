@@ -64,6 +64,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착 중입니다.");
             }
+            Console.ReadLine();
         }
 
         public override void UnEquipThis(Character character)
@@ -79,6 +80,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name}은(는) 이미 장착해제됐습니다.");
             }
+            Console.ReadLine();
         }
 
         public override void SellThis(Character character)
@@ -101,6 +103,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine("판매할 아이템이 없습니다.");
             }
+            Console.ReadLine();
         }
 
     }

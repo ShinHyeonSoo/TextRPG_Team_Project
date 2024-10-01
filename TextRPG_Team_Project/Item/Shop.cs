@@ -26,9 +26,11 @@ namespace TextRPG_Team_Project.Item
             return result;
         }
 
-        void DisplayCharacterInventoryUI()
+        // 이하 인벤토리 메서드
+
+        public void DisplayCharacterInventoryUI()
         {
-            Console.Clear();
+            CharacterInventoryCheck();
             Console.WriteLine("=====가방=====");
             DisplayCharacterInventory("무기");
             DisplayCharacterInventory("방어구");
@@ -55,11 +57,12 @@ namespace TextRPG_Team_Project.Item
                     DisplayCharacterInventory("방어구");
                     ArmorEquipment();
                     break;
+                default:
+                    Console.WriteLine("제대로된 값을 입력해주세요.");
+                    break;
             }
 
         }
-
-        // 인벤토리 메서드
 
         void DisplayCharacterInventory(string inventoryType)
         {
@@ -94,7 +97,7 @@ namespace TextRPG_Team_Project.Item
             }
 
             Console.WriteLine($"==={inventoryTitle} 가방===");
-            Console.WriteLine($" |이름\t\t|\t{itemStat}|\t   가격|    소지수");
+            Console.WriteLine($" |이름\t\t\t|\t{itemStat}|\t   가격|    소지수");
 
             for (int i = 1; i < inventoryCount; i++)
             {
@@ -142,7 +145,7 @@ namespace TextRPG_Team_Project.Item
             }
             string WeaponAttack = $"{character.Weapon[indexNum].WeaponAttack}";
 
-            Console.WriteLine($"{indexNumber}|{isEquipped} {weaponName}\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
+            Console.WriteLine($"{indexNumber}|{isEquipped} {weaponName}\t\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
 
         void WeaponEquipment()
@@ -265,6 +268,9 @@ namespace TextRPG_Team_Project.Item
 
         void CharacterInventoryCheck()
         {
+            character.Weapon.Clear();
+            character.armor.Clear();
+            character.potion.Clear();
             // weapon check
             foreach (var weapon in itemDB.weaponDict.Values)
             {
@@ -312,9 +318,9 @@ namespace TextRPG_Team_Project.Item
             }
         }
 
-        // 상점 메서드
+        // 이하 상점 메서드
 
-        void DisplayShopUI()
+        public void DisplayShopUI()
         {
             Console.WriteLine("어떤 상점에 갑니까?");
             Console.WriteLine("==========");
@@ -340,6 +346,9 @@ namespace TextRPG_Team_Project.Item
                     break;
                 case 3:
                     DisplayShop("물약");
+                    break;
+                default:
+                    Console.WriteLine("제대로 된 값을 입력해주세요.");
                     break;
             }
         }
