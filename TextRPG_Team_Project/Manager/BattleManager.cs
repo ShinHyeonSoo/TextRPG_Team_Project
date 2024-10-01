@@ -20,10 +20,8 @@ namespace TextRPG_Team_Project
         private Queue<Monster> _minions;
         private Queue<Monster> _cannonMinions;
         private Queue<Monster> _voidlings;
-        private Queue<Monster> _golems;
 
         private const int _MAX = 4;
-        private const int _MONSTERS = 10;
 
         public List<Monster> Monsters { get { return _monsters; } private set { _monsters = value; } }
 
@@ -33,37 +31,28 @@ namespace TextRPG_Team_Project
             _minions = new();
             _cannonMinions = new();
             _voidlings = new();
-            _golems = new();
 
-            for (int i = 0; i < _MONSTERS; ++i)
+            for (int i = 0; i < _MAX; ++i)
             {
                 //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
                 //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
                 //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                //_golems.Enqueue(new Golem("골렘", 5, 30, 5, 5, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 5, 1, 50));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 7, 0, 75));
-                _golems.Enqueue(new Golem("골렘", 7, 1, 10, 5, 150));
+                _minions.Enqueue(new Minion("미니언", 2, 30, 1, 1, 100));
+                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 30, 1, 3, 100));
+                _voidlings.Enqueue(new Voidling("공허충", 3, 30, 5, 0, 100));
             }
         }
 
         public void ShuffleMonster()
         {
             Random rand = DataManager.Instance().GetRandom();
-            int stageIdx = GameManager.Instance.Data.StageIndex;
 
-            int randValue = rand.Next(stageIdx, _MAX + stageIdx);
+            int randValue = rand.Next(1, _MAX + 1);
 
             for (int i = 0; i < randValue; ++i)
             {
-                int randType = 0;
+                int randType = rand.Next(0, _MAX - 1);
 
-                if (stageIdx < 3)
-                    randType = rand.Next(0, (int)MonsterType.VOILDING + 1);
-                else
-                    randType = rand.Next(0, (int)MonsterType.GOLEM + 1);
-                
                 switch ((MonsterType)randType)
                 {
                     case MonsterType.MINION:
@@ -75,20 +64,7 @@ namespace TextRPG_Team_Project
                     case MonsterType.VOILDING:
                         _monsters.Add(_voidlings.Dequeue());
                         break;
-                    case MonsterType.GOLEM:
-                        _monsters.Add(_golems.Dequeue());
-                        break;
                 }
-            }
-
-            MonsterLevelManagement();
-        }
-
-        public void MonsterLevelManagement()
-        {
-            foreach (var monster in _monsters)
-            {
-                monster.LevelUp(GameManager.Instance.Data.StageIndex);
             }
         }
 
@@ -108,9 +84,6 @@ namespace TextRPG_Team_Project
                         break;
                     case MonsterType.VOILDING:
                         _voidlings.Enqueue(monster);
-                        break;
-                    case MonsterType.GOLEM:
-                        _golems.Enqueue(monster);
                         break;
                 }
             }
@@ -172,25 +145,28 @@ namespace TextRPG_Team_Project
             else // 스킬 공격 처리
             {
                 int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
-
+                Monster monster = _monsters[targetNum - 1];
                 for (int i = 0; i < targetCount; i++)
                 {
 
-                    if (IsAlliveCount(_monsters) <= 0) // 배열을 순회하며 살아남은 몬스터의 수를 받아옴 (무한루프 방지)
-                    {
+                    if ((IsAlliveCount(_monsters) <= 0))
                         break;
-                    }
+              
+                    if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
+                        monster = null;
 
-                    Monster monster = null;
                     int randomTarget = -1;
 
-                    // 유효한 타겟을 찾을 때까지 반복              
-                    while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
+                    // 유효한 타겟을 찾을 때까지 반복
+                    if(targetCount > 1)
                     {
-                        randomTarget = random.Next(0, _monsters.Count);
-                        monster = _monsters[randomTarget];
-                    }
-
+                        while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
+                        {  
+                                
+                            randomTarget = random.Next(0, _monsters.Count);
+                            monster = _monsters[randomTarget];
+                        }
+                    }                
 
                     attackedTargets.Add(randomTarget); // 타겟 중복 방지
                     int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
