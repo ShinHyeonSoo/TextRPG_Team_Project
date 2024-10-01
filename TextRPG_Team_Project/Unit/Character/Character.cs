@@ -4,8 +4,10 @@ using System.Net.Security;
 using System.Runtime.InteropServices.Marshalling;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Transactions;
 using TextRPG_Team_Project;
 using TextRPG_Team_Project.Data;
+using TextRPG_Team_Project.Database;
 using TextRPG_Team_Project.Item.EquippableItem.Armors;
 using TextRPG_Team_Project.Item.EquippableItem.Weapons;
 using TextRPG_Team_Project.Item.Potions;
@@ -32,20 +34,27 @@ namespace TextRPG_Team_Project
         public int CurrentAttack { get; private set; }
         public string Job { get; protected set; }
 
+        ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
+
         private int exp = 0;
 
         private int[] expTable = { 10, 35, 65, 100 };
 
         public List<Weapon> Weapon;
-        public List<Armor> armor;
-        public List<Potion> potion;
+        public List<Armor> Armor;
+        public List<Potion> Potion;
         public List<Skill> Skill;
+        
 
         public Weapon currentWeapon;
         public Armor currentArmor;
 
         public Character(String _name, int _level, int _maxHealth, int _attack, int _defense, int _mp) // 캐릭터 생성시 초기값 설정
         {
+
+            KeyValuePair<string, Weapon> defaultWeapon = itemDB.weaponDict.ElementAt(0);
+            KeyValuePair<string, Armor> defaultArmor = itemDB.armorDict.ElementAt(0);
+
             MaxMp = _mp;
             Mp = MaxMp;
             Name = _name;
@@ -57,9 +66,13 @@ namespace TextRPG_Team_Project
             IsDead = false;
 
             Weapon = new List<Weapon>();
-            armor = new List<Armor>();
-            potion = new List<Potion>();
+            Armor = new List<Armor>();
+            Potion = new List<Potion>();
+            currentWeapon = defaultWeapon.Value;
+            currentArmor = defaultArmor.Value;
 
+            Weapon.Add(defaultWeapon.Value);
+            Armor.Add(defaultArmor.Value);
 
         }
 
@@ -169,10 +182,15 @@ namespace TextRPG_Team_Project
             {
                 Attack -= currentWeapon.WeaponAttack;
             }
-
             GameManager.Instance.PlayerRecored.NotifyUserEuipment(_weapon.Name);
             currentWeapon = _weapon;
             Attack += _weapon.WeaponAttack;
+        }
+
+        public void UnEquipWeapon()
+        {
+            Attack -= currentWeapon.WeaponAttack;
+            currentWeapon = Weapon[0];
 
         }
 
@@ -182,10 +200,22 @@ namespace TextRPG_Team_Project
             {
                 Attack -= currentArmor.ArmorDefence;
             }
+
             GameManager.Instance.PlayerRecored.NotifyUserEuipment(_armor.Name);
             currentArmor = _armor;
             Defense += _armor.ArmorDefence;
         }
+
+        public void UnEquipArmor()
+        {
+
+            Defense -= currentArmor.ArmorDefence;
+            currentArmor = Armor[0];
+
+
+
+        }
+       
 
         public virtual void AttackEnemy(Monster _target)
         {
@@ -323,7 +353,7 @@ namespace TextRPG_Team_Project
             save.Defense = Defense;
             save.Gold = Gold;
             save.Weapon = Weapon;
-            save.armor = armor;
+            save.armor = Armor;
             save.PostionSaves = SavePotions();
             save.currentWeapon = currentWeapon;
             save.currentArmor = currentArmor;
@@ -333,9 +363,9 @@ namespace TextRPG_Team_Project
         public List<PotionSaveData> SavePotions()
         {
             List<PotionSaveData> save = new List<PotionSaveData>();
-            for (int i = 0; i < potion.Count; i++) 
+            for (int i = 0; i < Potion.Count; i++) 
             {
-                save.Add(new PotionSaveData(potion[i].Name, potion[i].ItemCount));
+                save.Add(new PotionSaveData(Potion[i].Name, Potion[i].ItemCount));
             }
             return save;
         }
@@ -352,14 +382,14 @@ namespace TextRPG_Team_Project
             Defense = data.Defense;
             Gold = data.Gold;
             Weapon = data.Weapon;
-            armor = data.armor;
+            Armor = data.armor;
             LoadPotions(data.PostionSaves);
             currentArmor = data.currentArmor;
             currentWeapon = data.currentWeapon;
         }
         public void LoadPotions(List<PotionSaveData> data)
         {
-            potion = new List<Potion>();
+            Potion = new List<Potion>();
             PotionDataBase potionDB = GameManager.Instance.Data.PotionDB;
             for(int i = 0;i< data.Count; i++)
             {
@@ -370,7 +400,7 @@ namespace TextRPG_Team_Project
                         potionDB.PotionDict[data[i].Name].ItemPrice,
                         data[i].Count,
                         potionDB.PotionDict[data[i].Name].PotionEffect);
-                    potion.Add(hpPotion);
+                    Potion.Add(hpPotion);
                 }
             }
 		}

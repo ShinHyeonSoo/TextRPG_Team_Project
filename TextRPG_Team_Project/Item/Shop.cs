@@ -83,13 +83,13 @@ namespace TextRPG_Team_Project.Item
             {
                 inventoryTitle = "방어구";
                 itemStat = "방어력";
-                inventoryCount = character.armor.Count;
+                inventoryCount = character.Armor.Count;
             }
             else if (inventoryType == "물약")
             {
                 inventoryTitle = "물약";
                 itemStat = "효과";
-                inventoryCount = character.potion.Count;
+                inventoryCount = character.Potion.Count;
             }
             else
             {
@@ -190,7 +190,7 @@ namespace TextRPG_Team_Project.Item
         {
             string indexNumber = $"{indexNum}";
             string isEquipped;
-            if (character.armor[indexNum].IsEquipped)
+            if (character.Armor[indexNum].IsEquipped)
             {
                 isEquipped = "[E]";
             }
@@ -198,18 +198,18 @@ namespace TextRPG_Team_Project.Item
             {
                 isEquipped = "   ";
             }
-            string armorName = $"{character.armor[indexNum].Name}";
-            string armorPrice = character.armor[indexNum].ItemPrice.ToString("D4");
+            string armorName = $"{character.Armor[indexNum].Name}";
+            string armorPrice = character.Armor[indexNum].ItemPrice.ToString("D4");
             string armorCount;
-            if (character.armor[indexNum].ItemCount < character.armor[indexNum].ItemCountMax)
+            if (character.Armor[indexNum].ItemCount < character.Armor[indexNum].ItemCountMax)
             {
-                armorCount = $"{character.armor[indexNum].ItemCount}개 보유";
+                armorCount = $"{character.Armor[indexNum].ItemCount}개 보유";
             }
             else
             {
                 armorCount = "[최대보유]";
             }
-            string armorDefence = character.armor[indexNum].ArmorDefence.ToString("D2");
+            string armorDefence = character.Armor[indexNum].ArmorDefence.ToString("D2");
 
             //Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
             Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}   \t |  + {armorDefence}|  {armorCount}|");
@@ -222,22 +222,22 @@ namespace TextRPG_Team_Project.Item
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
-                if (tempInput < character.armor.Count)
+                if (tempInput < character.Armor.Count)
                 {
-                    if (!character.armor[tempInput].IsEquipped)
+                    if (!character.Armor[tempInput].IsEquipped)
                     {
-                        for (int i = 0; i < character.armor.Count; i++)
+                        for (int i = 0; i < character.Armor.Count; i++)
                         {
-                            if (character.armor[i].IsEquipped)
+                            if (character.Armor[i].IsEquipped)
                             {
                                 character.armor[i].UnEquipThis(character);
                             }
                         }
-                        character.armor[tempInput].EquipThis(character);
+                        character.Armor[tempInput].EquipThis(character);
                     }
                     else
                     {
-                        character.armor[tempInput].UnEquipThis(character);
+                        character.Armor[tempInput].UnEquipThis(character);
                     }
                 }
                 else
@@ -254,18 +254,18 @@ namespace TextRPG_Team_Project.Item
         void DisplayPotionInventory(int indexNum)
         {
             string indexNumber = $"{indexNum}";
-            string potionName = $"{character.potion[indexNum].Name}";
-            string potionPrice = character.potion[indexNum].ItemPrice.ToString("D4");
+            string potionName = $"{character.Potion[indexNum].Name}";
+            string potionPrice = character.Potion[indexNum].ItemPrice.ToString("D4");
             string potionCount;
-            if (character.potion[indexNum].ItemCount < character.potion[indexNum].ItemCountMax)
+            if (character.Potion[indexNum].ItemCount < character.Potion[indexNum].ItemCountMax)
             {
-                potionCount = $"{character.potion[indexNum].ItemCount}개 보유";
+                potionCount = $"{character.Potion[indexNum].ItemCount}개 보유";
             }
             else
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = $"{character.potion[indexNum].PotionEffect}";
+            string potionEffect = $"{character.Potion[indexNum].PotionEffect}";
 
             Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
         }
@@ -298,54 +298,54 @@ namespace TextRPG_Team_Project.Item
             // armor check
             foreach (var armor in itemDB.armorDict.Values)
             {
-                if (!character.armor.Contains(armor))
+                if (!character.Armor.Contains(armor))
                 {
                     if (armor.ItemCount > 0)
                     {
-                        character.armor.Add(armor);
+                        character.Armor.Add(armor);
                     }
                     else
                     {
-                        character.armor.Remove(armor);
+                        character.Armor.Remove(armor);
                     }
                 }
                 else
                 {
                     if (armor.ItemCount > 0)
                     {
-                        int itemIndex = character.armor.IndexOf(armor);
-                        character.armor[itemIndex].ItemCount = armor.ItemCount;
+                        int itemIndex = character.Armor.IndexOf(armor);
+                        character.Armor[itemIndex].ItemCount = armor.ItemCount;
                     }
                     else
                     {
-                        character.armor.Remove(armor);
+                        character.Armor.Remove(armor);
                     }
                 }
             }
             // potion check
             foreach (var potion in itemDB.potionDict.Values)
             {
-                if (!character.potion.Contains(potion))
+                if (!character.Potion.Contains(potion))
                 {
                     if (potion.ItemCount > 0)
                     {
-                        character.potion.Add(potion);
+                        character.Potion.Add(potion);
                     }
                     else
                     {
-                        character.potion.Remove(potion);
+                        character.Potion.Remove(potion);
                     }
                 }
                 else
                 {
                     if (potion.ItemCount > 0)
                     {
-                        int itemIndex = character.potion.IndexOf(potion);
-                        character.potion[itemIndex].ItemCount = potion.ItemCount;
+                        int itemIndex = character.Potion.IndexOf(potion);
+                        character.Potion[itemIndex].ItemCount = potion.ItemCount;
                     }
                     else
                     {
-                        character.potion.Remove(potion);
+                        character.Potion.Remove(potion);
                     }
                 }
             }

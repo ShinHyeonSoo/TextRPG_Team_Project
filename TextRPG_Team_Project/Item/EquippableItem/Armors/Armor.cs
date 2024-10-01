@@ -27,16 +27,16 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.armor.Contains(this))
+                if (character.Armor.Contains(this))
                 {
                     itemCount += addItemCount;
-                    int itemIndex = character.armor.IndexOf(this);
-                    character.armor[itemIndex].ItemCount = this.ItemCount;
+                    int itemIndex = character.Armor.IndexOf(this);
+                    character.Armor[itemIndex].ItemCount = this.ItemCount;
                 }
                 else
                 {
                     this.itemCount += addItemCount;
-                    character.armor.Add(this);
+                    character.Armor.Add(this);
                 }
             }
             else
@@ -55,7 +55,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 {
                     Console.WriteLine($"{Name} 장착.");
                     isEquipped = true;
-                    character.currentArmor = this;
+                    
                 }
                 else
                 {

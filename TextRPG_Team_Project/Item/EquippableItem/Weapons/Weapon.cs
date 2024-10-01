@@ -54,8 +54,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
                 if (itemCount > 0)
                 {
                     Console.WriteLine($"{Name} 장착.");
-                    isEquipped = true;
-                    character.currentWeapon = this;
+                    isEquipped = true;                
                 }
                 else
                 {
@@ -77,6 +76,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             {
                 Console.WriteLine($"{Name} 장착해제");
                 isEquipped = false;
+                
             }
             // 아닐 때
             else
