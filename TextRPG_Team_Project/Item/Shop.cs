@@ -31,7 +31,6 @@ namespace TextRPG_Team_Project.Item
 
         public void DisplayCharacterInventoryUI()
         {
-            CharacterInventoryCheck();
 
             Console.WriteLine($"  ==============인 벤 토 리==============");
 
@@ -73,6 +72,8 @@ namespace TextRPG_Team_Project.Item
             string inventoryTitle;
             string itemStat;
             int inventoryCount;
+
+            CharacterInventoryCheck(inventoryType);
 
             if (inventoryType == "무기")
             {
@@ -271,84 +272,86 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}   | {potionName}   \t |\t+ {potionEffect}|  {potionCount}|");
         }
 
-        void CharacterInventoryCheck()
+        void CharacterInventoryCheck(string inventoryType)
         {
-            // weapon check
-            foreach (var weapon in itemDB.weaponDict.Values)
+            if (inventoryType == "무기")
             {
-                if (!character.Weapon.Contains(weapon)) 
+                foreach (var weapon in itemDB.weaponDict.Values)
                 {
-                    if (weapon.ItemCount > 0)
+                    if (!character.Weapon.Contains(weapon))
                     {
-                        character.Weapon.Add(weapon);
-                    }
-                }
-                else
-                {
-                    if (weapon.ItemCount > 0)
-                    {
-                        int itemIndex = character.Weapon.IndexOf(weapon);
-                        character.Weapon[itemIndex].ItemCount = weapon.ItemCount;
+                        if (weapon.ItemCount > 0)
+                        {
+                            character.Weapon.Add(weapon);
+                        }
                     }
                     else
                     {
-                        character.Weapon.Remove(weapon);
+                        if (weapon.ItemCount > 0)
+                        {
+                            int itemIndex = character.Weapon.IndexOf(weapon);
+                            character.Weapon[itemIndex].ItemCount = weapon.ItemCount;
+                        }
+                        else
+                        {
+                            character.Weapon.Remove(weapon);
+                        }
+                    }
+                }
+            }   
+            else if(inventoryType == "방어구")
+            {
+                foreach (var armor in itemDB.armorDict.Values)
+                {
+                    if (!character.Armor.Contains(armor))
+                    {
+                        if (armor.ItemCount > 0)
+                        {
+                            character.Armor.Add(armor);
+                        }
+                    }
+                    else
+                    {
+                        if (armor.ItemCount > 0)
+                        {
+                            int itemIndex = character.Armor.IndexOf(armor);
+                            character.Armor[itemIndex].ItemCount = armor.ItemCount;
+                        }
+                        else
+                        {
+                            character.Armor.Remove(armor);
+                        }
                     }
                 }
             }
-            // armor check
-            foreach (var armor in itemDB.armorDict.Values)
+            else if(inventoryType == "물약")
             {
-                if (!character.Armor.Contains(armor))
+                foreach (var potion in itemDB.potionDict.Values)
                 {
-                    if (armor.ItemCount > 0)
+                    if (!character.Potion.Contains(potion))
                     {
-                        character.Armor.Add(armor);
+                        if (potion.ItemCount > 0)
+                        {
+                            character.Potion.Add(potion);
+                        }
                     }
                     else
                     {
-                        character.Armor.Remove(armor);
-                    }
-                }
-                else
-                {
-                    if (armor.ItemCount > 0)
-                    {
-                        int itemIndex = character.Armor.IndexOf(armor);
-                        character.Armor[itemIndex].ItemCount = armor.ItemCount;
-                    }
-                    else
-                    {
-                        character.Armor.Remove(armor);
+                        if (potion.ItemCount > 0)
+                        {
+                            int itemIndex = character.Potion.IndexOf(potion);
+                            character.Potion[itemIndex].ItemCount = potion.ItemCount;
+                        }
+                        else
+                        {
+                            character.Potion.Remove(potion);
+                        }
                     }
                 }
             }
-            // potion check
-            foreach (var potion in itemDB.potionDict.Values)
+            else
             {
-                if (!character.Potion.Contains(potion))
-                {
-                    if (potion.ItemCount > 0)
-                    {
-                        character.Potion.Add(potion);
-                    }
-                    else
-                    {
-                        character.Potion.Remove(potion);
-                    }
-                }
-                else
-                {
-                    if (potion.ItemCount > 0)
-                    {
-                        int itemIndex = character.Potion.IndexOf(potion);
-                        character.Potion[itemIndex].ItemCount = potion.ItemCount;
-                    }
-                    else
-                    {
-                        character.Potion.Remove(potion);
-                    }
-                }
+
             }
         }
 
@@ -617,17 +620,22 @@ namespace TextRPG_Team_Project.Item
         {
             int shopCount;
 
+
+            Console.Clear();
             if (shopType == "무기")
             {
                 shopCount = itemDB.weaponDict.Count;
+                DisplayCharacterInventory(shopType);
             }
             else if (shopType == "방어구")
             {
                 shopCount = itemDB.armorDict.Count;
+                DisplayCharacterInventory(shopType);
             }
             else if (shopType == "물약")
             {
                 shopCount = itemDB.potionDict.Count;
+                DisplayCharacterInventory(shopType);
             }
             else
             {
@@ -646,26 +654,23 @@ namespace TextRPG_Team_Project.Item
             {
                 if (shopType == "무기")
                 {
-                    KeyValuePair<string, Weapon> weaponBought = itemDB.weaponDict.ElementAt(tempInput);
                     Console.Clear();
-                    itemDB.weaponDict[weaponBought.Key].SellThis(character);
-                    DisplayShopItems(shopType);
+                    character.Weapon[tempInput].SellThis(character);
+                    DisplayCharacterInventory(shopType);
                     Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {
-                    KeyValuePair<string, Armor> armorBought = itemDB.armorDict.ElementAt(tempInput);
                     Console.Clear();
-                    itemDB.armorDict[armorBought.Key].SellThis(character);
-                    DisplayShopItems(shopType);
+                    character.Armor[tempInput].SellThis(character);
+                    DisplayCharacterInventory(shopType);
                     Console.ReadLine();
                 }
                 else if (shopType == "물약")
                 {
-                    KeyValuePair<string, Potion> potionBought = itemDB.potionDict.ElementAt(tempInput);
                     Console.Clear();
-                    itemDB.potionDict[potionBought.Key].SellThis(character);
-                    DisplayShopItems(shopType);
+                    character.Potion[tempInput].SellThis(character);
+                    DisplayCharacterInventory(shopType);
                     Console.ReadLine();
                 }
                 else
