@@ -2,7 +2,7 @@
 {
     public class CannonMinion : Monster
     {
-        public CannonMinion(string name, int level, int maxHealth, float attack, int defense, int gold) 
+        public CannonMinion(string name = "", int level = 1, int maxHealth = 1, float attack = 1, int defense = 1, int gold = 1) 
             : base(name, level, maxHealth, attack, defense, gold)
         {
             _type = MonsterType.CANNON_MINION;
