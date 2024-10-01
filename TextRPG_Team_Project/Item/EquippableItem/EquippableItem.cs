@@ -109,7 +109,7 @@ namespace TextRPG_Team_Project.Item.EquippableItem
             }
         }
 
-        public void BuyThis(Character character)
+        public virtual void BuyThis(Character character)
         {
             if (character.Gold >= itemPrice)
             {

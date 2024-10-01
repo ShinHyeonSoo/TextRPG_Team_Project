@@ -74,6 +74,10 @@ namespace TextRPG_Team_Project.Item.Potions
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
                 Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
+                if (itemCount == 0 && character.Potions.Contains(this))
+                {
+                    character.Potions.Remove(this);
+                }
             }
             // 없을 때
             else
@@ -92,7 +96,15 @@ namespace TextRPG_Team_Project.Item.Potions
                 if (itemCount < itemCountMax)
                 {
                     Console.WriteLine($"{this.name} 구입완료");
-                    this.itemCount++;
+                    if (!character.Potions.Contains(this))
+                    {
+                        this.itemCount++;
+                        character.Potions.Add(this);
+                    }
+                    else
+                    {
+                        this.itemCount++;
+                    }
                     character.Gold -= this.itemPrice;
                 }
                 else

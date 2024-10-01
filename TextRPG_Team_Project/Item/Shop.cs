@@ -73,7 +73,7 @@ namespace TextRPG_Team_Project.Item
             string itemStat;
             int inventoryCount;
 
-            CharacterInventoryCheck(inventoryType);
+            //CharacterInventoryCheck(inventoryType);
 
             if (inventoryType == "무기")
             {
@@ -192,7 +192,7 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayArmorInventory(int indexNum)
         {
-            string indexNumber = $"{indexNum}";
+            string indexNumber = $"{indexNum+1}";
             string isEquipped;
             if (character.Armors[indexNum].IsEquipped)
             {
@@ -268,7 +268,7 @@ namespace TextRPG_Team_Project.Item
             else
             {
                 potionCount = "[최대보유]";
-            }         
+            }
             string potionEffect = $"{character.Potions[indexNum].PotionEffect}";
             Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
         }
@@ -299,8 +299,8 @@ namespace TextRPG_Team_Project.Item
                         }
                     }
                 }
-            }   
-            else if(inventoryType == "방어구")
+            }
+            else if (inventoryType == "방어구")
             {
                 foreach (var armor in itemDB.ArmorDict.Values)
                 {
@@ -325,7 +325,7 @@ namespace TextRPG_Team_Project.Item
                     }
                 }
             }
-            else if(inventoryType == "물약")
+            else if (inventoryType == "물약")
             {
                 foreach (var potion in itemDB.PotionDict.Values)
                 {
@@ -411,6 +411,7 @@ namespace TextRPG_Team_Project.Item
             {
                 ShopTitle = "????";
             }
+            ShopListCheck(shopType);
             DisplayShopItems(shopType);
 
             Console.WriteLine($"{ShopTitle} 상점에서 뭘 하나요?");
@@ -504,14 +505,24 @@ namespace TextRPG_Team_Project.Item
             string weaponName = $"{itemDB.WeaponDict[weaponKey].Name}";
             string weaponPrice = itemDB.WeaponDict[weaponKey].ItemPrice.ToString("D4");
             string weaponCount;
-            if (itemDB.WeaponDict[weaponKey].ItemCount < itemDB.WeaponDict[weaponKey].ItemCountMax)
+
+            if (character.Weapons.Contains(itemDB.WeaponDict[weaponKey]))
             {
-                weaponCount = $"{itemDB.WeaponDict[weaponKey].ItemCount}개 보유";
+                int indexNum = character.Weapons.IndexOf(itemDB.WeaponDict[weaponKey]);
+                if (character.Weapons[indexNum].ItemCount < character.Weapons[indexNum].ItemCountMax)
+                {
+                    weaponCount = $"{character.Weapons[indexNum].ItemCount}개 보유";
+                }
+                else
+                {
+                    weaponCount = "[최대보유]";
+                }
             }
             else
             {
-                weaponCount = "[최대보유]";
+                weaponCount = $"{itemDB.WeaponDict[weaponKey].ItemCount}개 보유";
             }
+
             string WeaponAttack = ((int)(itemDB.WeaponDict[weaponKey].WeaponAttack)).ToString("D2");
 
 
@@ -526,21 +537,29 @@ namespace TextRPG_Team_Project.Item
             string armorCount;
             if (itemDB.ArmorDict[armorKey].ItemCount < itemDB.ArmorDict[armorKey].ItemCountMax)
             {
-                armorCount = $"{itemDB.ArmorDict[armorKey].ItemCount}개 보유";
+                if (character.Armors.Contains(itemDB.ArmorDict[armorKey]))
+                {
+                    int indexNum = character.Armors.IndexOf(itemDB.ArmorDict[armorKey]);
+                    armorCount = $"{character.Armors[indexNum].ItemCount}개 보유";
+                }
+                else
+                {
+                    armorCount = $"{itemDB.ArmorDict[armorKey].ItemCount}개 보유";
+                }
             }
             else
             {
                 armorCount = "[최대보유]";
             }
-			string armorDefence = itemDB.ArmorDict[armorKey].ArmorDefence.ToString("D2");
-			Console.WriteLine($" {indexNumber}| {armorName}      \t\t|    + {armorDefence}| {armorPrice} G|  {armorCount}|");
+            string armorDefence = itemDB.ArmorDict[armorKey].ArmorDefence.ToString("D2");
+            Console.WriteLine($" {indexNumber}| {armorName}      \t\t|    + {armorDefence}| {armorPrice} G|  {armorCount}|");
         }
 
         void DisplayPotionShop(string potionKey, int i)
         {
             string indexNumber = $"{i}";
             string potionName = $"{itemDB.PotionDict[potionKey].Name}";
-            string potionPrice = $"{itemDB.PotionDict[potionKey].ItemPrice}";
+            string potionPrice = itemDB.PotionDict[potionKey].ItemPrice.ToString("D4");
             string potionCount;
             if (itemDB.PotionDict[potionKey].ItemCount < itemDB.PotionDict[potionKey].ItemCountMax)
             {
@@ -553,6 +572,19 @@ namespace TextRPG_Team_Project.Item
             string potionEffect = itemDB.PotionDict[potionKey].PotionEffect.ToString("D3");
 
             Console.WriteLine($" {indexNumber}| {potionName}         \t|   + {potionEffect}|   {potionPrice} G|  {potionCount}|");
+        }
+
+        void ShopListCheck(string shopType)
+        {
+            if (shopType == "무기")
+            {
+            }
+            else if (shopType == "방어구")
+            {
+            }
+            else if (shopType == "물약")
+            {
+            }
         }
 
         void BuyItems(string shopType)
@@ -591,9 +623,18 @@ namespace TextRPG_Team_Project.Item
                 {
                     KeyValuePair<string, Weapon> weaponBought = itemDB.WeaponDict.ElementAt(tempInput);
                     Console.Clear();
-                    itemDB.WeaponDict[weaponBought.Key].BuyThis(character);
+                    if(character.Weapons.Contains(weaponBought.Value))
+                    {
+                        int indexNum = character.Weapons.IndexOf(weaponBought.Value);
+                        character.Weapons[indexNum].BuyThis(character);
+                    }
+                    else
+                    {
+                        itemDB.WeaponDict[weaponBought.Key].BuyThis(character);
+                    }
+                    // itemDB.WeaponDict[weaponBought.Key].BuyThis(character);
                     DisplayShopItems(shopType);
-                    Console.ReadLine() ;
+                    Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {

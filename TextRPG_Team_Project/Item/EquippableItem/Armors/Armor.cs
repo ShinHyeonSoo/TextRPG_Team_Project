@@ -39,7 +39,6 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                     itemCount += addItemCount;
                     int itemIndex = character.Armors.IndexOf(this);
                     character.Armors[itemIndex].ItemCount = this.ItemCount;
-
                 }
                 else
                 {
@@ -109,6 +108,10 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
                 Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
+                if (itemCount == 0 && character.Armors.Contains(this))
+                {
+                    character.Armors.Remove(this);
+                }
             }
             // 없을 때
             else
@@ -117,5 +120,35 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Armors
             }
         }
 
-	}
+        public override void BuyThis(Character character)
+        {
+            if (character.Gold >= itemPrice)
+            {
+                // 최대치보다 적을 때
+                if (itemCount < itemCountMax)
+                {
+                    Console.WriteLine($"{this.name} 구입완료");
+                    if (!character.Armors.Contains(this))
+                    {
+                        this.itemCount++;
+                        character.Armors.Add(this);
+                    }
+                    else
+                    {
+                        this.itemCount++;
+                    }
+                    character.Gold -= this.itemPrice;
+                }
+                else
+                {
+                    Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("소지 골드가 부족합니다.");
+
+            }
+        }
+    }
 }
