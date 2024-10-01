@@ -129,25 +129,28 @@ namespace TextRPG_Team_Project
             else // 스킬 공격 처리
             {
                 int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
-
+                Monster monster = _monsters[targetNum - 1];
                 for (int i = 0; i < targetCount; i++)
                 {
 
-                    if (IsAlliveCount(_monsters) <= 1 && i == 1) // 배열을 순회하며 살아남은 몬스터의 수를 받아옴 (무한루프 방지)
-                    {
+                    if ((IsAlliveCount(_monsters) <= 0))
                         break;
-                    }
+              
+                    if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
+                        monster = null;
 
-                    Monster monster = null;
                     int randomTarget = -1;
 
-                    // 유효한 타겟을 찾을 때까지 반복              
+                    // 유효한 타겟을 찾을 때까지 반복
+                    if(targetCount > 1)
+                    {
                         while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
-                        {
+                        {  
+                                
                             randomTarget = random.Next(0, _monsters.Count);
                             monster = _monsters[randomTarget];
                         }
-                   
+                    }                
 
                     attackedTargets.Add(randomTarget); // 타겟 중복 방지
                     int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
@@ -162,7 +165,7 @@ namespace TextRPG_Team_Project
                         Console.WriteLine($"HP {prevHp} -> {monster.Health}");
 
 
-                 
+
                     Thread.Sleep(1000);
                 }
                 player.ManaReduced();
