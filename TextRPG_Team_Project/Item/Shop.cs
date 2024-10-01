@@ -165,7 +165,7 @@ namespace TextRPG_Team_Project.Item
                         {
                             if (character.Weapon[i].IsEquipped)
                             {
-                                character.Weapon[i].IsEquipped = false;
+                                character.Weapon[i].UnEquipThis(character);
                             }
                         }
                         character.Weapon[tempInput].EquipThis(character);
@@ -212,7 +212,7 @@ namespace TextRPG_Team_Project.Item
             string armorDefence = character.armor[indexNum].ArmorDefence.ToString("D2");
 
             //Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
-            Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}\t |  + {armorDefence}|  {armorCount}|");
+            Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}   \t |  + {armorDefence}|  {armorCount}|");
         }
 
         void ArmorEquipment()
@@ -230,7 +230,7 @@ namespace TextRPG_Team_Project.Item
                         {
                             if (character.armor[i].IsEquipped)
                             {
-                                character.armor[i].IsEquipped = false;
+                                character.armor[i].UnEquipThis(character);
                             }
                         }
                         character.armor[tempInput].EquipThis(character);
@@ -389,27 +389,22 @@ namespace TextRPG_Team_Project.Item
         void DisplayShop(string shopType)
         {
             string ShopTitle;
-            int inventoryCount;
 
             if (shopType == "무기")
             {
                 ShopTitle = "무기";
-                inventoryCount = character.Weapon.Count;
             }
             else if (shopType == "방어구")
             {
                 ShopTitle = "방어구";
-                inventoryCount = character.armor.Count;
             }
             else if (shopType == "물약")
             {
                 ShopTitle = "물약";
-                inventoryCount = character.potion.Count;
             }
             else
             {
                 ShopTitle = "????";
-                inventoryCount = 1;
             }
             DisplayShopItems(shopType);
 
