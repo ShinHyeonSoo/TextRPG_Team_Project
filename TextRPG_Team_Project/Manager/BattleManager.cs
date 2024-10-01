@@ -17,12 +17,13 @@ namespace TextRPG_Team_Project
     public class BattleManager
     {
         private List<Monster> _monsters;
+        private List<Monster> _monsterDB;
 
         private Queue<Monster> _minions;
         private Queue<Monster> _cannonMinions;
         private Queue<Monster> _voidlings;
         private Queue<Monster> _golems;
-
+        AttackHandler attackHandler;
         private const int _MAX = 4;
         private const int _MONSTERS = 10;
 
@@ -30,23 +31,31 @@ namespace TextRPG_Team_Project
 
         public BattleManager()
         {
+            attackHandler = new AttackHandler();
+
             _monsters = new();
+            _monsterDB = new();
             _minions = new();
             _cannonMinions = new();
             _voidlings = new();
             _golems = new();
 
-            for (int i = 0; i < _MONSTERS; ++i)
-            {
-                //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
-                //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
-                //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
-                //_golems.Enqueue(new Golem("골렘", 5, 30, 5, 5, 100));
-                _minions.Enqueue(new Minion("미니언", 2, 1, 5, 1, 50));
-                _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
-                _voidlings.Enqueue(new Voidling("공허충", 3, 1, 7, 0, 75));
-                _golems.Enqueue(new Golem("골렘", 7, 1, 10, 5, 150));
-            }
+            //for (int i = 0; i < _MONSTERS; ++i)
+            //{
+            //    //_minions.Enqueue(new Minion("미니언", 2, 15, 3, 1, 100));
+            //    //_cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 25, 2, 3, 100));
+            //    //_voidlings.Enqueue(new Voidling("공허충", 3, 10, 5, 0, 100));
+            //    //_golems.Enqueue(new Golem("골렘", 5, 30, 5, 5, 100));
+            //    _minions.Enqueue(new Minion("미니언", 2, 1, 5, 1, 50));
+            //    _cannonMinions.Enqueue(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
+            //    _voidlings.Enqueue(new Voidling("공허충", 3, 1, 7, 0, 75));
+            //    _golems.Enqueue(new Golem("골렘", 7, 1, 10, 5, 150));
+            //}
+
+            _monsterDB.Add(new Minion("미니언", 2, 1, 5, 1, 50));
+            _monsterDB.Add(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
+            _monsterDB.Add(new Voidling("공허충", 3, 1, 7, 0, 75));
+            _monsterDB.Add(new Golem("골렘", 7, 1, 10, 5, 150));
         }
 
         public void ShuffleMonster()
@@ -66,22 +75,23 @@ namespace TextRPG_Team_Project
                 else
                     randType = rand.Next(0, (int)MonsterType.GOLEM + 1);
 
+                _monsters.Add(_monsterDB[randType].Clone());
 
-                switch ((MonsterType)randType)
-                {
-                    case MonsterType.MINION:
-                        _monsters.Add(_minions.Dequeue());
-                        break;
-                    case MonsterType.CANNON_MINION:
-                        _monsters.Add(_cannonMinions.Dequeue());
-                        break;
-                    case MonsterType.VOILDING:
-                        _monsters.Add(_voidlings.Dequeue());
-                        break;
-                    case MonsterType.GOLEM:
-                        _monsters.Add(_golems.Dequeue());
-                        break;
-                }
+                //switch ((MonsterType)randType)
+                //{
+                //    case MonsterType.MINION:
+                //        _monsters.Add(_minions.Dequeue());
+                //        break;
+                //    case MonsterType.CANNON_MINION:
+                //        _monsters.Add(_cannonMinions.Dequeue());
+                //        break;
+                //    case MonsterType.VOILDING:
+                //        _monsters.Add(_voidlings.Dequeue());
+                //        break;
+                //    case MonsterType.GOLEM:
+                //        _monsters.Add(_golems.Dequeue());
+                //        break;
+                //}
 
                 MonsterLevelManagement();
             }
@@ -97,26 +107,26 @@ namespace TextRPG_Team_Project
 
         public void CollectMonster()
         {
-            foreach (var monster in _monsters)
-            {
-                monster.Recovery();
+            //foreach (var monster in _monsters)
+            //{
+            //    monster.Recovery();
 
-                switch (monster.Type)
-                {
-                    case MonsterType.MINION:
-                        _minions.Enqueue(monster);
-                        break;
-                    case MonsterType.CANNON_MINION:
-                        _cannonMinions.Enqueue(monster);
-                        break;
-                    case MonsterType.VOILDING:
-                        _voidlings.Enqueue(monster);
-                        break;
-                    case MonsterType.GOLEM:
-                        _golems.Enqueue(monster);
-                        break;
-                }
-            }
+            //    switch (monster.Type)
+            //    {
+            //        case MonsterType.MINION:
+            //            _minions.Enqueue(monster);
+            //            break;
+            //        case MonsterType.CANNON_MINION:
+            //            _cannonMinions.Enqueue(monster);
+            //            break;
+            //        case MonsterType.VOILDING:
+            //            _voidlings.Enqueue(monster);
+            //            break;
+            //        case MonsterType.GOLEM:
+            //            _golems.Enqueue(monster);
+            //            break;
+            //    }
+            //}
             _monsters.Clear();
         }
 
@@ -147,79 +157,22 @@ namespace TextRPG_Team_Project
         public void AttacktoMonster(int targetNum)
         {
             Character player = GameManager.Instance.Data.GetPlayer();
-            Random random = GameManager.Instance.Data.GetRandom();
-            HashSet<int> attackedTargets = new HashSet<int>(); // 이미 공격한 몬스터를 저장
-
-            if (player.CurrentSkill == -1) // 기본 공격 처리
+            bool isCrit = player.IsCritical();
+            if(player.CurrentSkill == -1)
             {
-                Monster monster = _monsters[targetNum - 1];
-                int prevHp = monster.Health; // 이전 HP 기록
-                bool isCrit = player.AttackEnemy(monster);
-                Console.WriteLine($"{player.Name} 의 기본 공격!");
+                attackHandler.NormalAttack(player, targetNum, _monsters,isCrit);
 
-                if (prevHp != monster.Health)
-                {
-                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
-
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
-
-                    if (monster.IsDead)
-                        Console.WriteLine($"HP {prevHp} -> Dead");
-                    else
-                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
-                }
-                else
-                {
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다...");
-                }
             }
-            else // 스킬 공격 처리
+            else
             {
-                int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
-                Monster monster = _monsters[targetNum - 1];
-                for (int i = 0; i < targetCount; i++)
-                {
+                attackHandler.SkillAttack(player, targetNum, _monsters,isCrit);
 
-                    if ((IsAlliveCount(_monsters) <= 0))
-                        break;
-
-                    if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
-                        monster = null;
-
-                    int randomTarget = -1;
-
-                    // 유효한 타겟을 찾을 때까지 반복
-                    if (targetCount > 1)
-                    {
-                        while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
-                        {
-
-                            randomTarget = random.Next(0, _monsters.Count);
-                            monster = _monsters[randomTarget];
-                        }
-                    }
-
-                    attackedTargets.Add(randomTarget); // 타겟 중복 방지
-                    int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
-                    bool isCrit = player.AttackEnemy(monster);
-                    Console.WriteLine($"{player.Name} 의 스킬 공격!");
-                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
-
-                    if (monster.IsDead)
-                        Console.WriteLine($"HP {prevHp} -> Dead");
-                    else
-                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+            }
 
 
-
-                    Thread.Sleep(1000);
-                }
                 player.ManaReduced();
                 player.ResetCurrentSkill();
-            }
+           
 
 
 
@@ -379,19 +332,6 @@ namespace TextRPG_Team_Project
             }
         }
 
-        public int IsAlliveCount(List<Monster> monsters)
-        {
-            int isAlliveCount = 0;
-            foreach (var i in monsters)
-            {
-                if (!i.IsDead)
-                {
-                    isAlliveCount += 1;
-                }
-
-
-            }
-            return isAlliveCount;
-        }
+  
     }
 }

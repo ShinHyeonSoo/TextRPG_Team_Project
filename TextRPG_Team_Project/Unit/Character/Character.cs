@@ -218,17 +218,29 @@ namespace TextRPG_Team_Project
 
         }
        
-
-        public bool AttackEnemy(Monster _target)
+        public bool IsCritical()
         {
             Random random = GameManager.Instance.Data.GetRandom();
-            int critChance = random.Next(0, 10);
             bool isCrit = false;
+            int critChance = random.Next(0, 10);
 
-            int critMulti = 1;
-            if(critChance > 8)
+            if(critChance > 5)
             {
                 isCrit = true;
+            }
+            return isCrit;
+        }
+
+        public void AttackEnemy(Monster _target, bool isCrit)
+        {
+            Random random = GameManager.Instance.Data.GetRandom();
+            
+            
+
+            int critMulti = 1;
+            if(isCrit)
+            {
+                
                 critMulti = 2;
             }
 
@@ -250,7 +262,7 @@ namespace TextRPG_Team_Project
                
 
             _target.TakeDamage(damage);
-            return isCrit;
+            
 
         }
 

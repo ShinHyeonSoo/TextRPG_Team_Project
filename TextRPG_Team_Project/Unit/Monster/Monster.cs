@@ -12,7 +12,7 @@ namespace TextRPG_Team_Project
         GOLEM,
     }
 
-    public class Monster : IUnit
+    public class Monster : IUnit, ICloneable
     {
         public event MonsterAttackHandler? OnAttack;
 
@@ -37,7 +37,7 @@ namespace TextRPG_Team_Project
         public bool IsDead { get => _isDead; private set => _isDead = value; }
         public MonsterType Type { get => _type; }
 
-        public Monster(string name, int level, int maxHealth, float attack, int defense, int gold)
+        public Monster(string name = "", int level = 1, int maxHealth = 1, float attack = 1, int defense = 1, int gold = 1)
         {
             Name = name;
             Level = level;
@@ -75,7 +75,7 @@ namespace TextRPG_Team_Project
 
             int dodge = rand.Next(0, 10);
             
-            if(dodge > 0)
+            if(dodge > 5)
                 _health -= totalDamage;
 
             if (_health < 1)
@@ -95,6 +95,38 @@ namespace TextRPG_Team_Project
         {
             _health = _maxHealth;
             _isDead = false;
+        }
+
+        public Monster Clone()
+        {
+            Monster newMonster = null;
+
+            switch (this.Type)
+            {
+                case MonsterType.MINION:
+                    newMonster = new Minion();
+                    break;
+                case MonsterType.CANNON_MINION:
+                    newMonster = new CannonMinion();
+                    break;
+                case MonsterType.VOILDING:
+                    newMonster = new Voidling();
+                    break;
+                case MonsterType.GOLEM:
+                    newMonster = new Golem();
+                    break;
+            }
+            
+            newMonster._name = this.Name;
+            newMonster._level = this.Level;
+            newMonster._health = this._health;
+            newMonster._maxHealth = this._maxHealth;
+            newMonster._attack = this.Attack;
+            newMonster._defense = this._defense;
+            newMonster._gold = this.Gold;
+            newMonster._type = this.Type;
+
+            return newMonster;
         }
     }
 }
