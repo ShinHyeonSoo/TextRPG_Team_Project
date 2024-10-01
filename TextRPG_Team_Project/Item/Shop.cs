@@ -230,7 +230,7 @@ namespace TextRPG_Team_Project.Item
                         {
                             if (character.Armor[i].IsEquipped)
                             {
-                                character.armor[i].UnEquipThis(character);
+                                character.Armor[i].UnEquipThis(character);
                             }
                         }
                         character.Armor[tempInput].EquipThis(character);
