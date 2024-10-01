@@ -453,7 +453,7 @@ namespace TextRPG_Team_Project.Item
             else if (shopType == "물약")
             {
                 shopTitle = "물약";
-                itemStat = "회복력";
+                itemStat = "효과";
                 shopCount = itemDB.potionDict.Count;
             }
             else    // 잘못된 입력시
@@ -543,9 +543,9 @@ namespace TextRPG_Team_Project.Item
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = itemDB.potionDict[potionKey].PotionEffect.ToString("D3");
+            string potionEffect = $"{itemDB.potionDict[potionKey].PotionEffect}";
 
-            Console.WriteLine($" {indexNumber}| {potionName}         \t|  + {potionEffect}|   {potionPrice} G|  {potionCount}|");
+            Console.WriteLine($" {indexNumber}| {potionName}         \t| + {potionEffect}|   {potionPrice} G|  {potionCount}|");
         }
 
         void BuyItems(string shopType)
