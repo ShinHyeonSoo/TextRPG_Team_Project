@@ -21,7 +21,7 @@
             if (overItemCount < 0)
             {
                 Console.WriteLine($"{name}을(를) 얻었다.");
-                if (character.armor.Contains(this) || character.Weapon.Contains(this))
+                if (character.Armor.Contains(this) || character.Weapon.Contains(this))
                 {
                     itemCount += addItemCount;
                 }
