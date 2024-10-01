@@ -167,6 +167,7 @@ namespace TextRPG_Team_Project.Item
             {
                 if (tempInput < character.Weapons.Count+1)
                 {
+                    Console.Clear();
                     if (!character.Weapons[tempInput - 1].IsEquipped)
                     {
                         for (int i = 0; i < character.Weapons.Count; i++)
@@ -182,6 +183,8 @@ namespace TextRPG_Team_Project.Item
                     {
                         character.Weapons[tempInput - 1].UnEquipThis(character);
                     }
+                    DisplayCharacterInventory("무기");
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -232,6 +235,7 @@ namespace TextRPG_Team_Project.Item
             {
                 if (tempInput < character.Armors.Count+1)
                 {
+                    Console.Clear();
                     if (!character.Armors[tempInput - 1].IsEquipped)
                     {
                         for (int i = 0; i < character.Armors.Count; i++)
@@ -247,6 +251,8 @@ namespace TextRPG_Team_Project.Item
                     {
                         character.Armors[tempInput - 1].UnEquipThis(character);
                     }
+                    DisplayCharacterInventory("방어구");
+                    Console.ReadLine();
                 }
                 else
                 {
@@ -691,10 +697,12 @@ namespace TextRPG_Team_Project.Item
                 foreach (var weapon in itemDB.WeaponDict.Values)
                 {
                     weapon.ItemCount = 0;
+                    weapon.IsEquipped = false;
                 }
                 for (int i = 0; i < character.Weapons.Count; i++)
                 {
                     itemDB.WeaponDict[character.Weapons[i].Name].ItemCount = character.Weapons[i].ItemCount;
+                    itemDB.WeaponDict[character.Weapons[i].Name].IsEquipped = character.Weapons[i].IsEquipped;
                 }
                 character.Weapons.Clear();
 
@@ -707,6 +715,7 @@ namespace TextRPG_Team_Project.Item
                 for (int i = 0; i < character.Armors.Count; i++)
                 {
                     itemDB.ArmorDict[character.Armors[i].Name].ItemCount = character.Armors[i].ItemCount;
+                    itemDB.ArmorDict[character.Armors[i].Name].IsEquipped = character.Armors[i].IsEquipped;
                 }
                 character.Armors.Clear();
 

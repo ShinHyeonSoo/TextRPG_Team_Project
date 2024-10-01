@@ -1,6 +1,5 @@
-using TextRPG_Team_Project.Database;
+﻿using TextRPG_Team_Project.Database;
 using System.Text.Json.Serialization;
-using TextRPG_Team_Project.Database;
 
 using TextRPG_Team_Project.Scene;
 
