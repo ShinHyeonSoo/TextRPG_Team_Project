@@ -13,7 +13,7 @@ namespace TextRPG_Team_Project.Item
         Character character = GameManager.Instance.Data.GetPlayer();
         ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
 
-        int ShopSelect(string input)
+        int ShopInput(string input)
         {
             int result;
             bool tempInput = int.TryParse(input, out result);
@@ -39,7 +39,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"2. 방어구 장착 관리");
 
             Console.Write("선택: ");
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
 
             switch (tempInput)
             {
@@ -148,7 +148,7 @@ namespace TextRPG_Team_Project.Item
         void WeaponEquipment()
         {
             Console.WriteLine("어떤 무기 장착? (0 눌러 취소)");
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
                 if (tempInput < character.Weapon.Count)
@@ -212,7 +212,7 @@ namespace TextRPG_Team_Project.Item
         void ArmorEquipment()
         {
             Console.WriteLine("어떤 방어구 장착? (0 눌러 취소)");
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
                 if (tempInput < character.armor.Count)
@@ -263,14 +263,92 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{potionName}\t|\t+ {potionEffect}|  {potionCount}|");
         }
 
+        void CharacterInventoryCheck()
+        {
+            // weapon check
+            foreach (var weapon in itemDB.weaponDict.Values)
+            {
+                if (!character.Weapon.Contains(weapon))
+                {
+                    if (weapon.ItemCount > 0)
+                    {
+                        character.Weapon.Add(weapon);
+                    }
+                    else
+                    {
+                        character.Weapon.Remove(weapon);
+                    }
+                }
+            }
+            // armor check
+            foreach (var armor in itemDB.armorDict.Values)
+            {
+                if (!character.armor.Contains(armor))
+                {
+                    if (armor.ItemCount > 0)
+                    {
+                        character.armor.Add(armor);
+                    }
+                    else
+                    {
+                        character.armor.Remove(armor);
+                    }
+                }
+            }
+            // potion check
+            foreach (var potion in itemDB.potionDict.Values)
+            {
+                if (!character.potion.Contains(potion))
+                {
+                    if (potion.ItemCount > 0)
+                    {
+                        character.potion.Add(potion);
+                    }
+                    else
+                    {
+                        character.potion.Remove(potion);
+                    }
+                }
+            }
+        }
+
         // 상점 메서드
+
+        void DisplayShopUI()
+        {
+            Console.WriteLine("어떤 상점에 갑니까?");
+            Console.WriteLine("==========");
+            Console.WriteLine($"소지 골드 : {character.Gold} G");
+            Console.WriteLine($"1. 무기 상점");
+            Console.WriteLine($"2. 방어구 상점");
+            Console.WriteLine($"3. 물약 상점");
+
+            Console.Write("선택: ");
+            int tempInput = ShopInput(Console.ReadLine());
+
+            switch (tempInput)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Console.Clear();
+                    DisplayShop("무기");
+                    break;
+                case 2:
+                    Console.Clear();
+                    DisplayShop("방어구");
+                    break;
+                case 3:
+                    DisplayShop("물약");
+                    break;
+            }
+        }
 
         void DisplayShop(string shopType)
         {
             string ShopTitle;
             int inventoryCount;
 
-            CharacterInventoryCheck();
             if (shopType == "무기")
             {
                 ShopTitle = "무기";
@@ -296,7 +374,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{ShopTitle} 상점에서 뭘 하나요?");
             Console.WriteLine($"1. 구입");
             Console.WriteLine($"2. 판매");
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
             {
@@ -353,17 +431,17 @@ namespace TextRPG_Team_Project.Item
                 if (shopType == "무기")
                 {
                     KeyValuePair<string, Weapon> weapon = itemDB.weaponDict.ElementAt(i);
-                    DisplayWeapon(weapon.Key, i);
+                    DisplayWeaponShop(weapon.Key, i);
                 }
                 else if (shopType == "방어구")
                 {
                     KeyValuePair<string, Armor> armor = itemDB.armorDict.ElementAt(i);
-                    DisplayArmor(armor.Key, i);
+                    DisplayArmorShop(armor.Key, i);
                 }
                 else if (shopType == "물약")
                 {
                     KeyValuePair<string, Potion> potion = itemDB.potionDict.ElementAt(i);
-                    DisplayPotion(potion.Key, i);
+                    DisplayPotionShop(potion.Key, i);
                 }
                 else Console.WriteLine("뭔가 잘못됨");
 
@@ -371,7 +449,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine("========");
         }
 
-        void DisplayWeapon(string weaponKey, int i)
+        void DisplayWeaponShop(string weaponKey, int i)
         {
             string indexNumber = $"{i}";
             string weaponName = $"{itemDB.weaponDict[weaponKey].Name}";
@@ -390,7 +468,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{weaponName}\t|\t  + {WeaponAttack}|\t {weaponPrice} G|  {weaponCount}|");
         }
 
-        void DisplayArmor(string armorKey, int i)
+        void DisplayArmorShop(string armorKey, int i)
         {
             string indexNumber = $"{i}";
             string armorName = $"{itemDB.armorDict[armorKey].Name}";
@@ -409,7 +487,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{indexNumber}|{armorName}\t|\t  + {armorDefence}|\t {armorPrice} G|  {armorCount}|");
         }
 
-        void DisplayPotion(string potionKey, int i)
+        void DisplayPotionShop(string potionKey, int i)
         {
             string indexNumber = $"{i}";
             string potionName = $"{itemDB.potionDict[potionKey].Name}";
@@ -427,7 +505,6 @@ namespace TextRPG_Team_Project.Item
 
             Console.WriteLine($"{indexNumber}|{potionName}\t|\t+ {potionEffect}|\t   {potionPrice} G|  {potionCount}|");
         }
-
 
         void BuyItems(string shopType)
         {
@@ -452,7 +529,7 @@ namespace TextRPG_Team_Project.Item
 
             Console.Write("구입할 물건 선택 (0 눌러 나가기)\n>> ");
 
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
             {
@@ -482,7 +559,6 @@ namespace TextRPG_Team_Project.Item
                 }
             }
         }
-        // 판매 메서드
 
         void SellItems(string shopType)
         {
@@ -507,7 +583,7 @@ namespace TextRPG_Team_Project.Item
 
             Console.Write("판매할 아이템 선택 (0 눌러 취소) \n>>");
 
-            int tempInput = ShopSelect(Console.ReadLine());
+            int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
             {
@@ -538,6 +614,7 @@ namespace TextRPG_Team_Project.Item
             }
         }
 
+
         public void DebugInventory()
         {
             // 디버깅 원할 시 원하는 Shop shop = new Shop();
@@ -547,12 +624,10 @@ namespace TextRPG_Team_Project.Item
                 Console.Clear();
                 Console.WriteLine("인벤토리 디버그 시작");
                 Console.WriteLine("1. 인벤토리 출력 테스트");
-                Console.WriteLine("2. 무기 상점 테스트");
-                Console.WriteLine("3. 방어구 상점 테스트");
-                Console.WriteLine("4. 물약 상점 테스트");
-                Console.WriteLine("6. 1만 골드 추가");
+                Console.WriteLine("2. 상점 테스트");
+                Console.WriteLine("3. 1만 골드 추가");
                 Console.Write("디버그 선택: ");
-                int tempInput = ShopSelect(Console.ReadLine());
+                int tempInput = ShopInput(Console.ReadLine());
 
                 switch (tempInput)
                 {
@@ -563,22 +638,13 @@ namespace TextRPG_Team_Project.Item
                         DisplayCharacterInventoryUI();
                         break;
                     case 2:
-                        Console.WriteLine("무기 상점");
-                        DisplayShop("무기");
+                        Console.WriteLine("상점 출력");
+                        DisplayShopUI();
                         break;
                     case 3:
-                        Console.WriteLine("방어구 상점");
-                        DisplayShop("방어구");
-                        break;
-                    case 4:
-                        Console.WriteLine("물약 상점");
-                        DisplayShop("물약");
-                        break;
-                    case 6:
                         Console.WriteLine("1만 골드 획득");
                         character.Gold += 10000;
                         break;
-
                 }
                 if (tempInput == 0)
                 {
@@ -587,55 +653,6 @@ namespace TextRPG_Team_Project.Item
             }
             Console.Clear();
             Console.WriteLine("인벤토리 디버그 종료");
-        }
-
-        void CharacterInventoryCheck()
-        {
-            // weapon check
-            foreach (var weapon in itemDB.weaponDict.Values)
-            {
-                if (!character.Weapon.Contains(weapon))
-                {
-                    if (weapon.ItemCount > 0)
-                    {
-                        character.Weapon.Add(weapon);
-                    }
-                    else
-                    {
-                        character.Weapon.Remove(weapon);
-                    }
-                }
-            }
-            // armor check
-            foreach (var armor in itemDB.armorDict.Values)
-            {
-                if (!character.armor.Contains(armor))
-                {
-                    if (armor.ItemCount > 0)
-                    {
-                        character.armor.Add(armor);
-                    }
-                    else
-                    {
-                        character.armor.Remove(armor);
-                    }
-                }
-            }
-            // potion check
-            foreach (var potion in itemDB.potionDict.Values)
-            {
-                if (!character.potion.Contains(potion))
-                {
-                    if (potion.ItemCount > 0)
-                    {
-                        character.potion.Add(potion);
-                    }
-                    else
-                    {
-                        character.potion.Remove(potion);
-                    }
-                }
-            }
         }
     }
 }
