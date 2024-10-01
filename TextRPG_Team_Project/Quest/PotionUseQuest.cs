@@ -58,6 +58,7 @@ namespace TextRPG_Team_Project
 				if(_useCount == GoalUseCount)
 				{
 					CompleteQuest();
+					GameManager.Instance.PlayerRecored.TrackPotionUse -= increaseUseCount;
 				}
 			}
 		}
