@@ -67,10 +67,10 @@ namespace TextRPG_Team_Project.Item.Potions
             // 있을 때
             if (itemCount > 0)
             {
-                float sellPrice = itemPrice / 0.75f;
+                float sellPrice = itemPrice * 0.75f;
                 this.itemCount--;
                 character.Gold += (int)sellPrice;
-                Console.WriteLine($"{this.name} 판매완료 (+ {sellPrice} G)");
+                Console.WriteLine($"{this.name} 판매완료 (+ {(int)sellPrice} G)");
             }
             // 없을 때
             else

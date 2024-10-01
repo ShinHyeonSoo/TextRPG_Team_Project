@@ -109,14 +109,14 @@
                 else
                 {
                     Console.WriteLine("보유 최대치에 도달해 구입할 수 없습니다.");
-                    Console.ReadLine();
                 }
             }
             else
             {
                 Console.WriteLine("소지 골드가 부족합니다.");
-                Console.ReadLine();
+                
             }
+            Console.ReadLine();
         }
     }
 }
