@@ -73,7 +73,10 @@ namespace TextRPG_Team_Project
             int maxRange = (int)damage + error + 1;
             int totalDamage = rand.Next(minRange, maxRange);
 
-            _health -= totalDamage;
+            int dodge = rand.Next(0, 10);
+            
+            if(dodge > 0)
+                _health -= totalDamage;
 
             if (_health < 1)
             {

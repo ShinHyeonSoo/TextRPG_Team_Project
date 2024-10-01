@@ -2,9 +2,17 @@
 using System.Security.Cryptography;
 using System.Threading;
 using TextRPG_Team_Project.Scene;
+using TextRPG_Team_Project.Item;
 
 namespace TextRPG_Team_Project
 {
+    public enum RewardType
+    {
+        WEAPON,
+        ARMOR,
+        POTION,
+        NONE
+    }
     public class BattleManager
     {
         private List<Monster> _monsters;
@@ -145,13 +153,21 @@ namespace TextRPG_Team_Project
                 int prevHp = monster.Health; // 이전 HP 기록
                 player.AttackEnemy(monster);
                 Console.WriteLine($"{player.Name} 의 기본 공격!");
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                Console.WriteLine($"\nLv.{monster.Level} {monster.Name}")
-                    ;
-                if (monster.IsDead)
-                    Console.WriteLine($"HP {prevHp} -> Dead");
+
+                if (prevHp != monster.Health)
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
+                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
+
+                    if (monster.IsDead)
+                        Console.WriteLine($"HP {prevHp} -> Dead");
+                    else
+                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                }
                 else
-                    Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+                {
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다...");
+                }
             }
             else // 스킬 공격 처리
             {
@@ -269,8 +285,77 @@ namespace TextRPG_Team_Project
 
             Console.WriteLine("\n[획득 아이템]");
             Console.WriteLine($"{gold} Gold");
-            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
-            //Console.WriteLine();   // 장비 or 포션 아이템 습득 추가
+
+            IItem rewardWeapon = null, rewardArmor = null, rewardPotion = null;
+
+            int rand = GameManager.Instance.Data.GetRandom().Next(0, 3);
+            string[] rewardStr = new string[(int)RewardType.NONE];
+
+            RandomEquipReward(rewardStr);
+
+            if (rand == 0)
+            {
+                rewardWeapon = GameManager.Instance.Data.ItemDatabase.weaponDict[(rewardStr[(int)RewardType.WEAPON])];
+            }
+            else if (rand == 1)
+            {
+                rewardArmor = GameManager.Instance.Data.ItemDatabase.armorDict[(rewardStr[(int)RewardType.ARMOR])];
+            }
+            else
+            {
+                rewardWeapon = GameManager.Instance.Data.ItemDatabase.weaponDict[(rewardStr[(int)RewardType.WEAPON])];
+                rewardArmor = GameManager.Instance.Data.ItemDatabase.armorDict[(rewardStr[(int)RewardType.ARMOR])];
+            }
+
+            rewardPotion = GameManager.Instance.Data.ItemDatabase.potionDict[(rewardStr[(int)RewardType.POTION])];
+
+            rewardWeapon?.GetItem(player, rewardStr[(int)RewardType.WEAPON], 1);
+            rewardArmor?.GetItem(player, rewardStr[(int)RewardType.ARMOR], 1);
+            rewardPotion?.GetItem(player, rewardStr[(int)RewardType.POTION], GameManager.Instance.Data.StageIndex++); 
+        }
+
+        public void RandomEquipReward(string[] itemName)
+        {
+            string job = GameManager.Instance.Data.GetPlayer().Job;
+            int stageIdx = GameManager.Instance.Data.StageIndex;
+
+            if (job == "전사")
+            {
+                if(1 <= stageIdx && stageIdx < 3)
+                {
+                    itemName[(int)RewardType.WEAPON] = "나무 검";
+                    itemName[(int)RewardType.ARMOR] = "가죽 갑옷";
+                }
+                else if (3 <= stageIdx && stageIdx < 5)
+                {
+                    itemName[(int)RewardType.WEAPON] = "무쇠 검";
+                    itemName[(int)RewardType.ARMOR] = "사슬 갑옷";
+                }
+                else
+                {
+                    itemName[(int)RewardType.WEAPON] = "강철 검";
+                    itemName[(int)RewardType.ARMOR] = "판금 갑옷";
+                }
+            }   
+            else if (job == "마법사")
+            {
+                if (1 <= stageIdx && stageIdx < 3)
+                {
+                    itemName[(int)RewardType.WEAPON] = "나무 지팡이";
+                    itemName[(int)RewardType.ARMOR] = "천 로브";
+                }
+                else if (3 <= stageIdx && stageIdx < 5)
+                {
+                    itemName[(int)RewardType.WEAPON] = "전투 지팡이";
+                    itemName[(int)RewardType.ARMOR] = "견습 로브";
+                }
+                else
+                {
+                    itemName[(int)RewardType.WEAPON] = "마법 지팡이";
+                    itemName[(int)RewardType.ARMOR] = "숙련 로브";
+                }
+            }
+            itemName[(int)RewardType.POTION] = "체력 포션";
         }
 
         public int IsAlliveCount(List<Monster> monsters)

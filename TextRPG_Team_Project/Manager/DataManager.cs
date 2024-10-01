@@ -50,11 +50,10 @@ namespace TextRPG_Team_Project
             return _random;
         }
 
-        #region 임시 메서드
         public Character GetPlayer() 
         {
             if (_player == null)
-                return new Warrior("홍길동", 1,100,1,1, 1);
+                return new Warrior("UnKnown", 1, 1, 1, 1, 1);
 
             return _player; 
         }
@@ -73,7 +72,6 @@ namespace TextRPG_Team_Project
                 _player = new Mage(name, 1, 100, 10, 5, 100);
             }
         }
-        #endregion
 
         public void Save(string filename="default1")
         {
