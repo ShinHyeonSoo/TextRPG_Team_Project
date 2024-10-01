@@ -22,7 +22,7 @@ namespace TextRPG_Team_Project
         private Queue<Monster> _cannonMinions;
         private Queue<Monster> _voidlings;
         private Queue<Monster> _golems;
-
+        AttackHandler attackHandler;
         private const int _MAX = 4;
         private const int _MONSTERS = 10;
 
@@ -30,6 +30,8 @@ namespace TextRPG_Team_Project
 
         public BattleManager()
         {
+            attackHandler = new AttackHandler();
+
             _monsters = new();
             _minions = new();
             _cannonMinions = new();
@@ -147,79 +149,22 @@ namespace TextRPG_Team_Project
         public void AttacktoMonster(int targetNum)
         {
             Character player = GameManager.Instance.Data.GetPlayer();
-            Random random = GameManager.Instance.Data.GetRandom();
-            HashSet<int> attackedTargets = new HashSet<int>(); // 이미 공격한 몬스터를 저장
-
-            if (player.CurrentSkill == -1) // 기본 공격 처리
+            bool isCrit = player.IsCritical();
+            if(player.CurrentSkill == -1)
             {
-                Monster monster = _monsters[targetNum - 1];
-                int prevHp = monster.Health; // 이전 HP 기록
-                bool isCrit = player.AttackEnemy(monster);
-                Console.WriteLine($"{player.Name} 의 기본 공격!");
+                attackHandler.NormalAttack(player, targetNum, _monsters,isCrit);
 
-                if (prevHp != monster.Health)
-                {
-                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
-
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
-
-                    if (monster.IsDead)
-                        Console.WriteLine($"HP {prevHp} -> Dead");
-                    else
-                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
-                }
-                else
-                {
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다...");
-                }
             }
-            else // 스킬 공격 처리
+            else
             {
-                int targetCount = player.Skill[player.CurrentSkill].GetSkillType() == 1 ? 1 : 2;
-                Monster monster = _monsters[targetNum - 1];
-                for (int i = 0; i < targetCount; i++)
-                {
+                attackHandler.SkillAttack(player, targetNum, _monsters,isCrit);
 
-                    if ((IsAlliveCount(_monsters) <= 0))
-                        break;
-
-                    if (targetCount > 1 && IsAlliveCount(_monsters) > 1)
-                        monster = null;
-
-                    int randomTarget = -1;
-
-                    // 유효한 타겟을 찾을 때까지 반복
-                    if (targetCount > 1)
-                    {
-                        while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
-                        {
-
-                            randomTarget = random.Next(0, _monsters.Count);
-                            monster = _monsters[randomTarget];
-                        }
-                    }
-
-                    attackedTargets.Add(randomTarget); // 타겟 중복 방지
-                    int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
-                    bool isCrit = player.AttackEnemy(monster);
-                    Console.WriteLine($"{player.Name} 의 스킬 공격!");
-                    if (isCrit) { Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); }
-                    Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
-                    Console.WriteLine($"\nLv.{monster.Level} {monster.Name}");
-
-                    if (monster.IsDead)
-                        Console.WriteLine($"HP {prevHp} -> Dead");
-                    else
-                        Console.WriteLine($"HP {prevHp} -> {monster.Health}");
+            }
 
 
-
-                    Thread.Sleep(1000);
-                }
                 player.ManaReduced();
                 player.ResetCurrentSkill();
-            }
+           
 
 
 
@@ -379,19 +324,6 @@ namespace TextRPG_Team_Project
             }
         }
 
-        public int IsAlliveCount(List<Monster> monsters)
-        {
-            int isAlliveCount = 0;
-            foreach (var i in monsters)
-            {
-                if (!i.IsDead)
-                {
-                    isAlliveCount += 1;
-                }
-
-
-            }
-            return isAlliveCount;
-        }
+  
     }
 }
