@@ -16,11 +16,85 @@ namespace TextRPG_Team_Project.Item
         ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         InventoryScene scene = new InventoryScene();
 
+        enum InventoryState
+        {
+            InventoryMain,
+            CharacterInventory,
+            ShopInventory,
+            WeaponInventory,
+            ArmorInventory,
+            PotionInventory,
+            WeaponShop,
+            ArmorShop,
+            PotionShop,
+            InventoryExit
+        }
+
+        InventoryState _state = InventoryState.InventoryMain;
 
         public static bool isReset = false;
 
         public void StartInventoryScene()
         {
+            while (_state != InventoryState.InventoryExit)
+            {
+                switch (_state)
+                {
+                    case InventoryState.InventoryMain:
+                        MainInventoryScene();
+                        break;
+
+                    case InventoryState.CharacterInventory:
+                        DisplayCharacterInventoryUI();
+                        break;
+
+                    case InventoryState.ShopInventory:
+                        DisplayShopUI();
+                        break;
+
+                    case InventoryState.WeaponInventory:
+                        Console.Clear();
+                        scene.DisplayIntro("무기 가방");
+                        DisplayCharacterInventory("무기");
+                        WeaponEquipment();
+                        break;
+
+                    case InventoryState.ArmorInventory:
+                        Console.Clear();
+                        scene.DisplayIntro("방어구 가방");
+                        DisplayCharacterInventory("방어구");
+                        ArmorEquipment();
+                        break;
+
+                    case InventoryState.PotionInventory:
+                        Console.Clear();
+                        scene.DisplayIntro("물약 가방");
+                        DisplayCharacterInventory("물약");
+                        PotionConsume();
+                        break;
+
+                    case InventoryState.WeaponShop:
+                        Console.Clear();
+                        DisplayShop("무기");
+                        break;
+
+                    case InventoryState.ArmorShop:
+                        Console.Clear();
+                        DisplayShop("방어구");
+                        break;
+
+                    case InventoryState.PotionShop:
+                        Console.Clear();
+                        DisplayShop("물약");
+                        break;
+
+                }
+            }
+        }
+
+        public void MainInventoryScene()
+        {
+
             scene.DisplayIntro("인벤토리");
             Console.WriteLine();
             Console.WriteLine("보유한 아이템을 확인하거나 상점에서 구매할 수 있습니다.");
@@ -331,7 +405,7 @@ namespace TextRPG_Team_Project.Item
             }
         }
 
-        // 목록 출력용
+        // 인벤토리 목록 출력용
 
         void DisplayCharacterInventory(string inventoryType)
         {
@@ -670,7 +744,7 @@ namespace TextRPG_Team_Project.Item
             Console.ReadLine();
         }
 
-        // 목록 출력용
+        // 상점 목록 출력용
 
         void DisplayShopItems(string shopType)
         {
