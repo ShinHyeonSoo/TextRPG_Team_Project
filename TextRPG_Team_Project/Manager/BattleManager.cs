@@ -31,14 +31,14 @@ namespace TextRPG_Team_Project
             _monsters = new();
             _monsterDB = new();
 
-            _monsterDB.Add(new Minion("미니언", 2, 1, 5, 1, 50));
-            _monsterDB.Add(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
-            _monsterDB.Add(new Voidling("공허충", 3, 1, 7, 0, 75));
-            _monsterDB.Add(new Golem("골렘", 7, 1, 10, 5, 150));
-            //_monsterDB.Add(new Minion("미니언", 2, 15, 5, 1, 50));
-            //_monsterDB.Add(new CannonMinion("대포미니언", 5, 25, 5, 3, 100));
-            //_monsterDB.Add(new Voidling("공허충", 3, 10, 7, 0, 75));
-            //_monsterDB.Add(new Golem("골렘", 7, 30, 10, 5, 150));
+            //_monsterDB.Add(new Minion("미니언", 2, 1, 5, 1, 50));
+            //_monsterDB.Add(new CannonMinion("대포미니언", 5, 1, 5, 3, 100));
+            //_monsterDB.Add(new Voidling("공허충", 3, 1, 7, 0, 75));
+            //_monsterDB.Add(new Golem("골렘", 7, 1, 10, 5, 150));
+            _monsterDB.Add(new Minion("미니언", 2, 20, 10, 3, 50));
+            _monsterDB.Add(new CannonMinion("대포미니언", 5, 35, 15, 5, 100));
+            _monsterDB.Add(new Voidling("공허충", 3, 15, 20, 0, 75));
+            _monsterDB.Add(new Golem("골렘", 7, 45, 30, 10, 150));
         }
 
         public void ShuffleMonster()

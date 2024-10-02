@@ -24,12 +24,12 @@
 
         public override void LevelUp(int level)
         {
-            _level = 7 + (level - 1);
-            _maxHealth = 1 + (level - 1) * 20;
+            _level += (level - 1);
+            _maxHealth += (level - 1) * 20;
             _health = _maxHealth;
-            _attack = 10 + (level - 1) * 5;
-            _defense = 5 + (level - 1) * 5;
-            _gold = 150 + (level - 1) * 30;
+            _attack += (level - 1) * 5;
+            _defense += (level - 1) * 5;
+            _gold += (level - 1) * 30;
         }
     }
 }

@@ -113,7 +113,7 @@ namespace TextRPG_Team_Project
             
             newMonster._name = this.Name;
             newMonster._level = this.Level;
-            newMonster._health = this._health;
+            newMonster._health = this._maxHealth;
             newMonster._maxHealth = this._maxHealth;
             newMonster._attack = this.Attack;
             newMonster._defense = this._defense;
