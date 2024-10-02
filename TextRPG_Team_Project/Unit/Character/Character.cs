@@ -274,19 +274,23 @@ namespace TextRPG_Team_Project
             }
         }
 
-        public string GetSkillInfo()
+        public List<string> GetSkillInfo()
         {
             StringBuilder skillList = new StringBuilder();
+            List<string> stringList = new List<string>();
 
             int index = 1; // 스킬 번호 초기화
             foreach (var skill in Skill)
             {
+                skillList.Clear();
                 skillList.AppendLine($"{index}. {skill.Name} - MP {skill.ManaCost}");
                 skillList.AppendLine($"   {skill.Description}");
+
+                stringList.Add(skillList.ToString());
                 index++;
             }
 
-            return skillList.ToString();
+            return stringList;
 
         }
 

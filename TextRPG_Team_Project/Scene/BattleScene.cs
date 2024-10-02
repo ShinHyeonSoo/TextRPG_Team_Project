@@ -75,7 +75,7 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine();
 			Console.WriteLine(UserInfo?.Invoke());// 캐릭터의 간단한 정보 출력
 
-            Console.WriteLine(player.GetSkillInfo());
+            DisplayOption(player.GetSkillInfo());
             Console.WriteLine("0. 취소\n");
             DisplayGetInputNumber();
             
