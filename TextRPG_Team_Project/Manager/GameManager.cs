@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -19,7 +20,16 @@ namespace TextRPG_Team_Project.Scene
 		private DataManager _dataManager = new DataManager();
 		private PlayerRecordManager _playerRecordManager = new PlayerRecordManager();
 
-		public static GameManager Instance { get { return _instance; } }
+		public static GameManager Instance {
+			get
+			{
+				if (_instance == null)
+				{
+					_instance = new GameManager();
+				}
+				return _instance;
+			}
+		}
 
 		
 		public QuestManger Quest { get { return _questManager; } }
@@ -38,15 +48,7 @@ namespace TextRPG_Team_Project.Scene
 		private LoadScene _loadScene = new LoadScene();
 		#endregion
 
-		public GameManager()
-		{
-			if (_instance == null)
-			{
-				_instance = this;
-
-				_questScene.Init();
-			}
-		}
+		private GameManager() { }
 		public void GoHomeScene()
 		{
 			_status = Defines.GameStatus.Home;
