@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -195,9 +196,9 @@ namespace TextRPG_Team_Project.Scene
             Console.WriteLine("Victory\n");
             Console.ResetColor();
 
-            Console.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.");
+            StyleConsole.WriteLine($"던전에서 몬스터 {_monstersCount} 마리를 잡았습니다.",ConsoleColor.White);
 
-            Console.WriteLine(player.AddExp(_monstersCount));
+            StyleConsole.WriteLine(player.AddExp(_monstersCount), ConsoleColor.Yellow);
             Console.WriteLine($"\nlv.{player.Level} {player.Name}");
             Console.WriteLine($"hp {_prevPlayerHealth} -> {player.Health}");
             Console.WriteLine(player.ManaRegen(10));

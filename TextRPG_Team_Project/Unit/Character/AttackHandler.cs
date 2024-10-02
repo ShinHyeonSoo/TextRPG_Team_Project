@@ -68,7 +68,7 @@ namespace TextRPG_Team_Project
             {
                 if (isCrit) 
                 {
-                    Console.WriteLine("Critical !!"); 
+                    StyleConsole.WriteLine("Critical !!",ConsoleColor.Red); 
                 }                   
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
@@ -85,7 +85,7 @@ namespace TextRPG_Team_Project
             }
             else
             {
-                Console.WriteLine("몬스터가 열씸히 피했습니다");
+                Console.WriteLine("공격이 빗나갔습니다!");
 
             }
         }

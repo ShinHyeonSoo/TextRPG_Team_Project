@@ -18,7 +18,7 @@ namespace TextRPG_Team_Project
             Skill = new List<Skill>
             {
                 new Skill ("알파 스트라이크", 2, "공격력 * 2 로 하나의 적을 공격합니다", 10 , 1),
-                new Skill ("더블 스트라이크", 1.5f, "공격력 * 2 로 무작위 두명의 적을 공격합니다", 20 ,2)
+                new Skill ("더블 스트라이크", 2, "공격력 * 2 로 무작위 두명의 적을 공격합니다", 20 ,2)
 
             };
 

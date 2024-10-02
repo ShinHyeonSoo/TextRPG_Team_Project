@@ -38,7 +38,7 @@ namespace TextRPG_Team_Project
 
         private int exp = 0;
 
-        private int[] expTable = { 10, 35, 65, 100 };
+        private int[] expTable = { 3, 35, 65, 100 };
 
         public List<Weapon> Weapons;
         public List<Armor> Armors;
@@ -133,7 +133,7 @@ namespace TextRPG_Team_Project
                 exp -= requireExp;
                 requireExp = GetRequireExp(Level);
 
-                return $"LV.{_prevLevel} {Name} -> LV.{Level} {Name}\nExp {_prevRequireExp} -> {requireExp}";
+                return $"LV.{_prevLevel} {Name} -> LV.{Level} {Name}\n필요 경험치량 : {_prevRequireExp} -> {requireExp}";
             }
 
 
