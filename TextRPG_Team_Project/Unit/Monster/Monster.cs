@@ -91,12 +91,6 @@ namespace TextRPG_Team_Project
             OnAttack?.Invoke(damage);
         }
 
-        public void Recovery()
-        {
-            _health = _maxHealth;
-            _isDead = false;
-        }
-
         public Monster Clone()
         {
             Monster newMonster = null;

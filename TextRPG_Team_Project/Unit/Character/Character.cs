@@ -109,9 +109,7 @@ namespace TextRPG_Team_Project
 
             if (level < expTable[level - 1])
             {
-
                 return expTable[level - 1];
-
             }
             else
             {
@@ -136,7 +134,6 @@ namespace TextRPG_Team_Project
                 return $"LV.{_prevLevel} {Name} -> LV.{Level} {Name}\n필요 경험치량 : {_prevRequireExp} -> {requireExp}";
             }
 
-
             return $"Exp.{prevExp} -> {exp}";
         }
 
@@ -156,8 +153,6 @@ namespace TextRPG_Team_Project
             Attack += 1;
             Level += 1;
             GameManager.Instance.PlayerRecored.NotifyUserLevelUp();
-
-
         }
 
         public string GetStatus() // 유저의 status의 정보를 알려주는 함수
@@ -166,17 +161,12 @@ namespace TextRPG_Team_Project
             string armorName = currentArmor != null ? currentArmor.Name : "장착되지 않음";
 
             return $"LV.{Level}\n{Name}  ({Job})\n공격력: {Attack}\n방어력: {Defense}\n체 력 : {Health}/{MaxHealth}\nGold : {Gold} G\n무기 : {weaponName}\n방어구 : {armorName}";
-
         }
-        // Lv. 01      
-
 
         public string GetUserInfoShort()
         {
             return $"LV.{Level} {Name}  ({Job})\nHP {Health} / {MaxHealth}\nMP {Mp} / {MaxMp}\n";
-
         }
-
 
         public void EquipWeapon(Weapon _weapon)
         {
@@ -193,7 +183,6 @@ namespace TextRPG_Team_Project
         {
             Attack -= currentWeapon.WeaponAttack;
             currentWeapon = itemDB.WeaponDict["맨 주먹"];
-
         }
 
         public void EquipArmor(Armor _armor)
@@ -213,9 +202,6 @@ namespace TextRPG_Team_Project
 
             Defense -= currentArmor.ArmorDefence;
             currentArmor = itemDB.ArmorDict["일반 옷"];
-
-
-
         }
        
         public bool IsCritical()
@@ -234,13 +220,10 @@ namespace TextRPG_Team_Project
         public void AttackEnemy(Monster _target, bool isCrit)
         {
             Random random = GameManager.Instance.Data.GetRandom();
-            
-            
 
             int critMulti = 1;
             if(isCrit)
             {
-                
                 critMulti = 2;
             }
 
@@ -255,15 +238,10 @@ namespace TextRPG_Team_Project
             else
             {
                 damage = (Attack * Skill[CurrentSkill].DamageMulti) * critMulti;
-                CurrentAttack = (int)Math.Ceiling(damage);
-                           
+                CurrentAttack = (int)Math.Ceiling(damage);         
             }
                    
-               
-
             _target.TakeDamage(damage);
-            
-
         }
 
         public void ManaReduced()
@@ -291,24 +269,14 @@ namespace TextRPG_Team_Project
             }
 
             return stringList;
-
         }
 
         public int ManaChecker(int select)
         {
             if (Mp >= Skill[select - 1].ManaCost)
-            {
                 return select;
-
-            }
-
             else
-            {
-
                 return 0;
-            }
-
-
         }
 
         public int SetCurrentSkill(int input)
@@ -316,15 +284,11 @@ namespace TextRPG_Team_Project
             CurrentSkill = input - 1;
 
             return CurrentSkill;
-
-
         }
 
         public string GetCurrentSkillInfo()
         {
-
             return $"{Skill[CurrentSkill].Name}";
-
         }
 
 
@@ -332,8 +296,6 @@ namespace TextRPG_Team_Project
         {
             if (reward != null)
                 Gold += reward.Value.Gold;
-            else { }
-
         }
 
         public void HealthRegen(int value)
@@ -345,24 +307,18 @@ namespace TextRPG_Team_Project
                 if(Health > MaxHealth)
                 {
                     Health = MaxHealth;
-
                 }
 
                 if(Health > 0)
                 {
-
                     IsDead = false;
-
                 }
-            }           
-
-
+            }
         }
 
         public void ResetCurrentSkill()
         {
             CurrentSkill = -1;
-
         }
 
       
@@ -430,7 +386,6 @@ namespace TextRPG_Team_Project
                 }
             }
 		}
-
 	}
 
 

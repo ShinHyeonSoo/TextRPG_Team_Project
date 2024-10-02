@@ -13,7 +13,7 @@ namespace TextRPG_Team_Project
 		private int _targetLevel;
 
 		[JsonIgnore]
-		public string ShortDescription { get { return $"{_targetLevel} 달성 | {GameManager.Instance.Data.GetPlayer().Level}/{_targetLevel}"; } }
+		public string ShortDescription { get { return $"{_targetLevel} 달성 | {GameManager.Instance.Data.GetPlayer().Level} / {_targetLevel}"; } }
 
 		#region [Conductor]
 		public LevelQuest(string id,string name, string description, int targetLevel, Reward reward) : base(id, name, description, reward)

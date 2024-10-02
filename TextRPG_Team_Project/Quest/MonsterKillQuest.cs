@@ -18,7 +18,7 @@ namespace TextRPG_Team_Project
 
 		public int GoalKillCount { get; init; }
 		[JsonIgnore]
-		public string ShortDescription { get { return $"{_monsterName}을(를) {GoalKillCount} 마리 처치 | {_killCount}/{GoalKillCount}"; } }
+		public string ShortDescription { get { return $"{_monsterName}을(를) {GoalKillCount} 마리 처치 | {_killCount} / {GoalKillCount}"; } }
 
 		#region Constructor
 		public MonsterKillQuest(string id, string name, string description, string monsterName, int killCount, int goalKillCount, Defines.QuestStatus status, Reward reward) : base(id, name, description, status, reward)

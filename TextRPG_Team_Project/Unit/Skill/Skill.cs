@@ -31,12 +31,7 @@ namespace TextRPG_Team_Project
 
         public int GetSkillType()
         {
-
             return SkillType;
         }
-
-
-
-
     }
 }

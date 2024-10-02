@@ -18,10 +18,8 @@ namespace TextRPG_Team_Project
             int prevHp = monster.Health;
             player.AttackEnemy(monster,isCrit);
 
-
             StyleConsole.WriteLine($"{player.Name} 의 기본 공격!",ConsoleColor.Cyan);
             DisplayAttack(player, prevHp, monster, isCrit);
-
         }
 
         public void SkillAttack(Character player, int targetNum, List<Monster> monsters, bool isCrit)
@@ -37,7 +35,6 @@ namespace TextRPG_Team_Project
                 if ((IsAlliveCount(monsters) <= 0))
                     break;
 
-
                 if (targetCount > 1 && IsAlliveCount(monsters) > 1)
                     monster = null;
 
@@ -48,7 +45,6 @@ namespace TextRPG_Team_Project
                 {
                     while (monster == null || attackedTargets.Contains(randomTarget) || monster.IsDead)
                     {
-
                         randomTarget = random.Next(0, monsters.Count);
                         monster = monsters[randomTarget];
                     }
@@ -80,13 +76,11 @@ namespace TextRPG_Team_Project
                 else
                 {
                     Console.WriteLine($"HP {prevHp} -> {monster.Health}");
-                    
                 }            
             }
             else
             {
                 Console.WriteLine("공격이 빗나갔습니다!");
-
             }
         }
 
@@ -99,8 +93,6 @@ namespace TextRPG_Team_Project
                 {
                     isAlliveCount += 1;
                 }
-
-
             }
             return isAlliveCount;
         }

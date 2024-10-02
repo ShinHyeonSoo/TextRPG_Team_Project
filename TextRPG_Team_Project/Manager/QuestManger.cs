@@ -45,14 +45,14 @@ namespace TextRPG_Team_Project
 				new Reward(700)));
 			Quests.Add(new PotionUseQuest("2001",
 				"회복 포션 사용",
-				"모험가라면 회복 포션도 사용할 줄 알아야하는 법.\n 회복포션을 사용해보고오면 보상을 줄께",
-				"회복포션",
+				"모험가라면 회복 포션도 사용할 줄 알아야하는 법.\n 회복 포션을 사용해보고 오면 보상을 줄께",
+                "작은 회복 포션",
 				1,
 				new Reward(700)));
 			Quests.Add(new EquipQuest("3001",
-				"나무칼 착용",
-				"모험하러 가는데 그 꼴로 갈거야? \n나무칼이라도 챙기지 그래?",
-				"나무 칼",
+				"나무 검 착용",
+				"모험하러 가는데 그 꼴로 갈거야? \n나무 검이라도 챙기지 그래?",
+				"나무 검",
 				new Reward(700)));
 			Quests.Add(new LevelQuest("4001",
 				"2레벨 달성",
