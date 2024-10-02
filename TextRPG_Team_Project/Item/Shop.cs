@@ -44,6 +44,7 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"소지 골드 : {character.Gold} G");
             Console.WriteLine($"1. 무기 장착 관리");
             Console.WriteLine($"2. 방어구 장착 관리");
+            Console.WriteLine($"3. 물약 사용");
 
             Console.Write("선택: ");
             int tempInput = ShopInput(Console.ReadLine());
@@ -61,6 +62,11 @@ namespace TextRPG_Team_Project.Item
                     Console.Clear();
                     DisplayCharacterInventory("방어구");
                     ArmorEquipment();
+                    break;
+                case 3:
+                    Console.Clear();
+                    DisplayCharacterInventory("물약");
+                    PotionConsume();
                     break;
                 default:
                     Console.WriteLine("제대로된 값을 입력해주세요.");
@@ -228,7 +234,7 @@ namespace TextRPG_Team_Project.Item
 
         void ArmorEquipment()
         {
-            Console.WriteLine("어떤 방어구를 장착합니까? (0 눌러 취소)");
+            Console.WriteLine("어떤 방어구를 장착합니까?");
             Console.WriteLine("장착된 장비를 선택하면 장착해제합니다.(0 눌러 취소)");
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
@@ -279,8 +285,39 @@ namespace TextRPG_Team_Project.Item
             {
                 potionCount = "[최대보유]";
             }
-            string potionEffect = $"{character.Potions[indexNum].PotionEffect}";
-            Console.WriteLine($"{indexNumber}   | {potionName}\t\t|  + {potionEffect}|  {potionCount}|");
+            string potionEffect = character.Potions[indexNum].PotionEffect.ToString("D3");
+            Console.WriteLine($"{indexNumber}   | {potionName}\t |  \t+ {potionEffect}|  {potionCount}|");
+        }
+
+        void PotionConsume()
+        {
+            Console.WriteLine("어떤 물약을 사용합니까?(0 눌러 취소)");
+            int tempInput = ShopInput(Console.ReadLine());
+            if (tempInput != 0)
+            {
+                if (tempInput < character.Potions.Count + 1)
+                {
+                    Console.Clear();
+                    if (character.Potions[tempInput - 1].ItemCount>0)
+                    {
+                        character.Potions[tempInput - 1].ConsumeThis(character);
+                    }
+                    else
+                    {
+                        Console.WriteLine("물약이 없습니다?");
+                    }
+                    DisplayCharacterInventory("물약");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("올바른 값 입력");
+                }
+            }
+            else
+            {
+                Console.WriteLine("나갑니다.");
+            }
         }
 
         void CharacterInventoryCheck(string inventoryType)
@@ -546,7 +583,7 @@ namespace TextRPG_Team_Project.Item
         {
             string indexNumber = $"{i}";
             string potionName = $"{itemDB.PotionDict[potionKey].Name}";
-            string potionPrice = $"{itemDB.PotionDict[potionKey].ItemPrice}";
+            string potionPrice = itemDB.PotionDict[potionKey].ItemPrice.ToString("D4");
             string potionCount;
             if (itemDB.PotionDict[potionKey].ItemCount < itemDB.PotionDict[potionKey].ItemCountMax)
             {
@@ -558,7 +595,7 @@ namespace TextRPG_Team_Project.Item
             }
             string potionEffect = itemDB.PotionDict[potionKey].PotionEffect.ToString("D3");
 
-            Console.WriteLine($" {indexNumber}| {potionName}         \t|   + {potionEffect}|   {potionPrice} G|  {potionCount}|");
+            Console.WriteLine($" {indexNumber}| {potionName}            \t|   + {potionEffect}|   {potionPrice} G|  {potionCount}|");
         }
 
         void BuyItems(string shopType)
