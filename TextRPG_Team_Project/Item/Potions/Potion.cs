@@ -19,6 +19,11 @@ namespace TextRPG_Team_Project.Item.Potions
             potionEffect = _potionEffect;
         }
 
+        public string Name { get { return name; } private set { name = value; } }
+        public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
+        public int ItemCount { get { return itemCount; } set { itemCount = value; } }
+        public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
+        public int PotionEffect { get { return potionEffect; } private set { potionEffect = value; } }
 
         public virtual void ConsumeThis(Character character)
         {
@@ -58,12 +63,6 @@ namespace TextRPG_Team_Project.Item.Potions
                 itemCount = itemCountMax;
             }
         }
-
-        public string Name { get { return name; } private set { name = value; } }
-        public int ItemPrice { get { return itemPrice; } private set { itemPrice = value; } }
-        public int ItemCount { get { return itemCount; } set { itemCount = value; } }
-        public int ItemCountMax { get { return itemCountMax; } private set { itemCountMax = value; } }
-        public int PotionEffect {  get { return potionEffect; } private set { potionEffect = value; } }
 
         public void SellThis(Character character)
         {
