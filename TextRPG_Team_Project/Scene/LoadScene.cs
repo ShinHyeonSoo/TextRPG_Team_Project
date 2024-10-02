@@ -83,7 +83,7 @@ namespace TextRPG_Team_Project.Scene
 		public void ProcessDataLoad()
 		{
 			int userInput = Utils.GetNumberInput(0, _files.Length+1);
-			if(userInput == 0) { GameManager.Instance.GoAnySScene(Defines.GameStatus.Start); }
+			if(userInput == 0) { GameManager.Instance.GoAnySScene(Defines.GameStatus.Start); return; }
 			_selectedFileIndex = userInput-1;
 			GameManager.Instance.Data.Load(_files[_selectedFileIndex]);
 

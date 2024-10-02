@@ -48,7 +48,8 @@ namespace TextRPG_Team_Project.Scene
 		private LoadScene _loadScene = new LoadScene();
 		#endregion
 
-		private GameManager() { }
+		private GameManager() {
+		}
 		public void GoHomeScene()
 		{
 			_status = Defines.GameStatus.Home;

@@ -18,7 +18,6 @@ namespace TextRPG_Team_Project.Scene
 		public void Init()
 		{
 			_selectedQuest = 0;
-			_questManager = GameManager.Instance.Quest;
 		}
 
 		public override void DisplayInitScene()
@@ -110,6 +109,7 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void PlayScene()
 		{
+			_questManager = GameManager.Instance.Quest;
 			switch (_state)
 			{
 				case Defines.QuestSceneState.QuestList:
