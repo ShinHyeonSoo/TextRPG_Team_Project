@@ -19,7 +19,7 @@ namespace TextRPG_Team_Project
             player.AttackEnemy(monster,isCrit);
 
 
-            Console.WriteLine($"{player.Name} 의 기본 공격!");
+            StyleConsole.WriteLine($"{player.Name} 의 기본 공격!",ConsoleColor.Cyan);
             DisplayAttack(player, prevHp, monster, isCrit);
 
         }
@@ -57,7 +57,7 @@ namespace TextRPG_Team_Project
                 attackedTargets.Add(randomTarget); // 타겟 중복 방지
                 int prevHp = monster.Health; // 각 몬스터에 대한 이전 HP 기록
                 player.AttackEnemy(monster,isCrit);
-                Console.WriteLine($"{player.Name} 의 스킬 공격!");
+                StyleConsole.WriteLine($"\n{player.Name} 의 스킬 공격!" ,ConsoleColor.Cyan);
                 DisplayAttack(player, prevHp, monster, isCrit);
             }
         }
@@ -68,10 +68,8 @@ namespace TextRPG_Team_Project
             {
                 if (isCrit) 
                 {
-                    Console.WriteLine("크리티컬 발생! 2배의 추가피해가 들어갑니다\n"); 
-                }
-                    
-
+                    StyleConsole.WriteLine("Critical !!",ConsoleColor.Red); 
+                }                   
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다. [데미지 : {player.CurrentAttack}]");
 
                 if (monster.IsDead)
@@ -79,18 +77,15 @@ namespace TextRPG_Team_Project
                     Console.WriteLine($"HP {prevHp} -> Dead"); 
                 }
 
-
-
                 else
                 {
                     Console.WriteLine($"HP {prevHp} -> {monster.Health}");
-                }
                     
-                    
+                }            
             }
             else
             {
-                Console.WriteLine("몬스터가 열씸히 피했습니다");
+                Console.WriteLine("공격이 빗나갔습니다!");
 
             }
         }
