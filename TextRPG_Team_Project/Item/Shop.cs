@@ -13,17 +13,20 @@ namespace TextRPG_Team_Project.Item
     {
         Character character = GameManager.Instance.Data.GetPlayer();
         ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
+        InventoryScene scene = new InventoryScene();
+
 
         public static bool isReset = false;
 
         int ShopInput(string input)
         {
-            int result;
+            int result = -1;
             bool tempInput = int.TryParse(input, out result);
 
             if (!tempInput)
             {
-                Console.WriteLine("제대로된 값을 입력해주세요.");
+                Console.WriteLine("제대로된 값을 입력해주세요."); 
+                Console.ReadLine();
             }
 
             return result;
@@ -33,7 +36,7 @@ namespace TextRPG_Team_Project.Item
 
         public void DisplayCharacterInventoryUI()
         {
-
+            scene.DisplayIntro("인벤토리");
             Console.WriteLine($"  ==============인 벤 토 리==============");
 
             DisplayCharacterInventory("무기");
@@ -42,37 +45,46 @@ namespace TextRPG_Team_Project.Item
 
             Console.WriteLine("=============================================");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"1. 무기 장착 관리");
-            Console.WriteLine($"2. 방어구 장착 관리");
-            Console.WriteLine($"3. 물약 사용");
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine();
+            scene.DisplayOption(new List<string>() { "1. 무기 장착 관리", "2. 방어구 장착 관리", "3. 물약 사용" });
+            Console.WriteLine($"");
+            Console.WriteLine($"0. 뒤로가기");
 
-            Console.Write("선택: ");
-            int tempInput = ShopInput(Console.ReadLine());
-
-            switch (tempInput)
+            while(true)
             {
-                case 0:
-                    break;
-                case 1:
-                    Console.Clear();
-                    DisplayCharacterInventory("무기");
-                    WeaponEquipment();
-                    break;
-                case 2:
-                    Console.Clear();
-                    DisplayCharacterInventory("방어구");
-                    ArmorEquipment();
-                    break;
-                case 3:
-                    Console.Clear();
-                    DisplayCharacterInventory("물약");
-                    PotionConsume();
-                    break;
-                default:
-                    Console.WriteLine("제대로된 값을 입력해주세요.");
-                    break;
-            }
+                Console.Write(">> ");
+                int tempInput = ShopInput(Console.ReadLine());
 
+                switch (tempInput)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.Clear();
+                        scene.DisplayIntro("무기 가방");
+                        DisplayCharacterInventory("무기");
+                        WeaponEquipment();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        scene.DisplayIntro("방어구 가방");
+                        DisplayCharacterInventory("방어구");
+                        ArmorEquipment();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        scene.DisplayIntro("물약 가방");
+                        DisplayCharacterInventory("물약");
+                        PotionConsume();
+                        break;
+                }
+                if(tempInput ==0)
+                {
+                    break;
+                }
+                
+            }
         }
 
         void DisplayCharacterInventory(string inventoryType)
@@ -80,8 +92,6 @@ namespace TextRPG_Team_Project.Item
             string inventoryTitle;
             string itemStat;
             int inventoryCount;
-
-            // ItemDatabaseCheck();
 
             CharacterInventoryCheck(inventoryType);
 
@@ -112,7 +122,7 @@ namespace TextRPG_Team_Project.Item
             }
 
             Console.WriteLine($"  ==============={inventoryTitle} 가방===============");
-            Console.WriteLine($"    | 이름\t\t |\t {itemStat}|    소지수|");
+            Console.WriteLine($"      | 이름\t\t |\t {itemStat}|    소지수|");
             Console.WriteLine("---------------------------------------------");
             for (int i = 0; i < inventoryCount; i++)
             {
@@ -161,13 +171,14 @@ namespace TextRPG_Team_Project.Item
 
             string WeaponAttack = ((int)(character.Weapons[indexNum].WeaponAttack)).ToString("D2");
 
-            Console.WriteLine($"{indexNumber}{isEquipped}| {weaponName}   \t |\t   + {WeaponAttack}|  {weaponCount}|");
+            Console.WriteLine($"  {indexNumber}{isEquipped}| {weaponName}  \t |\t   + {WeaponAttack}|  {weaponCount}|");
         }
 
         void WeaponEquipment()
         {
             Console.WriteLine("어떤 무기를 장착합니까?");
             Console.WriteLine("장착된 장비를 선택하면 장착해제합니다.(0 눌러 취소)");
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
@@ -228,14 +239,14 @@ namespace TextRPG_Team_Project.Item
             }
             string armorDefence = character.Armors[indexNum].ArmorDefence.ToString("D2");
 
-            //Console.WriteLine($"{indexNumber}|{armorName}|\t{armorDefence}|{armorPrice}G|{armorCount}|");
-            Console.WriteLine($"{indexNumber}{isEquipped}| {armorName}   \t | \t   + {armorDefence}|  {armorCount}|");
+            Console.WriteLine($"  {indexNumber}{isEquipped}| {armorName}  \t | \t   + {armorDefence}|  {armorCount}|");
         }
 
         void ArmorEquipment()
         {
             Console.WriteLine("어떤 방어구를 장착합니까?");
             Console.WriteLine("장착된 장비를 선택하면 장착해제합니다.(0 눌러 취소)");
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
@@ -286,12 +297,13 @@ namespace TextRPG_Team_Project.Item
                 potionCount = "[최대보유]";
             }
             string potionEffect = character.Potions[indexNum].PotionEffect.ToString("D3");
-            Console.WriteLine($"{indexNumber}   | {potionName}\t |  \t+ {potionEffect}|  {potionCount}|");
+            Console.WriteLine($"  {indexNumber}   | {potionName}\t |  \t+ {potionEffect}|  {potionCount}|");
         }
 
         void PotionConsume()
         {
             Console.WriteLine("어떤 물약을 사용합니까?(0 눌러 취소)");
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
             if (tempInput != 0)
             {
@@ -403,14 +415,14 @@ namespace TextRPG_Team_Project.Item
 
         public void DisplayShopUI()
         {
+            scene.DisplayIntro("상점");
             Console.WriteLine("어떤 상점에 갑니까?");
-            Console.WriteLine("==========");
+            Console.WriteLine("=============================================");
             Console.WriteLine($"소지 골드 : {character.Gold} G");
-            Console.WriteLine($"1. 무기 상점");
-            Console.WriteLine($"2. 방어구 상점");
-            Console.WriteLine($"3. 물약 상점");
-
-            Console.Write("선택: ");
+            Console.WriteLine("---------------------------------------------");
+            scene.DisplayOption(new List<string>() { "1. 무기 상점", "2. 방어구 상점", "3. 물약 상점" });
+            Console.WriteLine();
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
 
             switch (tempInput)
@@ -457,8 +469,9 @@ namespace TextRPG_Team_Project.Item
             DisplayShopItems(shopType);
 
             Console.WriteLine($"{ShopTitle} 상점에서 뭘 하나요?");
-            Console.WriteLine($"1. 구입");
-            Console.WriteLine($"2. 판매");
+            scene.DisplayOption(new List<string>() { "1. 구입", "2. 판매"});
+            Console.WriteLine();
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
@@ -619,14 +632,14 @@ namespace TextRPG_Team_Project.Item
                 shopCount = 1;
             }
 
-            Console.Write("구입할 물건 선택 (0 눌러 나가기)\n>> ");
+            Console.WriteLine("구입할 아이템 선택 (0 눌러 나가기)");
+            Console.Write(">> ");
 
             int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
             {
                 Console.WriteLine("상점을 나갑니다.");
-                Console.ReadLine();
             }
             else if (tempInput < shopCount)
             {
@@ -636,7 +649,6 @@ namespace TextRPG_Team_Project.Item
                     Console.Clear();
                     itemDB.WeaponDict[weaponBought.Key].BuyThis(character);
                     DisplayShopItems(shopType);
-                    Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {
@@ -644,7 +656,6 @@ namespace TextRPG_Team_Project.Item
                     Console.Clear();
                     itemDB.ArmorDict[armorBought.Key].BuyThis(character);
                     DisplayShopItems(shopType);
-                    Console.ReadLine();
                 }
                 else if (shopType == "물약")
                 {
@@ -652,14 +663,13 @@ namespace TextRPG_Team_Project.Item
                     Console.Clear();
                     itemDB.PotionDict[potionBought.Key].BuyThis(character);
                     DisplayShopItems(shopType);
-                    Console.ReadLine();
                 }
                 else
                 {
                     Console.WriteLine("잘못된 값");
-                    Console.ReadLine();
                 }
             }
+            Console.ReadLine();
         }
 
         void SellItems(string shopType)
@@ -688,8 +698,8 @@ namespace TextRPG_Team_Project.Item
                 shopCount = 1;
             }
 
-            Console.Write("판매할 아이템 선택 (0 눌러 취소) \n>>");
-
+            Console.WriteLine("판매할 아이템 선택 (0 눌러 나가기)");
+            Console.Write(">> ");
             int tempInput = ShopInput(Console.ReadLine());
 
             if (tempInput == 0)
@@ -701,30 +711,27 @@ namespace TextRPG_Team_Project.Item
                 if (shopType == "무기")
                 {
                     Console.Clear();
-                    character.Weapons[tempInput].SellThis(character);
+                    character.Weapons[tempInput-1].SellThis(character);
                     DisplayCharacterInventory(shopType);
-                    Console.ReadLine();
                 }
                 else if (shopType == "방어구")
                 {
                     Console.Clear();
-                    character.Armors[tempInput].SellThis(character);
+                    character.Armors[tempInput-1].SellThis(character);
                     DisplayCharacterInventory(shopType);
-                    Console.ReadLine();
                 }
                 else if (shopType == "물약")
                 {
                     Console.Clear();
-                    character.Potions[tempInput].SellThis(character);
+                    character.Potions[tempInput-1].SellThis(character);
                     DisplayCharacterInventory(shopType);
-                    Console.ReadLine();
                 }
                 else
                 {
                     Console.WriteLine("잘못된 값");
-                    Console.ReadLine();
                 }
             }
+            Console.ReadLine();
         }
 
         public void ItemDatabaseCheck()
@@ -772,6 +779,51 @@ namespace TextRPG_Team_Project.Item
             }
         }
 
+        
+        public void StartInventoryScene()
+        {
+            scene.DisplayIntro("인벤토리");
+            Console.WriteLine();
+            Console.WriteLine("보유한 아이템을 확인하거나 상점에서 구매할 수 있습니다.");
+            Console.WriteLine();
+            scene.DisplayOption(new List<string>() { "1. 인벤토리", "2. 상점" });
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+
+            Console.Write(">> ");
+
+            while (true)
+            {
+                string inputCheck = Console.ReadLine();
+                int tempInput = ShopInput(inputCheck);
+
+                switch (tempInput)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.WriteLine("인벤토리 출력");
+                        DisplayCharacterInventoryUI();
+                        break;
+                    case 2:
+                        Console.WriteLine("상점 출력");
+                        DisplayShopUI();
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력");
+                        Console.ReadLine();
+                        break;
+                }
+                if (tempInput == 0)
+                {
+                    GameManager.Instance.GoHomeScene();
+                    break;
+                }
+                break;
+            }
+            Console.Clear();
+            
+        }
 
         public void DebugInventory()
         {
