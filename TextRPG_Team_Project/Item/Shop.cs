@@ -473,10 +473,11 @@ namespace TextRPG_Team_Project.Item
 
         void DisplayArmorInventory(int indexNum)
         {
-            string indexNumber = $"  {indexNum + 1}   ";
+            string indexNumber = $"  {indexNum + 1}";
             StyleConsole.Write(indexNumber, ConsoleColor.Cyan);
             string isEquipped = character.Armors[indexNum].IsEquipped ? "[E]" : "   ";
             StyleConsole.Write(isEquipped, ConsoleColor.Blue);
+
             string armorName = $"{character.Armors[indexNum].Name}";
             string armorPrice = character.Armors[indexNum].ItemPrice.ToString("D4");
             string armorCount;
