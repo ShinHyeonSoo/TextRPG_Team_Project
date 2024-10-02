@@ -101,9 +101,12 @@ namespace TextRPG_Team_Project.Item.EquippableItem.Weapons
             // 있을 때
             if (itemCount > 0)
             {
-                if (this.isEquipped)
+                if(itemCount == 1)
                 {
-                    this.UnEquipThis(character);
+                    if (this.isEquipped)
+                    {
+                        this.UnEquipThis(character);
+                    }
                 }
                 
                 float sellPrice = itemPrice * 0.75f;
