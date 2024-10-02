@@ -20,17 +20,12 @@ namespace TextRPG_Team_Project.Scene
 
 		public override void DisplayInitScene()
 		{
-			if (shop == null)
-			{
-				shop = new Shop();
-			}
-			shop.DebugInventory();
 			DisplayIntro("인벤토리");
 			Console.WriteLine();
-			Console.WriteLine("인벤토리 목록 출력");
-            DisplayOption(new List<string>() { "1. 장착 관리", "2. 아이템 사용" });
-			Console.WriteLine("0. 나가기");
-			DisplayGetInputNumber();
+            Console.WriteLine("보유한 아이템을 확인하거나 상점에서 구매할 수 있습니다.");
+            DisplayOption(new List<string>() { "1. 인벤토리", "2. 상점" });
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
 		}
 		public void DisplayManagingEuipment()
 		{
@@ -59,8 +54,13 @@ namespace TextRPG_Team_Project.Scene
 			switch (_state)
 			{
 				case Defines.InventoryState.Start:
-					DisplayInitScene();
-					userInput = Utils.GetNumberInput(0, 2);
+                    if (shop == null)
+                    {
+                        shop = new Shop();
+                    }
+					shop._state = Shop.InventoryState.InventoryMain;
+					shop.StartInventoryScene();
+					userInput = 0;
 					if(userInput == 0) { GameManager.Instance.GoHomeScene(); }
 
 					break;
