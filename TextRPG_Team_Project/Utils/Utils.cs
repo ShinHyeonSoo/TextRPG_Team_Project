@@ -30,5 +30,20 @@ namespace TextRPG_Team_Project
 				Scene.Scene.WrongInput();
 			}
 		}
+		public static void ClearBelowCursor(int startLine)
+		{
+			// 콘솔의 크기를 가져옴
+			int windowHeight = Console.WindowHeight;
+			int windowWidth = Console.WindowWidth;
+
+			// 현재 커서 위치 아래 모든 줄을 공백으로 덮어씀
+			for (int i = startLine; i < windowHeight; i++)
+			{
+				Console.SetCursorPosition(0, i);  // 커서 위치를 설정
+				Console.Write(new string(' ', windowWidth));  // 해당 줄을 공백으로 덮어씀
+			}
+			Console.SetCursorPosition(0, startLine);
+		}
+
 	}
 }

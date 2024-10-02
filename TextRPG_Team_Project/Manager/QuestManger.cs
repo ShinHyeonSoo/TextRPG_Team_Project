@@ -56,9 +56,14 @@ namespace TextRPG_Team_Project
 				new Reward(700)));
 			Quests.Add(new LevelQuest("4001",
 				"2레벨 달성",
-				"레벨 2레벨을 달성해오라구~",
+				"2레벨을 달성해오라구~",
 				2,
-				new Reward(700)));
+				new Reward(2000)));
+			Quests.Add(new LevelQuest("4001",
+				"3레벨 달성",
+				"3레벨을 달성해오라구~",
+				3,
+				new Reward(3000)));
 		}
 
 		public string DisplayQuestList()

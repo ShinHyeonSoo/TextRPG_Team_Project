@@ -133,19 +133,13 @@ namespace TextRPG_Team_Project.Item
             while (true)
             {
                 string input = Console.ReadLine();
-                bool tempInput = int.TryParse(input, out result);
-                if (tempInput && int.Parse(input) < choiceNum || choiceNum > 0)
+                if(int.TryParse(input,out result))
                 {
-                    break;
+                    if(0 <=result && result <= choiceNum) { return result; }
                 }
-                else
-                {
-                    Console.WriteLine("유효하지 않은 입력입니다.");
-                    continue;
-                }
-
+				Console.WriteLine("유효하지 않은 입력입니다.");
+                continue;
             }
-            return result;
         }
 
         void CharacterInventoryCheck(string inventoryType)
@@ -232,7 +226,7 @@ namespace TextRPG_Team_Project.Item
         void DisplayCharacterInventoryUI()
         {
             scene.DisplayIntro("인벤토리");
-            Console.WriteLine($"  ==============인 벤 토 리==============");
+            Console.WriteLine($"================인 벤 토 리================");
 
             DisplayCharacterInventory("무기");
             DisplayCharacterInventory("방어구");
@@ -424,8 +418,8 @@ namespace TextRPG_Team_Project.Item
                 inventoryCount = 1;
             }
 
-            Console.WriteLine($"  ==============={inventoryTitle} 가방===============");
-            Console.WriteLine($"      | 이름\t\t |\t {itemStat}|    소지수|");
+            Console.WriteLine($"================={inventoryTitle} 가방=================");
+            Console.WriteLine($"| 이름\t\t |\t {itemStat}|    소지수|");
             Console.WriteLine("---------------------------------------------");
             for (int i = 0; i < inventoryCount; i++)
             {
@@ -634,7 +628,7 @@ namespace TextRPG_Team_Project.Item
                 Console.WriteLine("상점을 나갑니다.");
                 return;
             }
-            else if (tempInput < shopCount)
+            else if (tempInput <= shopCount)
             {
                 if (shopType == "무기")
                 {
@@ -672,17 +666,17 @@ namespace TextRPG_Team_Project.Item
             Console.Clear();
             if (shopType == "무기")
             {
-                shopCount = itemDB.WeaponDict.Count;
+                shopCount = GameManager.Instance.Data.GetPlayer().Weapons.Count ;
                 DisplayCharacterInventory(shopType);
             }
             else if (shopType == "방어구")
             {
-                shopCount = itemDB.ArmorDict.Count;
+                shopCount = GameManager.Instance.Data.GetPlayer().Armors.Count;
                 DisplayCharacterInventory(shopType);
             }
             else if (shopType == "물약")
             {
-                shopCount = itemDB.PotionDict.Count;
+                shopCount = GameManager.Instance.Data.GetPlayer().Armors.Count;
                 DisplayCharacterInventory(shopType);
             }
             else
@@ -699,7 +693,7 @@ namespace TextRPG_Team_Project.Item
                 Console.WriteLine("상점을 나갑니다.");
                 return;
             }
-            else if (tempInput < shopCount)
+            else if (tempInput <= shopCount)
             {
                 if (shopType == "무기")
                 {

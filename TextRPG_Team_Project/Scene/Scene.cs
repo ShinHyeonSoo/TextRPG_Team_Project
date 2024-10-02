@@ -17,16 +17,24 @@ namespace TextRPG_Team_Project.Scene
 
 		public void DisplayIntro()
 		{
+			StringBuilder sb = new StringBuilder();
+			sb.AppendLine($" **********                   **         *******   *******    ******** ");
+			sb.AppendLine($"/////**///                   /**        /**////** /**////**  **//////**");
+			sb.AppendLine($"    /**      *****  **   ** ******      /**   /** /**   /** **      // ");
+			sb.AppendLine($"    /**     **///**//** ** ///**/       /*******  /******* /**         ");
+			sb.AppendLine($"    /**    /******* //***    /**        /**///**  /**////  /**    *****");
+			sb.AppendLine($"    /**    /**////   **/**   /**        /**  //** /**      //**  ////**");
+			sb.AppendLine($"    /**    //****** ** //**  //**       /**   //**/**       //******** ");
+			sb.AppendLine($"    //      ////// //   //    //        //     // //         ////////  ");
+
 			Console.Clear();
 			Console.WriteLine();
-			StyleConsole.WriteLine($" **********                   **         *******   *******    ******** ", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"/////**///                   /**        /**////** /**////**  **//////**", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    /**      *****  **   ** ******      /**   /** /**   /** **      // ", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    /**     **///**//** ** ///**/       /*******  /******* /**         ", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    /**    /******* //***    /**        /**///**  /**////  /**    *****", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    /**    /**////   **/**   /**        /**  //** /**      //**  ////**", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    /**    //****** ** //**  //**       /**   //**/**       //******** ", ConsoleColor.Yellow);
-			StyleConsole.WriteLine($"    //      ////// //   //    //        //     // //         ////////  ", ConsoleColor.Yellow);
+			foreach(char c in sb.ToString())
+			{
+				if( c == '*') { StyleConsole.Write(c, ConsoleColor.Yellow); }
+				else if (c == '/') { StyleConsole.Write(c, ConsoleColor.DarkBlue); }
+				else { StyleConsole.Write(c); }
+			}
 			Console.WriteLine();
 		}
 		public void DisplayIntro(string name)
@@ -70,6 +78,7 @@ namespace TextRPG_Team_Project.Scene
 		{
 			(int left, int top) = Console.GetCursorPosition();
 			Console.SetCursorPosition(0, top-2);
+			Utils.ClearBelowCursor(top - 2);
 			StyleConsole.WriteLine("잘못입력하셨습니다. 다시 입력해주세요.", ConsoleColor.White, ConsoleColor.Red);
 			Console.Write(">>>   ");
 		}

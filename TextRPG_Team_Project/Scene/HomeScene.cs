@@ -26,7 +26,9 @@ namespace TextRPG_Team_Project.Scene
 				$"2. 전투하기 (현재 진행 : {GameManager.Instance.Data.StageIndex} 층)",
 				"3. 인벤토리", 
 				"4. 퀘스트 목록", 
-				"5. 저장하기" });
+				"5. 저장하기",
+				"0. 종료하기"
+			});
 			Console.WriteLine();
 			DisplayGetInputNumber();
 		}
@@ -34,7 +36,9 @@ namespace TextRPG_Team_Project.Scene
 		public override void PlayScene()
 		{
 			DisplayInitScene();
-			GameManager.Instance.GoAnySScene((Defines.GameStatus)Utils.GetNumberInput(1, 6));
+			int userinput = Utils.GetNumberInput(0, 6);
+			if (userinput == 0) { Environment.Exit(0); }
+			GameManager.Instance.GoAnySScene((Defines.GameStatus)userinput);
 		}
 	}
 }

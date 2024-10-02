@@ -14,7 +14,28 @@ namespace TextRPG_Team_Project.Scene
 
             DisplayIntro("상태보기");
 			Console.WriteLine();
-			Console.WriteLine(player.GetStatus());
+			string[] status = player.GetStatus().Split("\n");
+			foreach (string s in status) 
+			{
+				if(s.Contains("체 력")) 
+				{
+					if (player.Health < player.MaxHealth) 
+					{
+						string[] hp = s.Split(':');
+						StyleConsole.Write($"{hp[0]}:");
+						StyleConsole.Write(hp[1].Split("/")[0],ConsoleColor.Red);
+						StyleConsole.WriteLine($"/{hp[1].Split("/")[1]}");
+					}
+					else
+					{
+						StyleConsole.WriteLine(s);
+					}
+				}
+				else
+				{
+					StyleConsole.WriteLine(s);
+				}
+			}
 			Console.WriteLine();
 			DisplayBack();
 			DisplayGetInputNumber();

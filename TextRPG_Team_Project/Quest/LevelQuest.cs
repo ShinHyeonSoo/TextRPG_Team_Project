@@ -39,12 +39,13 @@ namespace TextRPG_Team_Project
 			{
 				_status = Defines.QuestStatus.InProgress;
 				GameManager.Instance.PlayerRecored.TrackLevel += CheckUserLevel;
+				CheckUserLevel();
 			}
 		}
 
 		public void CheckUserLevel()
 		{
-			if(GameManager.Instance.Data.GetPlayer().Level == _targetLevel)
+			if(GameManager.Instance.Data.GetPlayer().Level >= _targetLevel)
 			{
 				CompleteQuest();
 				GameManager.Instance.PlayerRecored.TrackLevel -= CheckUserLevel;

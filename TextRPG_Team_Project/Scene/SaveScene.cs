@@ -13,7 +13,7 @@ namespace TextRPG_Team_Project.Scene
 			DisplayIntro("저장하기");
 			Console.WriteLine();
 			StyleConsole.Write("1. ", ConsoleColor.Cyan);
-			Console.WriteLine("저장하기.");
+			Console.WriteLine("저장하기");
 			DisplayBack();
 			Console.WriteLine();
 			DisplayGetInputNumber();

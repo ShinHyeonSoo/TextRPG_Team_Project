@@ -27,14 +27,14 @@ namespace TextRPG_Team_Project.Scene
 		public void DisplaySetCharacterName()
 		{
 			DisplayIntro("Text RPG"); // 게임 이름 뭐로할까용
-			Console.WriteLine("케릭터 이름을 설정해주세요,");
+			Console.WriteLine("캐릭터의 이름을 설정해주세요.");
 			Console.WriteLine("");
 			DisplayGetInputString("이름");
 		}
 		public void DisplaySetCharacterJob()
 		{
 			DisplayIntro("Text RPG"); // 게임 이름 뭐로할까용
-			Console.WriteLine("케릭터 이름을 설정해주세요,");
+			Console.WriteLine("캐릭터의 직업을 선택해주세요.");
 			Console.WriteLine("");
 			DisplayOption(new List<string>() { "1. 전사", "2. 마법사" });
 			Console.WriteLine();
