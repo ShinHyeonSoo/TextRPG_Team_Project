@@ -58,7 +58,8 @@ namespace TextRPG_Team_Project.Scene
                     {
                         shop = new Shop();
                     }
-					shop.MainInventoryScene();
+					shop._state = Shop.InventoryState.InventoryMain;
+					shop.StartInventoryScene();
 					userInput = 0;
 					if(userInput == 0) { GameManager.Instance.GoHomeScene(); }
 

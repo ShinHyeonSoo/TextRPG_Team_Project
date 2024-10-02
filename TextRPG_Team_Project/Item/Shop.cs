@@ -16,7 +16,7 @@ namespace TextRPG_Team_Project.Item
         ItemDatabase itemDB = GameManager.Instance.Data.ItemDatabase;
         InventoryScene scene = new InventoryScene();
 
-        enum InventoryState
+        public enum InventoryState
         {
             InventoryMain,
             CharacterInventory,
@@ -30,7 +30,7 @@ namespace TextRPG_Team_Project.Item
             InventoryExit
         }
 
-        InventoryState _state = InventoryState.InventoryMain;
+        public InventoryState _state = InventoryState.InventoryMain;
 
         public static bool isReset = false;
 
@@ -94,7 +94,6 @@ namespace TextRPG_Team_Project.Item
 
         public void MainInventoryScene()
         {
-
             scene.DisplayIntro("인벤토리");
             Console.WriteLine();
             Console.WriteLine("보유한 아이템을 확인하거나 상점에서 구매할 수 있습니다.");
@@ -107,32 +106,21 @@ namespace TextRPG_Team_Project.Item
 
             Console.Write(">> ");
 
-            while (true)
-            {
-                int tempInput = ShopInput(2);
+            int tempInput = ShopInput(2);
 
-                switch (tempInput)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        Console.WriteLine("인벤토리 출력");
-                        DisplayCharacterInventoryUI();
-                        break;
-                    case 2:
-                        Console.WriteLine("상점 출력");
-                        DisplayShopUI();
-                        break;
-                    default:
-                        Console.WriteLine("잘못된 입력");
-                        Console.ReadLine();
-                        break;
-                }
-                if (tempInput == 0)
-                {
-                    return;
-                }
-                break;
+            switch (tempInput)
+            {
+                case 0:
+                    _state = InventoryState.InventoryExit;
+                    break;
+
+                case 1:
+                    _state = InventoryState.CharacterInventory;
+                    break;
+
+                case 2:
+                    _state = InventoryState.ShopInventory;
+                    break;
             }
             Console.Clear();
 
@@ -263,28 +251,20 @@ namespace TextRPG_Team_Project.Item
 
             if (tempInput == 0)
             {
+                _state = InventoryState.InventoryMain;
                 Console.WriteLine("나가기");
             }
             else if (tempInput == 1)
             {
-                Console.Clear();
-                scene.DisplayIntro("무기 가방");
-                DisplayCharacterInventory("무기");
-                WeaponEquipment();
+                _state = InventoryState.WeaponInventory;
             }
             else if (tempInput == 2)
             {
-                Console.Clear();
-                scene.DisplayIntro("방어구 가방");
-                DisplayCharacterInventory("방어구");
-                ArmorEquipment();
+                _state = InventoryState.ArmorInventory;
             }
             else if (tempInput == 3)
             {
-                Console.Clear();
-                scene.DisplayIntro("물약 가방");
-                DisplayCharacterInventory("물약");
-                PotionConsume();
+                _state = InventoryState.PotionInventory;
             }
             else
             {
@@ -329,6 +309,7 @@ namespace TextRPG_Team_Project.Item
             }
             else
             {
+                _state = InventoryState.CharacterInventory;
                 Console.WriteLine("나갑니다.");
             }
         }
@@ -369,6 +350,7 @@ namespace TextRPG_Team_Project.Item
             }
             else
             {
+                _state = InventoryState.CharacterInventory;
                 Console.WriteLine("나갑니다.");
             }
         }
@@ -401,6 +383,7 @@ namespace TextRPG_Team_Project.Item
             }
             else
             {
+                _state = InventoryState.CharacterInventory;
                 Console.WriteLine("나갑니다.");
             }
         }
@@ -546,22 +529,20 @@ namespace TextRPG_Team_Project.Item
 
             if (tempInput == 0)
             {
+                _state = InventoryState.InventoryMain;
                 Console.WriteLine("나가기");
             }
             else if (tempInput == 1)
             {
-                Console.Clear();
-                DisplayShop("무기");
+                _state = InventoryState.WeaponShop;
             }
             else if (tempInput == 2)
             {
-                Console.Clear();
-                DisplayShop("방어구");
+                _state = InventoryState.ArmorShop;
             }
             else if (tempInput == 3)
             {
-                Console.Clear();
-                DisplayShop("물약");
+                _state = InventoryState.PotionShop;
             }
             else
             {
@@ -597,13 +578,14 @@ namespace TextRPG_Team_Project.Item
             Console.WriteLine($"{ShopTitle} 상점에서 뭘 하나요?");
             scene.DisplayOption(new List<string>() { "1. 구입", "2. 판매" });
             Console.WriteLine();
+            Console.WriteLine("0. 나가기");
             Console.Write(">> ");
             int tempInput = ShopInput(2);
 
             if (tempInput == 0)
             {
+                _state = InventoryState.ShopInventory;
                 Console.WriteLine("나가기");
-                return;
             }
             else if (tempInput == 1)
             {
